@@ -1,0 +1,71 @@
+body {
+  min-height: calc(100vh - var(--navbar-height));
+  margin-top: calc(var(--navbar-height) + 5rem);
+}
+
+body {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.title-container {
+  padding: 1rem;
+  padding-top: 0;
+  padding-left: 0;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 3rem;
+  padding-bottom: 1rem;
+  padding-right: 2rem;
+  width: fit-content;
+  display: block;
+  border-bottom: 5px solid var(--tei-color);
+}
+
+form {
+  width: 700px;
+  display: block;
+  margin-bottom: 6rem;
+}
+
+.btn {
+  padding: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.input-group {
+  display: grid;
+  margin-bottom: 1rem;
+}
+
+label {
+  font-weight: bold;
+  color: var(--darkest-gray);
+  margin-bottom: 0.25rem;
+}
+
+.p-inputtext {
+  font-family: "Lexend", sans-serif !important;
+}
+
+.btn {
+  background: var(--darkest-gray);
+}
+
+.btn:disabled {
+  background-color: var(--medium-gray);
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    width: 100%;
+  }
+
+  form {
+    width: 90%;
+    padding: 1rem;
+  }
+}

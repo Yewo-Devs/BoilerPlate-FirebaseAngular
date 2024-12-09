@@ -1,0 +1,17 @@
+<body>
+  <article *ngIf="success">
+    <img src="../../../../assets/images/success-payment.png" />
+    <h1 class="text">Your Order Was Successful!</h1>
+    <p class="text">Thank you for your purchase! Let's view your offers.</p>
+    <button class="btn" routerLink="/offers/recent">View Offers</button>
+  </article>
+  <article *ngIf="!success">
+    <img src="../../../../assets/images/failed-payment.png" />
+    <h1 class="text">Your Order Failed!</h1>
+    <p class="text">
+      We were unable to process your order. Try again or cancel order below.
+    </p>
+    <button class="btn" routerLink="/checkout">Try Again</button>
+    <button class="btn" routerLink="/">Cancel</button>
+  </article>
+</body>

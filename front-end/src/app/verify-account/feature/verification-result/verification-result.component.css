@@ -1,0 +1,46 @@
+body {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  min-height: 100vh;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--lightest-gray);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  width: 50%;
+  height: fit-content;
+  box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.025);
+}
+
+img {
+  width: 300px;
+  display: block;
+  align-self: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    width: 100%;
+  }
+
+  article {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+}

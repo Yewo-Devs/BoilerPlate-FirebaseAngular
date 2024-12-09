@@ -1,0 +1,30 @@
+<body>
+  <article class="content-container">
+    <div class="login-card">
+      <div class="header">
+        <img class="company-logo" />
+        <h2 class="text">Recover your account</h2>
+      </div>
+
+      <p class="text">Reset your account login info</p>
+      <form [formGroup]="tokenForm" class="form-container">
+        <div class="form-control-group">
+          <app-text-input
+            [type]="'text'"
+            [formControl]="tokenForm.controls['accountID']"
+            [label]="'email'"
+            [placeholder]="'Email'"
+            class="form-control-container"
+          ></app-text-input>
+        </div>
+        <button
+          class="btn"
+          [disabled]="!tokenForm.valid"
+          (click)="tokenForm.valid && tokenRequest()"
+        >
+          Request Reset Token
+        </button>
+      </form>
+    </div>
+  </article>
+</body>

@@ -1,0 +1,345 @@
+<section>
+  <div class="min-h-full lg:flex lg:justify-between">
+    <div
+      class="flex flex-col justify-center flex-1 px-4 py-12 bg-white sm:px-6 lg:px-20 xl:px-24"
+    >
+      <div class="flex-1 max-w-sm mx-auto lg:max-w-md">
+        <h1
+          class="mt-5 text-3xl font-bold text-center text-gray-900 sm:text-4xl xl:text-5xl font-pj lg:text-left"
+        >
+          Get started with {{ saasName }}
+        </h1>
+
+        <form [formGroup]="userForm" class="mt-10">
+          <div class="space-y-4">
+            <div>
+              <label for="" class="sr-only"> Email </label>
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                >
+                  <svg
+                    class="w-5 h-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+
+                <input
+                  type="text"
+                  formControlName="email"
+                  placeholder="Email"
+                  class="block w-full py-4 pl-12 pr-4 overflow-hidden text-base font-normal text-gray-900 placeholder-gray-600 transition-all duration-200 border border-gray-300 caret-gray-900 rounded-xl bg-gray-50 focus:outline-none focus:bg-white focus:border-gray-900 focus:ring-gray-900 font-pj"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="" class="sr-only"> Password </label>
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                >
+                  <svg
+                    class="w-5 h-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                </div>
+
+                <input
+                  type="password"
+                  formControlName="password"
+                  placeholder="Password (min. 8 characters)"
+                  class="block w-full py-4 pl-12 pr-4 overflow-hidden text-base font-normal text-gray-900 placeholder-gray-600 transition-all duration-200 border border-gray-300 caret-gray-900 rounded-xl bg-gray-50 focus:outline-none focus:bg-white focus:border-gray-900 focus:ring-gray-900 font-pj"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-5">
+            <div class="relative flex items-center">
+              <div class="flex items-center h-5">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  id="terms"
+                  class="w-5 h-5 text-gray-900 border-gray-300 rounded focus:ring-gray-900"
+                />
+              </div>
+
+              <div class="ml-3 text-base">
+                <label for="terms" class="font-normal text-gray-900 font-pj">
+                  I agree with
+                  <a
+                    routerLink="/terms"
+                    class="font-bold rounded focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2 hover:underline"
+                    >Terms & Conditions</a
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative mt-8">
+            <div class="absolute -inset-2">
+              <div
+                class="w-full h-full mx-auto opacity-30 blur-lg filter"
+              ></div>
+            </div>
+
+            <button
+              [disabled]="!userForm.valid"
+              (click)="userForm.valid && registerUser()"
+              class="relative flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 font-pj hover:bg-gray-600"
+            >
+              Sign up
+            </button>
+          </div>
+
+          <svg
+            class="w-auto h-4 mx-auto mt-8 text-gray-300"
+            viewBox="0 0 172 16"
+            fill="none"
+            stroke="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 11 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 46 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 81 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 116 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 151 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 18 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 53 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 88 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 123 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 158 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 25 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 60 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 95 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 130 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 165 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 32 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 67 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 102 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 137 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 172 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 39 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 74 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 109 1)"
+            />
+            <line
+              y1="-0.5"
+              x2="18.0278"
+              y2="-0.5"
+              transform="matrix(-0.5547 0.83205 0.83205 0.5547 144 1)"
+            />
+          </svg>
+
+          <app-google-signin
+            [buttonText]="'Sign up with Google'"
+          ></app-google-signin>
+        </form>
+
+        <p
+          class="mt-10 text-base font-normal text-center text-gray-900 font-pj lg:text-left"
+        >
+          Already have an account?
+          <a
+            routerLink="/sign-in"
+            class="font-bold rounded focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2 hover:underline"
+            >Login now</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="relative grid flex-1 w-full px-4 py-12 overflow-hidden bg-gray-900 lg:max-w-2xl lg:px-20 xl:px-24 sm:px-6 place-items-center"
+    >
+      <div class="absolute inset-0">
+        <img
+          class="object-cover object-top w-full h-full scale-150 -rotate-90 opacity-10"
+          src="https://cdn.rareblocks.xyz/collection/clarity/images/sign-up/4/background-pattern.png"
+          alt=""
+        />
+      </div>
+
+      <div class="relative max-w-sm mx-auto">
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 bg-gray-800 rounded-xl"
+        >
+          <svg
+            class="w-auto h-5 text-white"
+            viewBox="0 0 33 23"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M32.0011 4.7203L30.9745 0C23.5828 0.33861 18.459 3.41404 18.459 12.4583V22.8687H31.3725V9.78438H26.4818C26.4819 6.88236 28.3027 5.17551 32.0011 4.7203Z"
+            />
+            <path
+              d="M13.5421 4.7203L12.5155 0C5.12386 0.33861 0 3.41413 0 12.4584V22.8687H12.914V9.78438H8.02029C8.02029 6.88236 9.84111 5.17551 13.5421 4.7203Z"
+            />
+          </svg>
+        </div>
+
+        <blockquote class="mt-14">
+          <p
+            class="text-2xl font-medium leading-relaxed text-white lg:text-3xl font-pj"
+          >
+            “You made it so simple. My new site is so much faster and easier to
+            work with than my old site. I just choose the page, make the
+            change.”
+          </p>
+        </blockquote>
+
+        <div class="flex items-center mt-12">
+          <img
+            class="flex-shrink-0 object-cover rounded-full w-14 h-14"
+            src="https://cdn.rareblocks.xyz/collection/clarity/images/sign-up/4/avatar-female.png"
+            alt=""
+          />
+          <div class="ml-4">
+            <p class="text-xl font-bold text-white font-pj">Leslie Alexander</p>
+            <p class="mt-px text-lg font-normal text-gray-400 font-pj">
+              React Developer
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

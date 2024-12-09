@@ -1,0 +1,50 @@
+<div class="relative">
+  <div
+    *ngIf="icon"
+    class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+  >
+    <i ngClass="{{ icon }}" class="text-gray-400"></i>
+  </div>
+
+  <input
+    [ngClass]="{
+      'pl-12': icon,
+      'pl-4': !icon
+    }"
+    [class.is-invalid]="
+      ngControl.touched && ngControl.invalid && invalidFeedback
+    "
+    type="{{ type }}"
+    class="block w-full py-4 pl-12 pr-4 overflow-hidden text-base font-normal text-gray-900 placeholder-gray-600 transition-all duration-200 border border-gray-300 caret-gray-900 rounded-xl bg-gray-50 focus:outline-none focus:bg-white focus:border-gray-900 focus:ring-gray-900 font-pj"
+    [formControl]="ngControl.control"
+    placeholder="{{ placeholder }}"
+  />
+</div>
+<ng-container *ngIf="ngControl.touched && ngControl.invalid && invalidFeedback">
+  <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">
+    Please enter your {{ label }}
+  </div>
+  <div *ngIf="ngControl.control.errors?.email" class="invalid-feedback">
+    Please enter a valid {{ label }} address
+  </div>
+  <div *ngIf="ngControl.control.errors?.minlength" class="invalid-feedback">
+    Your {{ label }} must be at least
+    {{ ngControl.control.errors.minlength["requiredLength"] }} characters
+  </div>
+  <div *ngIf="ngControl.control.errors?.maxlength" class="invalid-feedback">
+    Your {{ label }} must be at most
+    {{ ngControl.control.errors.maxlength["requiredLength"] }} characters
+  </div>
+  <div *ngIf="ngControl.control.errors?.isMatching" class="invalid-feedback">
+    Your {{ label }}s dont match
+  </div>
+  <div *ngIf="ngControl.control.errors?.hasNumbers" class="invalid-feedback">
+    You cannot have numbers or special characters in your {{ label }}
+  </div>
+  <div *ngIf="ngControl.control.errors?.hasLetters" class="invalid-feedback">
+    You can on have numbers in {{ label }}
+  </div>
+  <div *ngIf="ngControl.control.errors?.isInRange" class="invalid-feedback">
+    You have to pick a time with in operating hours
+  </div>
+</ng-container>

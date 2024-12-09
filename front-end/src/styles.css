@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+/*Prime ng icons*/
+@import "primeicons/primeicons.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base, primeng, app;
+
+@layer base {
+  * {
+    font-family: "Lexend", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  a:active,
+  a:focus,
+  li:focus,
+  li:active {
+    text-decoration: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
+  }
+}

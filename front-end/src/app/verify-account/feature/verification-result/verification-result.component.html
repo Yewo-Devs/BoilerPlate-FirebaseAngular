@@ -1,0 +1,17 @@
+<body>
+  <article *ngIf="success">
+    <img src="../../../../assets/images/email-removebg-preview.png" />
+    <h1 class="text">Email Verified!</h1>
+    <p class="text">
+      We have successfully verified your email. Sign in to access IllustraHub.
+    </p>
+    <button class="btn" routerLink="/sign-in">Sign In</button>
+  </article>
+  <article *ngIf="!success">
+    <img src="../../../../assets/images/email-fail-removebg-preview.png" />
+    <h1 class="text">Email Not Verified!</h1>
+    <p class="text">
+      Your email could not be verified. <a routerLink="/sign-in">Try again</a>.
+    </p>
+  </article>
+</body>
