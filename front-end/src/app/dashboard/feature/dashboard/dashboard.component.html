@@ -1,0 +1,92 @@
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div>
+        <div class="brand-section">
+          <img class="company-logo" routerLink="/" />
+          <h1 class="text">{{ saasName }} Dashboard</h1>
+        </div>
+        <div class="control-container">
+          <div
+            class="profile-container"
+            pTooltip="Profile"
+            tooltipPosition="right"
+            (click)="op.toggle($event)"
+          >
+            <img class="profile-img" src="{{ profile.photoUrl }}" />
+            <p class="text">{{ profile.firstname }} {{ profile.lastname }}</p>
+            <i class="pi pi-chevron-down text"></i>
+            <p-overlayPanel #op>
+              <div>
+                <p class="text">Hello {{ profile.firstname }}</p>
+              </div>
+            </p-overlayPanel>
+          </div>
+
+          <div
+            class="notification-container"
+            pTooltip="Notifications"
+            tooltipPosition="right"
+          >
+            <i class="pi pi-bell text"></i>
+          </div>
+        </div>
+
+        <ul class="sidebar-options">
+          <li
+            class="sidebar-option text"
+            routerLink="/dashboard"
+            routerLinkActive="active"
+          >
+            <i class="pi pi-clock"></i>
+            <p class="text">Recents</p>
+          </li>
+          <li
+            class="sidebar-option text"
+            routerLink="/dashboard/library"
+            routerLinkActive="active"
+          >
+            <i class="pi pi-book"></i>
+            <p class="text">Manage Library</p>
+          </li>
+          <li
+            class="sidebar-option text"
+            routerLink="/dashboard/trash"
+            routerLinkActive="active"
+          >
+            <i class="pi pi-trash"></i>
+            <p class="text">Recently Deleted</p>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="sidebar-options bottom">
+        <li class="sidebar-option text">
+          <i class="pi pi-share-alt"></i>
+          <p class="text">Tell Your Friends</p>
+        </li>
+        <li class="sidebar-option text">
+          <i class="pi pi-box"></i>
+          <p class="text">Suggestion Box</p>
+        </li>
+        <li class="sidebar-option text">
+          <i class="pi pi-star"></i>
+          <p class="text">Rate Us</p>
+        </li>
+
+        <p-selectButton
+          [options]="justifyOptions"
+          [(ngModel)]="value"
+          optionLabel="icon"
+        >
+          <ng-template let-item pTemplate>
+            <i [class]="item.icon"></i>
+          </ng-template>
+        </p-selectButton>
+      </ul>
+    </aside>
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</body>

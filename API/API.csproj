@@ -11,7 +11,6 @@
 	<PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
 	<PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
 	<PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
-	<PackageReference Include="IdentityX" Version="1.2.1" />
 	<PackageReference Include="LiteDB" Version="5.0.21" />
 	<PackageReference Include="MimeTypesMap" Version="1.0.8" />
 	<PackageReference Include="NUnit" Version="4.2.2" />
@@ -19,6 +18,27 @@
 	<PackageReference Include="SendGrid" Version="9.29.3" />
 	<PackageReference Include="Stripe.net" Version="47.1.0" />
     <PackageReference Include="CompressedStaticFiles" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Presentation\EmailTemplates\AccountActivation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Presentation\EmailTemplates\CustomerContactFormMessage.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Presentation\EmailTemplates\MfaToken.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Presentation\EmailTemplates\PasswordReset.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Presentation\EmailTemplates\PaymentFailedNotice.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Presentation\EmailTemplates\Receipt.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

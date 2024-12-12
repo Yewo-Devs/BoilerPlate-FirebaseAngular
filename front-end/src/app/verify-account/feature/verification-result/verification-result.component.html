@@ -1,17 +1,54 @@
-<body>
-  <article *ngIf="success">
-    <img src="../../../../assets/images/email-removebg-preview.png" />
-    <h1 class="text">Email Verified!</h1>
-    <p class="text">
-      We have successfully verified your email. Sign in to access IllustraHub.
-    </p>
-    <button class="btn" routerLink="/sign-in">Sign In</button>
-  </article>
-  <article *ngIf="!success">
-    <img src="../../../../assets/images/email-fail-removebg-preview.png" />
-    <h1 class="text">Email Not Verified!</h1>
-    <p class="text">
-      Your email could not be verified. <a routerLink="/sign-in">Try again</a>.
-    </p>
-  </article>
-</body>
+<section class="py-12 sm:py-16 lg:py-20 xl:py-24">
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="max-w-xl mx-auto text-center" *ngIf="success">
+      <i
+        class="pi pi-envelope text-7xl mb-5 font-semibold tracking-tight text-gray-900"
+      ></i>
+      <h2
+        class="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl"
+      >
+        Email Verified!
+      </h2>
+      <p
+        class="mt-4 text-base font-normal leading-7 text-gray-600 lg:text-lg lg:mt-6 lg:leading-8"
+      >
+        We have successfully verified your email. Sign in to access
+        {{ saasName }}.
+      </p>
+    </div>
+
+    <div class="max-w-xl mx-auto text-center" *ngIf="!success">
+      <i
+        class="pi pi-envelope text-7xl mb-5 font-semibold tracking-tight text-gray-900"
+      ></i>
+      <h2
+        class="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl"
+      >
+        Email Not Verified!
+      </h2>
+      <p
+        class="mt-4 text-base font-normal leading-7 text-gray-600 lg:text-lg lg:mt-6 lg:leading-8"
+      >
+        Your email could not be verified.
+        <a routerLink="/sign-in">Try again</a>.
+      </p>
+    </div>
+
+    <div class="max-w-lg mx-auto mt-4 sm:mt-4" *ngIf="success">
+      <div class="p-6 sm:px-8">
+        <div class="relative">
+          <div class="absolute -inset-2">
+            <div class="w-full h-full mx-auto opacity-30 blur-lg filter"></div>
+          </div>
+
+          <button
+            routerLink="/sign-in"
+            class="relative flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 font-pj hover:bg-gray-600"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

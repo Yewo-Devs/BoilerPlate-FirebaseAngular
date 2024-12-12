@@ -1,0 +1,81 @@
+<div class="content-container">
+  <div class="title-container">
+    <h2 class="text">Recents</h2>
+  </div>
+  <div class="button-group">
+    <button class="btn-outline btn-action">
+      <i class="pi pi-plus-circle"></i>
+      <div>
+        <label>Craft a new offer</label>
+        <p>The start of every great business</p>
+      </div>
+    </button>
+    <button class="btn-outline btn-action">
+      <i class="pi pi-file-import"></i>
+      <div>
+        <label>Import an offer</label>
+        <p>Import your dashboard and supercharge them</p>
+      </div>
+    </button>
+  </div>
+  <article class="dashboard-container">
+    <ng-container *ngFor="let item of items; let i = index">
+      <div class="offer-card">
+        <div class="banner click"></div>
+        <div class="info-container">
+          <div>
+            <h4 class="text click">
+              {{ item.name }}
+            </h4>
+            <label class="text">
+              Updated {{ item.lastUpdated | date : "MMM dd, yyyy" }}
+            </label>
+          </div>
+          <button class="btn btn-ellips" (click)="menu(item, $event, i)">
+            <i class="pi pi-ellipsis-h text"></i>
+            <p-menu
+              #menuq
+              [model]="[
+                {
+                  label: 'Options',
+                  items: [
+                    {
+                      label: 'Edit offer',
+                      icon: 'pi pi-pen-to-square'
+                    },
+                    {
+                      label: 'Move to folder',
+                      icon: 'pi pi-folder'
+                    },
+                    {
+                      label: 'Copy link',
+                      icon: 'pi pi-link'
+                    },
+                    {
+                      label: 'Delete',
+                      icon: 'pi pi-trash red'
+                    }
+                  ]
+                }
+              ]"
+              [popup]="true"
+            >
+              <ng-template pTemplate="item" let-item>
+                <a
+                  pRipple
+                  class="kebab flex align-items-center p-menuitem-link"
+                >
+                  <span [class]="item.icon"></span>
+                  <label *ngIf="item.label == 'Delete'" class="red">{{
+                    item.label
+                  }}</label>
+                  <label *ngIf="item.label != 'Delete'">{{ item.label }}</label>
+                </a>
+              </ng-template>
+            </p-menu>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </article>
+</div>

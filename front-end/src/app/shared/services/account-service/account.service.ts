@@ -6,12 +6,12 @@ import { environment } from '../../../../environments/environment';
 import { PreferencesService } from '../preferences-service/preferences.service';
 import { Router } from '@angular/router';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { AnalyticsService } from '../analytics-service/analytics.service';
 import { EditUserDto } from '../../models/dto/edit-user-dto';
 import { LoginDto } from '../../models/dto/login-dto';
 import { PasswordResetDto } from '../../models/dto/password-reset-dto';
 import { RegisterUserDto } from '../../models/dto/register-user-dto';
 import { UserDto } from '../../models/dto/user-dto';
+import { RefreshAuthDto } from '../../models/dto/refresh-auth-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,6 @@ export class AccountService {
     private httpClient: HttpClient,
     private preferencesService: PreferencesService,
     private authService: SocialAuthService,
-    private analyticsService: AnalyticsService,
     private routerService: Router
   ) {
     const initialUser = preferencesService.getPreferences().user;
@@ -40,23 +39,12 @@ export class AccountService {
     this.userSubject.next(user);
   }
 
-  //get-purchases
-  getPurchases(userId: any) {
-    return this.httpClient
-      .get(environment.apiUrl + 'account/get-purchases?userID=' + userId)
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
-  }
-
   socialLogin(user: any) {
     return this.httpClient
       .post(environment.apiUrl + 'account/social-login', user)
       .pipe(
         map((response: any) => {
-          this.setUser(response.user);
+          this.setUser(response);
           return response;
         })
       );
@@ -67,7 +55,27 @@ export class AccountService {
       .post(environment.apiUrl + 'account/login', loginDto)
       .pipe(
         map((response: any) => {
-          this.setUser(response.user);
+          this.setUser(response);
+          return response;
+        })
+      );
+  }
+
+  refreshToken() {
+    let refreshToken =
+      this.preferencesService.getPreferences().user.refreshToken;
+
+    let refreshAuthDto: RefreshAuthDto = {
+      accountId: this.preferencesService.getPreferences().user.id,
+      refreshToken: refreshToken,
+      keepLoggedIn: this.preferencesService.getPreferences().keepLoggedIn,
+    };
+
+    return this.httpClient
+      .post(environment.apiUrl + 'account/refresh-token', refreshAuthDto)
+      .pipe(
+        map((response: any) => {
+          this.setUser(response);
           return response;
         })
       );
@@ -78,7 +86,7 @@ export class AccountService {
       .post(environment.apiUrl + 'account/register', registerUserDto)
       .pipe(
         map((response: any) => {
-          this.setUser(response.user);
+          this.setUser(response);
           return response;
         })
       );
@@ -90,16 +98,19 @@ export class AccountService {
 
     let prefs = this.preferencesService.getPreferences();
     prefs.user = null;
+    prefs.keepLoggedIn = null;
+    prefs.profile = null;
 
     this.preferencesService.setPreferences(prefs);
 
-    this.analyticsService.trackEvent(
-      'Account Sign Out',
-      '',
-      'Customer Interaction'
-    );
-
-    this.routerService.navigateByUrl('/sign-in');
+    // if current page is '/' reload page
+    if (this.routerService.url === '/') {
+      this.routerService.navigateByUrl('/').then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.routerService.navigateByUrl('/');
+    }
   }
 
   getUsers() {
@@ -123,15 +134,15 @@ export class AccountService {
       .post(environment.apiUrl + 'account/edit-user', editUserDto)
       .pipe(
         map((response: any) => {
-          this.setUser(response.user);
+          this.setUser(response);
           return response;
         })
       );
   }
 
-  tokenRequest(accountID: string) {
+  tokenRequest(email: string) {
     return this.httpClient.get(
-      environment.apiUrl + 'account/token-request?accountID=' + accountID,
+      environment.apiUrl + 'account/password-reset-request?email=' + email,
       {
         responseType: 'text',
       }

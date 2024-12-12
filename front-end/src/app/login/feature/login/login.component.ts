@@ -10,6 +10,9 @@ import { PreferencesService } from '../../../shared/services/preferences-service
 import { Title, Meta } from '@angular/platform-browser';
 import { LoginDto } from '../../../shared/models/dto/login-dto';
 import { environment } from '../../../../environments/environment';
+import { ProfileService } from '../../../shared/services/profile-service/profile.service';
+import { CreateUserProfileDto } from '../../../shared/models/dto/create-user-profile-dto';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
+    private profileService: ProfileService,
     private preferencesService: PreferencesService,
     private toastService: ToastrService,
     private busyService: BusyService,
@@ -56,7 +60,7 @@ export class LoginComponent implements OnInit {
       this.user = user;
 
       if (user != null) {
-        this.socialLogin();
+        this.socialLogin(this.user);
       }
     });
   }
@@ -85,26 +89,26 @@ export class LoginComponent implements OnInit {
         this.busyService.idle();
         prefs.user = response;
 
+        prefs.keepLoggedIn = loginDto.keepLoggedIn;
+
         this.preferencesService.setPreferences(prefs);
 
         this.accountService.setUser(response);
 
-        if (!prefs.user.package) {
-          //Take them to pricing
-          this.routerService.navigateByUrl('/pricing');
-          return;
-        }
+        console.log('User Id = ' + prefs.user.id);
 
-        if (prefs.nextPage) {
-          this.routerService.navigateByUrl(prefs.nextPage);
-          prefs.nextPage = null;
+        this.profileService.getProfile(prefs.user.id).subscribe((_response) => {
+          if (prefs.nextPage) {
+            this.routerService.navigateByUrl(prefs.nextPage);
+            prefs.nextPage = null;
 
-          this.preferencesService.setPreferences(prefs);
+            this.preferencesService.setPreferences(prefs);
 
-          return;
-        }
+            return;
+          }
 
-        this.routerService.navigateByUrl('/dashboard');
+          this.routerService.navigateByUrl('/dashboard');
+        });
       },
       (error) => {
         this.busyService.idle();
@@ -121,44 +125,54 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  socialLogin() {
+  socialLogin(user: any) {
     this.busyService.busy();
 
     let prefs: Preferences = this.preferencesService.getPreferences();
 
-    let socialLoginDto: any = this.user;
+    let socialLoginDto: any = user;
 
     //Default to keep logged in
     socialLoginDto.keepLoggedIn = true;
+    socialLoginDto.role = 'User';
+    socialLoginDto.permissions = [];
 
-    this.accountService.socialLogin(socialLoginDto).subscribe(
-      (response: any) => {
-        this.busyService.idle();
-        prefs.user = response;
-
-        this.preferencesService.setPreferences(prefs);
-
-        this.accountService.setUser(response);
-
-        if (!prefs.user.package) {
-          //Take them to pricing
-          this.routerService.navigateByUrl('/pricing');
-          return;
-        }
-
-        if (prefs.nextPage) {
-          this.routerService.navigateByUrl(prefs.nextPage);
-          prefs.nextPage = null;
+    this.accountService
+      .socialLogin(socialLoginDto)
+      .pipe(
+        tap(() => this.busyService.idle()),
+        tap((response: any) => {
+          prefs.user = response;
+          prefs.keepLoggedIn = socialLoginDto.keepLoggedIn;
           this.preferencesService.setPreferences(prefs);
-          return;
+          this.accountService.setUser(response);
+        }),
+        switchMap((response: any) => {
+          const createProfileDto: CreateUserProfileDto = {
+            userId: response.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            photoUrl: user.photoUrl,
+          };
+          return this.profileService
+            .createProfile(createProfileDto)
+            .pipe(switchMap(() => this.profileService.getProfile(response.id)));
+        })
+      )
+      .subscribe(
+        (profileResponse: any) => {
+          if (prefs.nextPage) {
+            this.routerService.navigateByUrl(prefs.nextPage);
+            prefs.nextPage = null;
+            this.preferencesService.setPreferences(prefs);
+          } else {
+            this.routerService.navigateByUrl('/dashboard');
+          }
+        },
+        (error: any) => {
+          // Handle error appropriately
+          console.error('Error during social login process', error);
         }
-
-        this.routerService.navigateByUrl('/dashboard');
-      },
-      (error: any) => {
-        this.busyService.idle();
-        this.toastService.error(error.error);
-      }
-    );
+      );
   }
 }

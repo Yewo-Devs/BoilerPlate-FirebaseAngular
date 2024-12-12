@@ -8,6 +8,7 @@ namespace API.Application.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
 			services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICloudflareService, CloudflareService>();
 			services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IPhotoService, PhotoService>();
 			services.AddScoped<IFirebaseService, FirebaseService>();

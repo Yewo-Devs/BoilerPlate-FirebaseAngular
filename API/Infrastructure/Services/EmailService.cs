@@ -1,7 +1,9 @@
 ﻿using API.Application.DTO;
+using API.Application.Interfaces;
 using API.Core.Models.Purchases;
 using IdentityX.Application.Interfaces;
 using IdentityX.Core.Entities;
+using Newtonsoft.Json;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Reflection;
@@ -11,22 +13,33 @@ namespace API.Infrastructure.Services
 	public class EmailService : Application.Interfaces.IEmailService
 	{
 		private readonly IProfileService _profileService;
+		private readonly ICloudflareService _cloudflareService;
 		private readonly SendGridClient _sendGridClient;
 		private readonly string _emailDomain;
+		private readonly string _companyAddress;
+		private readonly string _saasName;
+		private readonly string _logoUrl;
 
-		public EmailService(IProfileService profileService)
+		public EmailService(IProfileService profileService, ICloudflareService cloudflareService)
 		{
 			var sendGridApiKey = Environment.GetEnvironmentVariable("SendGrid_ApiKey");
-
-			if (string.IsNullOrEmpty(sendGridApiKey))
-			{
-				throw new InvalidOperationException("SendGrid API key is not configured.");
-			}
 
 			_sendGridClient = new SendGridClient(sendGridApiKey);
 
 			_emailDomain = Environment.GetEnvironmentVariable("Email_Domain");
+			_companyAddress = Environment.GetEnvironmentVariable("Company_Address");
+			_saasName = Environment.GetEnvironmentVariable("SaaS_Name");
+			_logoUrl = Environment.GetEnvironmentVariable("Logo_Url");
+
 			_profileService = profileService;
+			_cloudflareService = cloudflareService;
+
+			Initialize();
+		}
+
+		private async void Initialize()
+		{
+			await AuthenticateDomain(_emailDomain);
 		}
 
 		public async Task SendEmail(string message, string subject, List<string> receipients)
@@ -65,8 +78,6 @@ namespace API.Infrastructure.Services
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
 				{
 					{ "activationUrl", url },
-					{ "companyName", "Your Company" },
-					{ "companyAddress", "1234 Street, City, State, 12345" }
 				});
 
 			var fromEmail = $"no-reply@{_emailDomain}";
@@ -89,8 +100,9 @@ namespace API.Infrastructure.Services
 				});
 
 			var fromEmail = $"no-reply@{_emailDomain}";
+			var toEmail = $"support@{_emailDomain}";
 
-			await SendEmail(message, subject, new List<string> { fromEmail }, fromEmail);
+			await SendEmail(message, subject, new List<string> { toEmail }, fromEmail);
 		}
 
 		public async Task SendMfaToken(string token, string email)
@@ -151,9 +163,104 @@ namespace API.Infrastructure.Services
 			await SendEmail(message, subject, new List<string> { appUser.Email }, fromEmail);
 		}
 
+		private async Task AuthenticateDomain(string domain)
+		{
+			// Check if the domain is already authenticated
+			var existingDomainsResponse = await _sendGridClient.RequestAsync(
+				method: SendGridClient.Method.GET,
+				urlPath: "whitelabel/domains"
+			);
+
+			if (!existingDomainsResponse.IsSuccessStatusCode)
+			{
+				var responseBody = await existingDomainsResponse.Body.ReadAsStringAsync();
+				throw new InvalidOperationException($"Failed to retrieve authenticated domains: {responseBody}");
+			}
+
+			var existingDomainsBody = await existingDomainsResponse.Body.ReadAsStringAsync();
+			var existingDomains = JsonConvert.DeserializeObject<List<DomainAuthResponse>>(existingDomainsBody);
+
+			var existingDomain = existingDomains.FirstOrDefault(d => d.Domain.Equals(domain, StringComparison.OrdinalIgnoreCase));
+			if (existingDomain != null)
+			{
+				// Check if the required DNS records are present and valid
+				if (existingDomain.Dns.Mail_cname.Valid && existingDomain.Dns.Dkim1.Valid && existingDomain.Dns.Dkim2.Valid)
+				{
+					return;
+				}
+			}
+
+			// Authenticate the domain
+			var domainAuthentication = new
+			{
+				domain,
+				automatic_security = true,
+				custom_spf = false,
+				@default = true
+			};
+
+			var response = await _sendGridClient.RequestAsync(
+				method: SendGridClient.Method.POST,
+				urlPath: "whitelabel/domains",
+				requestBody: JsonConvert.SerializeObject(domainAuthentication)
+			);
+
+			if (!response.IsSuccessStatusCode)
+			{
+				var responseBody = await response.Body.ReadAsStringAsync();
+				throw new InvalidOperationException($"Failed to authenticate domain: {responseBody}");
+			}
+
+			var _responseBody = await response.Body.ReadAsStringAsync();
+			var domainAuthResponse = JsonConvert.DeserializeObject<DomainAuthResponse>(_responseBody);
+
+			Console.WriteLine("Adding the following DNS records to your Cloudflare DNS settings:");
+			List<DnsRecord> dnsRecords = new List<DnsRecord>() 
+			{ domainAuthResponse.Dns.Mail_cname, domainAuthResponse.Dns.Dkim1, domainAuthResponse.Dns.Dkim2 };
+
+			foreach (DnsRecord dnsRecord in dnsRecords)
+			{
+				Console.WriteLine($"Type: {dnsRecord.Type}, Hostname: {dnsRecord.Host}, Value: {dnsRecord.Data}");
+				await _cloudflareService.CreateDnsRecord(domain, dnsRecord.Type, dnsRecord.Host, dnsRecord.Data);
+			}
+
+			// Retry cycle for domain verification
+			const int maxRetries = 5;
+			const int delayMilliseconds = 30000;
+			int retryCount = 0;
+			bool verified = false;
+
+			while (retryCount < maxRetries && !verified)
+			{
+				// Await a delay to allow the DNS records to propagate
+				await Task.Delay(delayMilliseconds);
+
+				// Verify the domain
+				var verifyResponse = await _sendGridClient.RequestAsync(
+					method: SendGridClient.Method.POST,
+					urlPath: $"whitelabel/domains/{domainAuthResponse.Id}/validate"
+				);
+
+				if (verifyResponse.IsSuccessStatusCode)
+				{
+					verified = true;
+					Console.WriteLine($"Domain {domain} has been successfully authenticated and verified with SendGrid.");
+				}
+				else
+				{
+					retryCount++;
+					if (retryCount == maxRetries)
+					{
+						var verifyResponseBody = await verifyResponse.Body.ReadAsStringAsync();
+						throw new InvalidOperationException($"Failed to verify domain after {maxRetries} attempts: {verifyResponseBody}");
+					}
+				}
+			}
+		}
+
 		private async Task SendEmail(string message, string subject, List<string> receipients, string fromEmail)
 		{
-			var from = new EmailAddress(fromEmail);
+			var from = new EmailAddress(fromEmail, _saasName);
 			var tos = receipients.Select(email => new EmailAddress(email)).ToList();
 			var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, message, message);
 			var response = await _sendGridClient.SendEmailAsync(msg);
@@ -161,7 +268,10 @@ namespace API.Infrastructure.Services
 
 		private async Task<string> GetEmailTemplate(string templatePath, Dictionary<string, string> placeholders)
 		{
+			placeholders.Add("logoUrl", _logoUrl);
 			placeholders.Add("emailDomain", _emailDomain);
+			placeholders.Add("companyName", _saasName);
+			placeholders.Add("companyAddress", _companyAddress);
 
 			var template = await File.ReadAllTextAsync(templatePath);
 
@@ -172,5 +282,35 @@ namespace API.Infrastructure.Services
 
 			return template;
 		}
+	}
+
+	internal class DomainAuthResponse
+	{
+		public int Id { get; set; }
+		public int UserId { get; set; }
+		public string Subdomain { get; set; }
+		public string Domain { get; set; }
+		public string Username { get; set; }
+		public bool CustomSpf { get; set; }
+		public bool Default { get; set; }
+		public bool Legacy { get; set; }
+		public bool AutomaticSecurity { get; set; }
+		public bool Valid { get; set; }
+		public DnsRecords Dns { get; set; }
+	}
+
+	internal class DnsRecords
+	{
+		public DnsRecord Mail_cname { get; set; }
+		public DnsRecord Dkim1 { get; set; }
+		public DnsRecord Dkim2 { get; set; }
+	}
+
+	internal class DnsRecord
+	{
+		public bool Valid { get; set; }
+		public string Type { get; set; }
+		public string Host { get; set; }
+		public string Data { get; set; }
 	}
 }

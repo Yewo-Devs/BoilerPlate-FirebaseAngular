@@ -1,782 +1,1206 @@
 <app-nav></app-nav>
 <!--Pricing Section-->
-<section class="py-10 bg-gray-50 sm:py-16 lg:py-24">
+<section class="py-12 sm:py-16 lg:py-20">
   <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <div class="max-w-xl mx-auto text-center">
-      <h2 class="text-4xl font-bold text-black lg:text-5xl sm:text-5xl">
-        Pricing &amp; Plans
+    <div class="max-w-2xl text-center sm:text-left">
+      <h2
+        class="text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj"
+      >
+        Try {{ saasName }} for 30 days, completely free. No credit card
+        required.
       </h2>
-      <p class="mt-4 text-lg leading-relaxed text-gray-600">
-        Amet minim mollit non deserunt ullam co est sit aliqua dolor do amet
-        sint. Velit officia consequat duis enim velit mollit.
-      </p>
     </div>
 
-    <!-- lg+ -->
-    <div class="hidden mt-16 lg:block">
-      <table class="w-full">
-        <thead>
-          <tr>
-            <th class="py-8 pr-4"></th>
+    <div
+      class="flex sm:inline-flex px-5 py-4 rounded border border-gray-300 items-center justify-center sm:justify-start space-x-2.5 mt-12"
+    >
+      <span
+        class="text-sm font-bold tracking-widest text-gray-900 uppercase font-pj"
+      >
+        Monthly
+      </span>
 
-            <th class="px-4 py-8 text-center">
-              <span class="text-base font-medium text-blue-600">
-                Individual (30 Days Free Trial)
-              </span>
-              <p class="mt-6 text-6xl font-bold">$10</p>
-              <p class="mt-2 text-base font-normal text-gray-500">Per month</p>
-            </th>
+      <button
+        type="button"
+        class="relative inline-flex flex-shrink-0 w-20 h-4 transition-colors duration-200 ease-in-out bg-gray-100 rounded cursor-pointer focus:outline-none"
+        role="switch"
+        (click)="toggleSwitch()"
+      >
+        <span
+          aria-hidden="true"
+          [class.translate-x-0]="subscriptionInterval == 'mo'"
+          [class.translate-x-full]="subscriptionInterval != 'mo'"
+          class="inline-block w-10 h-4 transition duration-200 ease-in-out bg-gray-900 rounded shadow pointer-events-none"
+        ></span>
+      </button>
 
-            <th class="px-4 py-8 text-center">
-              <span class="text-base font-medium text-blue-600"> Team </span>
-              <p class="mt-6 text-6xl font-bold">$99</p>
-              <p class="mt-2 text-base font-normal text-gray-500">Per month</p>
-            </th>
+      <span
+        class="text-sm font-bold tracking-widest text-gray-900 uppercase font-pj"
+      >
+        Yearly
+      </span>
+    </div>
 
-            <th class="px-4 py-8 text-center bg-gray-900 rounded-t-xl">
-              <span
-                class="px-4 py-2 text-base font-medium text-white bg-blue-600 rounded-full"
-              >
-                Popular
-              </span>
-              <p class="mt-6 text-6xl font-bold text-white">$150</p>
-              <p class="mt-2 text-base font-normal text-gray-200">Per month</p>
-            </th>
+    <div
+      class="grid grid-cols-1 px-12 mt-8 text-center sm:text-left sm:px-0 gap-x-12 gap-y-16 lg:mt-16 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 font-pj">Startup</h3>
+        <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
+          Best for small business owners who needs website for business.
+        </p>
+        <div class="flex items-end justify-center mt-6 sm:justify-start">
+          <p class="text-5xl font-bold text-gray-900 font-pj">
+            ${{ items[0].price | currencyFormat }}
+          </p>
+          <p class="text-lg font-medium text-gray-400 font-pj">
+            /{{ subscriptionInterval }}
+          </p>
+        </div>
 
-            <th class="px-4 py-8 text-center">
-              <span class="text-base font-medium text-blue-600">
-                Enterprise
-              </span>
-              <p class="mt-6 text-6xl font-bold">$490</p>
-              <p class="mt-2 text-base font-normal text-gray-500">Per month</p>
-            </th>
-          </tr>
-        </thead>
+        <svg
+          class="w-auto h-4 mx-auto mt-8 text-gray-300 sm:mx-0"
+          viewBox="0 0 172 16"
+          fill="none"
+          stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 11 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 46 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 81 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 116 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 151 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 18 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 53 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 88 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 123 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 158 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 25 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 60 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 95 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 130 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 165 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 32 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 67 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 102 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 137 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 172 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 39 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 74 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 109 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 144 1)"
+          />
+        </svg>
 
-        <tbody>
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              Website number
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">01</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">10</td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
+        <ul class="mt-6 space-y-3 text-base font-medium text-gray-900">
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              50
-            </td>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Up to 10 members
+          </li>
 
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              Unlimited
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              Server storage
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              100 GB
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              500 GB
-            </td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              1 TB
-            </td>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            One admin account
+          </li>
 
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              Unlimited
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              Database
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">15</td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              Unlimited
-            </td>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            5GB Storage
+          </li>
+        </ul>
 
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              Unlimited
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              Unmetered Bandwidth
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
-            >
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              SSD Disk
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
-            >
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              VCPUS Fontworld
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
-            >
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              WordPress install
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
-            >
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-4 pr-4 font-medium border-b border-gray-200">
-              Server speed
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">-</td>
-
-            <td
-              class="px-4 py-4 text-center text-white bg-gray-900 border-b border-white/20"
-            >
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-
-            <td class="px-4 py-4 text-center border-b border-gray-200">
-              <svg
-                class="w-5 h-5 mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="py-6 pr-4"></td>
-
-            <td class="px-4 py-6 text-center">
-              <a
-                (click)="onBuy(0)"
-                title=""
-                class="inline-flex items-center font-semibold text-blue-600 hover:text-blue-700"
-              >
-                Get Started
-                <svg
-                  class="w-4 h-4 ml-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </a>
-            </td>
-
-            <td class="px-4 py-6 text-center">
-              <a
-                (click)="onBuy(1)"
-                title=""
-                class="inline-flex items-center font-semibold text-blue-600 hover:text-blue-700"
-              >
-                Get Started
-                <svg
-                  class="w-4 h-4 ml-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </a>
-            </td>
-
-            <td
-              class="px-4 py-6 text-center text-white bg-yellow-500 rounded-b-xl"
-            >
-              <a
-                (click)="onBuy(2)"
-                title=""
-                class="inline-flex items-center font-semibold text-white"
-              >
-                Get Started
-                <svg
-                  class="w-4 h-4 ml-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </a>
-            </td>
-
-            <td class="px-4 py-6 text-center">
-              <a
-                (click)="onBuy(3)"
-                title=""
-                class="inline-flex items-center font-semibold text-blue-600 hover:text-blue-700"
-              >
-                Get Started
-                <svg
-                  class="w-4 h-4 ml-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- xs to lg -->
-  <div
-    class="block mt-12 border-t border-b border-gray-200 divide-y divide-gray-200 lg:hidden"
-  >
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">
-        <span class="text-sm font-medium text-blue-600"> Free </span>
-        <p class="mt-2 text-xl font-bold">$0</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
-      </div>
-
-      <div class="px-2 py-2">
-        <span class="text-sm font-medium text-blue-600"> Team </span>
-        <p class="mt-2 text-xl font-bold">$99</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
-      </div>
-
-      <div class="px-2 py-2">
-        <span class="text-sm font-medium text-blue-600"> Popular </span>
-        <p class="mt-2 text-xl font-bold">$150</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
-      </div>
-
-      <div class="px-2 py-2">
-        <span class="text-sm font-medium text-blue-600"> Enterprise </span>
-        <p class="mt-2 text-xl font-bold">$490</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
-      </div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">Website number</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">01</div>
-
-      <div class="px-2 py-2">10</div>
-
-      <div class="px-2 py-2">100</div>
-
-      <div class="px-2 py-2">Unlimited</div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">Server storage</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">100 GB</div>
-
-      <div class="px-2 py-2">500 GB</div>
-
-      <div class="px-2 py-2">1 TB</div>
-
-      <div class="px-2 py-2">Unlimited</div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">Database</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">-</div>
-
-      <div class="px-2 py-2">15</div>
-
-      <div class="px-2 py-2">Unlimited</div>
-
-      <div class="px-2 py-2">Unlimited</div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">Unmetered bandwidth</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">-</div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">SSD Disk</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">-</div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">VCPUS Fontworld</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">-</div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-    </div>
-
-    <div class="px-2 py-4 sm:px-4">
-      <p class="font-semibold">WordPress install</p>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-2 py-2">-</div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-
-      <div class="px-2 py-2">
-        <svg
-          class="w-5 h-5 mx-auto"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-4 text-center divide-x divide-gray-200">
-      <div class="px-1 py-2 sm:px-4">
-        <span class="text-sm font-medium text-blue-600"> Free </span>
-        <p class="mt-2 text-xl font-bold">$0</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
         <a
-          href="#"
-          title=""
-          class="flex items-center justify-center w-full px-1 py-2 mt-5 text-sm text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+          (click)="onBuy(0)"
+          class="inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           role="button"
         >
-          Get Started
+          Get 30 days free trial
         </a>
       </div>
 
-      <div class="px-1 py-2 sm:px-4">
-        <span class="text-sm font-medium text-blue-600"> Team </span>
-        <p class="mt-2 text-xl font-bold">$99</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 font-pj">Pro</h3>
+        <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
+          Best for small business owners who needs website for business.
+        </p>
+        <div class="flex items-end justify-center mt-6 sm:justify-start">
+          <p class="text-5xl font-bold text-gray-900 font-pj">
+            ${{ items[1].price | currencyFormat }}
+          </p>
+          <p class="text-lg font-medium text-gray-400 font-pj">
+            /{{ subscriptionInterval }}
+          </p>
+        </div>
+
+        <svg
+          class="w-auto h-4 mx-auto mt-8 text-gray-300 sm:mx-0"
+          viewBox="0 0 172 16"
+          fill="none"
+          stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 11 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 46 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 81 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 116 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 151 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 18 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 53 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 88 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 123 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 158 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 25 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 60 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 95 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 130 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 165 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 32 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 67 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 102 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 137 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 172 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 39 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 74 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 109 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 144 1)"
+          />
+        </svg>
+
+        <ul class="mt-6 space-y-3 text-base font-medium text-gray-900">
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Unlimited members
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Unlimited admin accounts
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            500 GB Storage
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Custom domain
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            API access
+          </li>
+        </ul>
+
         <a
-          href="#"
-          title=""
-          class="flex items-center justify-center w-full px-1 py-2 mt-5 text-sm text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+          (click)="onBuy(1)"
+          class="inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           role="button"
         >
-          Get Started
+          Get 30 days free trial
         </a>
       </div>
 
-      <div class="px-1 py-2 sm:px-4">
-        <span class="text-sm font-medium text-blue-600"> Popular </span>
-        <p class="mt-2 text-xl font-bold">$150</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
-        <a
-          href="#"
-          title=""
-          class="flex items-center justify-center w-full px-1 py-2 mt-5 text-sm text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
-          role="button"
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 font-pj">Company</h3>
+        <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
+          Best for small business owners who needes website for business.
+        </p>
+        <div class="flex items-end justify-center mt-6 sm:justify-start">
+          <p class="text-5xl font-bold text-gray-900 font-pj">
+            ${{ items[2].price | currencyFormat }}
+          </p>
+          <p class="text-lg font-medium text-gray-400 font-pj">
+            /{{ subscriptionInterval }}
+          </p>
+        </div>
+
+        <svg
+          class="w-auto h-4 mx-auto mt-8 text-gray-300 sm:mx-0"
+          viewBox="0 0 172 16"
+          fill="none"
+          stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Get Started
-        </a>
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 11 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 46 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 81 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 116 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 151 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 18 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 53 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 88 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 123 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 158 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 25 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 60 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 95 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 130 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 165 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 32 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 67 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 102 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 137 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 172 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 39 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 74 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 109 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 144 1)"
+          />
+        </svg>
+
+        <ul class="mt-6 space-y-3 text-base font-medium text-gray-900">
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Unlimited members
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Unlimited admin accounts
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            1 TB Storage
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Custom domain
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            API access
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Access to all integrations
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Access to all widgets
+          </li>
+        </ul>
+
+        <div class="relative inline-flex mt-10 group">
+          <div
+            class="absolute duration-1000 transitiona-all opacity-70 -inset-px rounded-xl blur-lg filter group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200"
+            style="
+              background: linear-gradient(
+                90deg,
+                #44ff9a -0.55%,
+                #44b0ff 22.86%,
+                #8b44ff 48.36%,
+                #ff6644 73.33%,
+                #ebff70 99.34%
+              );
+            "
+          ></div>
+
+          <a
+            (click)="onBuy(2)"
+            class="relative inline-flex items-center justify-center px-4 py-3 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded font-pj hover:bg-gray-700 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+            role="button"
+          >
+            Get 30 days free trial
+          </a>
+        </div>
       </div>
 
-      <div class="px-1 pt-2 pb-4 sm:px-4">
-        <span class="text-sm font-medium text-blue-600"> Enterprise </span>
-        <p class="mt-2 text-xl font-bold">$490</p>
-        <span class="mt-1 text-sm font-normal text-gray-500"> Per month </span>
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 font-pj">Enterprise</h3>
+        <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
+          Best for small business owners who needes website for business.
+        </p>
+        <div class="flex items-end justify-center mt-6 sm:justify-start">
+          <p class="text-5xl font-bold text-gray-900 font-pj">
+            ${{ items[3].price | currencyFormat }}
+          </p>
+          <p class="text-lg font-medium text-gray-400 font-pj">
+            /{{ subscriptionInterval }}
+          </p>
+        </div>
+
+        <svg
+          class="w-auto h-4 mx-auto mt-8 text-gray-300 sm:mx-0"
+          viewBox="0 0 172 16"
+          fill="none"
+          stroke="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 11 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 46 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 81 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 116 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 151 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 18 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 53 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 88 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 123 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 158 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 25 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 60 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 95 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 130 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 165 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 32 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 67 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 102 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 137 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 172 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 39 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 74 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 109 1)"
+          />
+          <line
+            y1="-0.5"
+            x2="18.0278"
+            y2="-0.5"
+            transform="matrix(-0.5547 0.83205 0.83205 0.5547 144 1)"
+          />
+        </svg>
+
+        <ul class="mt-6 space-y-3 text-base font-medium text-gray-900">
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Unlimited members
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Unlimited admin accounts
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Up to 5 TB Storage
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Custom domain
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            API access
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Access to all integrations
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Access to all widgets
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Live chat support
+          </li>
+
+          <li class="flex items-center">
+            <svg
+              class="w-5 h-5 mr-2.5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            Bulk importer
+          </li>
+        </ul>
+
         <a
-          href="#"
-          title=""
-          class="flex items-center justify-center w-full px-1 py-2 mt-5 text-sm text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+          (click)="onBuy(3)"
+          class="inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           role="button"
         >
-          Get Started
+          Get 30 days free trial
         </a>
       </div>
     </div>

@@ -280,7 +280,7 @@ namespace API.Infrastructure.Services
 			await _firebaseService.UpdateData(FirebaseDataNodes.Subscription, subscription.CustomerId, subscription);
 
 			var appUser = await _accountService.GetUserFromId(subscription.CustomerId);
-			var checkoutDto = subscription.Map<CheckoutDto, Core.Models.Purchases.Subscription>();
+			var checkoutDto = subscription.Map<CheckoutDto>();
 
 			await _emailService.SendReceipt(checkoutDto, appUser);
 			await _emailService.SendEmail($"You just got paid!!! ${subscription.Price:f2}", _saasName, new List<string> { _saasOwnerEmail });

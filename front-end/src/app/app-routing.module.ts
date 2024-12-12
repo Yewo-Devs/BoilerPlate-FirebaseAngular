@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/guards/auth/auth.guard';
+import { ProfileGuard } from './shared/guards/profile/profile.guard';
 
 const routes: Routes = [
   {
@@ -7,6 +9,13 @@ const routes: Routes = [
     loadComponent: () =>
       import('./landing/feature/landing/landing.component').then(
         (m) => m.LandingComponent
+      ),
+  },
+  {
+    path: 'support',
+    loadComponent: () =>
+      import('./support/feature/support/support.component').then(
+        (m) => m.SupportComponent
       ),
   },
   {
@@ -22,11 +31,70 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'password-reset',
+    loadComponent: () =>
+      import(
+        './password-reset/feature/token-request/token-request.component'
+      ).then((m) => m.TokenRequestComponent),
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import(
+        './password-reset/feature/password-reset/password-reset.component'
+      ).then((m) => m.PasswordResetComponent),
+  },
+  {
+    path: 'verify',
+    loadChildren: () =>
+      import(
+        './verify-account/feature/verification-request/verification-request.module'
+      ).then((m) => m.VerificationRequestModule),
+  },
+  {
+    path: 'verification-result',
+    loadChildren: () =>
+      import(
+        './verify-account/feature/verification-result/verification-result.module'
+      ).then((m) => m.VerificationResultModule),
+  },
+  {
+    path: 'dashboard',
+    canActivate: [ProfileGuard],
+    loadChildren: () =>
+      import('./dashboard/feature/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
+  },
+  {
+    path: 'profile',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./profile/feature/profile/profile.component').then(
+        (m) => m.ProfileComponent
+      ),
+  },
+  {
+    path: 'profile-onboarding',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import(
+        './profile/feature/profile-onboarding/profile-onboarding.component'
+      ).then((m) => m.ProfileOnboardingComponent),
+  },
+  {
     path: 'pricing',
     loadComponent: () =>
       import('./pricing/feature/pricing/pricing.component').then(
         (m) => m.PricingComponent
       ),
+  },
+  {
+    path: 'payment-result',
+    loadComponent: () =>
+      import(
+        './payment-result/feature/payment-result/payment-result.component'
+      ).then((m) => m.PaymentResultComponent),
   },
   {
     path: 'privacy-policy',
@@ -42,7 +110,6 @@ const routes: Routes = [
         (m) => m.TermsComponent
       ),
   },
-
   {
     path: '**',
     redirectTo: '',

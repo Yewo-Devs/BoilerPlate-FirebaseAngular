@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserDto } from '../../models/user-dto';
 import { PreferencesService } from '../../services/preferences-service/preferences.service';
+import { UserDto } from '../../models/dto/user-dto';
 
 @Injectable({
   providedIn: 'root',

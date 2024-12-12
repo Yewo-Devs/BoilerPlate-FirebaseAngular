@@ -1,0 +1,107 @@
+.content-container {
+  padding: 0 2rem;
+}
+
+.title-container {
+  border-bottom: 1px solid var(--light-gray);
+  padding: 1.64rem 0;
+
+  margin-bottom: 1rem;
+}
+/*Content*/
+.button-group {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-ellips {
+  background: transparent;
+  border-radius: 0.5rem;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .pi {
+    font-size: 0.75rem;
+  }
+}
+
+.kebab {
+  gap: 0.5rem;
+}
+
+:host ::ng-deep .p-submenu-header {
+  display: none;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-ellips:hover {
+  background: var(--lightest-gray);
+}
+
+.btn-action {
+  display: flex;
+  gap: 1rem;
+
+  text-align: left;
+
+  align-items: center;
+
+  padding: 1rem 1.5rem;
+
+  i {
+    font-size: 1.25rem;
+  }
+  label {
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+  p {
+    font-weight: 300;
+  }
+}
+
+.btn-action:hover {
+  background: var(--lightest-gray);
+  color: var(--text-color);
+}
+
+.dashboard-container {
+  display: grid;
+  padding-bottom: 1rem;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.click {
+  cursor: pointer;
+}
+
+.red {
+  color: #ff0000;
+}
+
+.banner {
+  height: 200px;
+  border-radius: 0.5rem;
+  background: var(--pri-color);
+}
+
+.offer-card {
+  display: grid;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.75rem;
+    font-weight: 300;
+  }
+}

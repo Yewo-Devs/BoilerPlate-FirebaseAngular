@@ -4,6 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CurrencyFormatPipe implements PipeTransform {
   transform(value: number): string {
     if (value === null || value === undefined) return '';
-    return value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 }

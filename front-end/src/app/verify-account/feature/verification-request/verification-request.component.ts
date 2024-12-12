@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService } from 'src/app/shared/services/account-service/account.service';
-import { BusyService } from 'src/app/shared/services/busy-service/busy.service';
-import { PreferencesService } from 'src/app/shared/services/preferences-service/preferences.service';
+import { AccountService } from '../../../shared/services/account-service/account.service';
+import { BusyService } from '../../../shared/services/busy-service/busy.service';
+import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 
 @Component({
   selector: 'app-verification-request',
   templateUrl: './verification-request.component.html',
+  standalone: false,
   styleUrl: './verification-request.component.css',
 })
 export class VerificationRequestComponent {

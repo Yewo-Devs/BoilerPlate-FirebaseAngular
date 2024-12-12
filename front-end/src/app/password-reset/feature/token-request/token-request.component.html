@@ -1,30 +1,51 @@
-<body>
-  <article class="content-container">
-    <div class="login-card">
-      <div class="header">
-        <img class="company-logo" />
-        <h2 class="text">Recover your account</h2>
-      </div>
-
-      <p class="text">Reset your account login info</p>
-      <form [formGroup]="tokenForm" class="form-container">
-        <div class="form-control-group">
-          <app-text-input
-            [type]="'text'"
-            [formControl]="tokenForm.controls['accountID']"
-            [label]="'email'"
-            [placeholder]="'Email'"
-            class="form-control-container"
-          ></app-text-input>
-        </div>
-        <button
-          class="btn"
-          [disabled]="!tokenForm.valid"
-          (click)="tokenForm.valid && tokenRequest()"
-        >
-          Request Reset Token
-        </button>
-      </form>
+<section class="py-12 sm:py-16 lg:py-20 xl:py-24 bg-gray-50">
+  <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="max-w-xl mx-auto text-center">
+      <h2
+        class="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl"
+      >
+        Recover your account
+      </h2>
+      <p
+        class="mt-4 text-base font-normal leading-7 text-gray-600 lg:text-lg lg:mt-6 lg:leading-8"
+      >
+        Reset your account login information.
+      </p>
     </div>
-  </article>
-</body>
+
+    <div class="max-w-lg mx-auto mt-4 sm:mt-4">
+      <div class="p-6 sm:px-8">
+        <form [formGroup]="tokenForm" class="mt-10">
+          <div class="space-y-4">
+            <div>
+              <label for="" class="sr-only"> Email </label>
+              <app-text-input
+                [type]="'text'"
+                [formControl]="tokenForm.get('email')"
+                [placeholder]="'Email'"
+                [label]="'email'"
+                [icon]="'pi pi-envelope'"
+              />
+            </div>
+          </div>
+
+          <div class="relative mt-8">
+            <div class="absolute -inset-2">
+              <div
+                class="w-full h-full mx-auto opacity-30 blur-lg filter"
+              ></div>
+            </div>
+
+            <button
+              [disabled]="!tokenForm.valid"
+              (click)="tokenForm.valid && tokenRequest()"
+              class="relative flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 font-pj hover:bg-gray-600"
+            >
+              Request Reset Token
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

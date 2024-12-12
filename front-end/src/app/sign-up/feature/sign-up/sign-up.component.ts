@@ -10,6 +10,9 @@ import { Title, Meta } from '@angular/platform-browser';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { RegisterUserDto } from '../../../shared/models/dto/register-user-dto';
 import { environment } from '../../../../environments/environment';
+import { CreateUserProfileDto } from '../../../shared/models/dto/create-user-profile-dto';
+import { ProfileService } from '../../../shared/services/profile-service/profile.service';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,6 +24,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
+    private profileService: ProfileService,
     private toastService: ToastrService,
     private busyService: BusyService,
     private preferencesService: PreferencesService,
@@ -63,6 +67,7 @@ export class SignUpComponent implements OnInit {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
+      terms: [false, [Validators.requiredTrue]],
     });
   }
 
@@ -86,16 +91,11 @@ export class SignUpComponent implements OnInit {
         );
 
         prefs.user = response;
+        prefs.keepLoggedIn = false;
 
         this.preferencesService.setPreferences(prefs);
 
         this.accountService.setUser(response);
-
-        if (!prefs.user.package) {
-          //Take them to pricing
-          this.routerService.navigateByUrl('/pricing');
-          return;
-        }
 
         if (prefs.nextPage) {
           this.routerService.navigateByUrl(prefs.nextPage);
@@ -129,35 +129,45 @@ export class SignUpComponent implements OnInit {
 
     //Default to keep logged in
     socialLoginDto.keepLoggedIn = true;
+    socialLoginDto.role = 'User';
+    socialLoginDto.permissions = [];
 
-    this.accountService.socialLogin(socialLoginDto).subscribe(
-      (response: any) => {
-        this.busyService.idle();
-        prefs.user = response;
-
-        this.preferencesService.setPreferences(prefs);
-
-        this.accountService.setUser(response);
-
-        if (!prefs.user.package) {
-          //Take them to pricing
-          this.routerService.navigateByUrl('/pricing');
-          return;
-        }
-
-        if (prefs.nextPage) {
-          this.routerService.navigateByUrl(prefs.nextPage);
-          prefs.nextPage = null;
+    this.accountService
+      .socialLogin(socialLoginDto)
+      .pipe(
+        tap(() => this.busyService.idle()),
+        tap((response: any) => {
+          prefs.user = response;
+          prefs.keepLoggedIn = socialLoginDto.keepLoggedIn;
           this.preferencesService.setPreferences(prefs);
-          return;
+          this.accountService.setUser(response);
+        }),
+        switchMap((response: any) => {
+          const createProfileDto: CreateUserProfileDto = {
+            userId: response.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            photoUrl: user.photoUrl,
+          };
+          return this.profileService
+            .createProfile(createProfileDto)
+            .pipe(switchMap(() => this.profileService.getProfile(response.id)));
+        })
+      )
+      .subscribe(
+        (profileResponse: any) => {
+          if (prefs.nextPage) {
+            this.routerService.navigateByUrl(prefs.nextPage);
+            prefs.nextPage = null;
+            this.preferencesService.setPreferences(prefs);
+          } else {
+            this.routerService.navigateByUrl('/dashboard');
+          }
+        },
+        (error: any) => {
+          // Handle error appropriately
+          console.error('Error during social login process', error);
         }
-
-        this.routerService.navigateByUrl('/dashboard');
-      },
-      (error: any) => {
-        this.busyService.idle();
-        this.toastService.error(error.error);
-      }
-    );
+      );
   }
 }

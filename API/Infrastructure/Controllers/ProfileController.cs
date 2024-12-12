@@ -54,10 +54,6 @@ namespace API.Infrastructure.Controllers
 			}
 
 			var profile = await _profileService.GetUserProfile(userId);
-			if (profile == null)
-			{
-				return NotFound();
-			}
 
 			return Ok(profile);
 		}

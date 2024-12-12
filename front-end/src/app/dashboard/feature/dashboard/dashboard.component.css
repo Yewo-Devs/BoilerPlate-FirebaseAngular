@@ -1,0 +1,150 @@
+body {
+  min-height: 100vh;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 20rem auto;
+}
+
+.content-container {
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img {
+    cursor: pointer;
+    width: 3.125rem;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--lightest-gray);
+}
+
+.notification-container {
+  border-radius: 0.5rem;
+  padding: 0.64rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+
+  .pi {
+    font-size: 1.25rem;
+  }
+}
+
+.notification-container:hover {
+  background: var(--lightest-gray);
+}
+
+.profile-container {
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  padding-right: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.75rem;
+
+  .pi {
+    font-size: 0.75rem;
+  }
+}
+
+.profile-container:hover {
+  background: var(--lightest-gray);
+}
+
+.control-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.profile-img {
+  width: 2rem;
+  display: block;
+  border-radius: 0.5rem;
+}
+
+.sidebar {
+  background: #fff;
+  border-right: 1px solid var(--lightest-gray);
+  display: grid;
+  padding: 1rem;
+  min-height: 100vh;
+  width: 20rem;
+}
+
+.sidebar-options {
+  text-decoration: none;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.sidebar-option {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.75rem;
+
+  p {
+    font-weight: 300;
+  }
+
+  .pi {
+    font-size: 1.25rem;
+    margin-left: 0;
+  }
+}
+
+.sidebar-option:hover {
+  background: var(--lightest-gray);
+}
+
+.active {
+  background: var(--light-gray);
+
+  color: var(--tei-color);
+
+  p {
+    color: var(--tei-color);
+  }
+}
+
+.bottom {
+  height: min-content;
+  align-self: flex-end;
+}
+
+.sidebar-options.bottom {
+  border-top: 1px solid var(--lightest-gray);
+  padding-top: 0.5rem;
+}
+
+:host ::ng-deep .p-button.p-highlight {
+  background: #000;
+  border: 1px solid #000;
+}
+
+:host ::ng-deep p-selectButton {
+  margin-top: 1.25rem;
+}

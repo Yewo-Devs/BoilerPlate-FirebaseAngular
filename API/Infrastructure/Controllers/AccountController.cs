@@ -25,7 +25,7 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("register")]
 		public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
 		{
-			var resultObject = await _accountService.Register(registerDto);
+			var resultObject = await _accountService.Register(registerDto, true);
 
 			if (resultObject.Error != null)
 				return BadRequest(resultObject.Error);
@@ -100,7 +100,7 @@ namespace API.Infrastructure.Controllers
 		/// <param name="username">The user's username.</param>
 		/// <returns>A message indicating the result.</returns>
 		[HttpGet("password-reset-request")]
-		public async Task<ActionResult<string>> ForgotPassword([FromQuery] string email, [FromQuery] string username)
+		public async Task<ActionResult<string>> ForgotPassword([FromQuery] string? email, [FromQuery] string? username)
 		{
 			var resultObject = await _accountService.InitiatePasswordReset(email, username);
 
@@ -152,6 +152,21 @@ namespace API.Infrastructure.Controllers
 		{
 			await _accountService.GenerateVerificationToken(accountId);
 			return NoContent();
+		}
+
+		/// <summary>
+		/// Generates a new token set.
+		/// </summary>
+		/// <param name="accountId">refreshAuthDto</param>
+		[HttpPost("refresh-token")]
+		public async Task<ActionResult<UserDto>> RefreshToken(RefreshAuthDto refreshAuthDto)
+		{
+			var resultObject = await _accountService.RefreshAuth(refreshAuthDto);
+
+			if (resultObject.Error != null)
+				return Unauthorized(resultObject.Error);
+
+			return Ok(resultObject.Result);
 		}
 	}
 }

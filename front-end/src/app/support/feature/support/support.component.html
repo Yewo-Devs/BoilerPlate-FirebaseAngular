@@ -1,0 +1,144 @@
+<app-nav></app-nav>
+<section class="py-12 sm:py-16 lg:py-20 xl:py-24">
+  <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-16 xl:gap-x-36"
+    >
+      <div class="flex flex-col self-stretch justify-between">
+        <div class="flex-1">
+          <h2
+            class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl"
+          >
+            Contact Us
+          </h2>
+          <p
+            class="mt-4 text-base font-normal leading-7 text-gray-600 lg:text-lg lg:mt-6 lg:leading-8"
+          >
+            Clarity gives you the blocks & components you need to create a truly
+            professional website.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 mt-12 sm:grid-cols-2 lg:mt-auto">
+          <div>
+            <h3
+              class="text-xs font-medium tracking-widest text-blue-600 uppercase"
+            >
+              USA OFFICE Hours
+            </h3>
+            <p class="mt-5 text-base font-medium text-gray-900">
+              Monday-Friday<br />
+              8:00 am to 5:00 pm
+            </p>
+          </div>
+
+          <div>
+            <h3
+              class="text-xs font-medium tracking-widest text-blue-600 uppercase"
+            >
+              Our Address
+            </h3>
+            <p class="mt-5 text-base font-medium text-gray-900">
+              8502 Preston Rd. Ingle, <br />Maine 98380, USA
+            </p>
+          </div>
+
+          <div>
+            <h3
+              class="text-xs font-medium tracking-widest text-blue-600 uppercase"
+            >
+              Canada Office Hours
+            </h3>
+            <p class="mt-5 text-base font-medium text-gray-900">
+              8502 Preston Rd. Ingle, <br />Maine 98380, USA
+            </p>
+          </div>
+
+          <div>
+            <h3
+              class="text-xs font-medium tracking-widest text-blue-600 uppercase"
+            >
+              Get In Touch
+            </h3>
+            <p class="mt-5 text-base font-medium text-gray-900">
+              +1-246-888-0653<br />
+              +1-222-632-0194
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-xl rounded-2xl">
+        <div class="p-6 sm:p-10">
+          <form [formGroup]="contactForm" class="">
+            <div class="mb-5">
+              <div>
+                <label
+                  for="fullName"
+                  class="text-base font-medium text-gray-900 mb-2"
+                >
+                  Your name
+                </label>
+                <app-text-input
+                  [type]="'text'"
+                  [formControl]="contactForm.get('name')"
+                  [placeholder]="'Enter your full name'"
+                  [label]="'name'"
+                />
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div>
+                <label
+                  for="email"
+                  class="text-base font-medium text-gray-900 mb-2"
+                >
+                  Email address
+                </label>
+                <app-text-input
+                  [type]="'text'"
+                  [formControl]="contactForm.get('email')"
+                  [placeholder]="'Enter your email'"
+                  [label]="'email'"
+                />
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <div>
+                <label
+                  for="message"
+                  class="text-base font-medium text-gray-900 mb-2"
+                >
+                  Writer your message
+                </label>
+                <textarea
+                  formControlName="message"
+                  placeholder="Write us your message here..."
+                  class="block w-full py-4 pl-4 pr-4 overflow-hidden text-base font-normal text-gray-900 placeholder-gray-600 transition-all duration-200 border border-gray-300 caret-gray-900 rounded-xl bg-gray-50 focus:outline-none focus:bg-white focus:border-gray-900 focus:ring-gray-900 font-pj"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="relative mt-8">
+              <div class="absolute -inset-2">
+                <div
+                  class="w-full h-full mx-auto opacity-30 blur-lg filter"
+                ></div>
+              </div>
+
+              <button
+                [disabled]="!contactForm.valid"
+                (click)="contactForm.valid && contact()"
+                class="relative flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 font-pj hover:bg-gray-600"
+              >
+                Send message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
