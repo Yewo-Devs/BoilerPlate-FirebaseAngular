@@ -21,10 +21,8 @@
     cursor: not-allowed;
   }
 
-  a:active,
-  a:focus,
-  li:focus,
-  li:active {
+  * {
+    outline: none !important;
     text-decoration: none !important;
     box-shadow: none !important;
     -webkit-tap-highlight-color: transparent !important;

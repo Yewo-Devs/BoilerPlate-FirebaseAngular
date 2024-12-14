@@ -95,8 +95,6 @@ export class LoginComponent implements OnInit {
 
         this.accountService.setUser(response);
 
-        console.log('User Id = ' + prefs.user.id);
-
         this.profileService.getProfile(prefs.user.id).subscribe((_response) => {
           if (prefs.nextPage) {
             this.routerService.navigateByUrl(prefs.nextPage);
@@ -112,7 +110,6 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         this.busyService.idle();
-
         //If verify account go to verify account page
         if (error.error[0] == '?') {
           this.routerService.navigateByUrl('/verify' + error.error);

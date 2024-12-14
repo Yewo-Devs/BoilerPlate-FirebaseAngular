@@ -7,9 +7,9 @@
   }
 }
 
-.animate-on-scroll {
+/*.animate-on-scroll {
   opacity: 0;
   animation: appear linear;
   animation-timeline: view();
   animation-range: entry 0%;
-}
+}*/

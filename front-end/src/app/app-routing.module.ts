@@ -67,14 +67,6 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'profile',
-    canActivate: [AuthGuard],
-    loadComponent: () =>
-      import('./profile/feature/profile/profile.component').then(
-        (m) => m.ProfileComponent
-      ),
-  },
-  {
     path: 'profile-onboarding',
     canActivate: [AuthGuard],
     loadComponent: () =>

@@ -2,6 +2,10 @@ body {
   min-height: 100vh;
 }
 
+a {
+  cursor: pointer;
+}
+
 .container {
   display: grid;
   grid-template-columns: 20rem auto;
@@ -13,41 +17,14 @@ body {
 }
 
 .brand-section {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
   img {
     cursor: pointer;
-    width: 3.125rem;
+    width: 10rem;
     margin: 0;
   }
 
-  h1 {
-    font-size: 1.25rem;
-    margin: 0;
-  }
-
-  padding-bottom: 1rem;
+  padding: 1rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--lightest-gray);
-}
-
-.notification-container {
-  border-radius: 0.5rem;
-  padding: 0.64rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  width: fit-content;
-
-  .pi {
-    font-size: 1.25rem;
-  }
-}
-
-.notification-container:hover {
-  background: var(--lightest-gray);
 }
 
 .profile-container {
@@ -60,13 +37,9 @@ body {
   width: fit-content;
   gap: 0.75rem;
 
-  .pi {
+  .pi-chevron-down {
     font-size: 0.75rem;
   }
-}
-
-.profile-container:hover {
-  background: var(--lightest-gray);
 }
 
 .control-container {
@@ -76,15 +49,7 @@ body {
   margin-bottom: 1rem;
 }
 
-.profile-img {
-  width: 2rem;
-  display: block;
-  border-radius: 0.5rem;
-}
-
 .sidebar {
-  background: #fff;
-  border-right: 1px solid var(--lightest-gray);
   display: grid;
   padding: 1rem;
   min-height: 100vh;
@@ -116,27 +81,12 @@ body {
   }
 }
 
-.sidebar-option:hover {
-  background: var(--lightest-gray);
-}
-
-.active {
-  background: var(--light-gray);
-
-  color: var(--tei-color);
-
-  p {
-    color: var(--tei-color);
-  }
-}
-
 .bottom {
   height: min-content;
   align-self: flex-end;
 }
 
 .sidebar-options.bottom {
-  border-top: 1px solid var(--lightest-gray);
   padding-top: 0.5rem;
 }
 
@@ -147,4 +97,18 @@ body {
 
 :host ::ng-deep p-selectButton {
   margin-top: 1.25rem;
+}
+
+:host ::ng-deep .p-button {
+  padding: 0.75rem 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100vw;
+  }
+
+  .container {
+    display: flex;
+  }
 }

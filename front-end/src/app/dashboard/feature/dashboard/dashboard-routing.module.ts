@@ -22,6 +22,37 @@ const routes: Routes = [
         loadChildren: () =>
           import('../trash/trash.module').then((m) => m.TrashModule),
       },
+      {
+        path: 'team',
+        loadComponent: () =>
+          import('../team/team.component').then((m) => m.TeamComponent),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('../notifications/notifications.component').then(
+            (m) => m.NotificationsComponent
+          ),
+      },
+      {
+        path: 'trash',
+        loadChildren: () =>
+          import('../trash/trash.module').then((m) => m.TrashModule),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('../profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+      },
+      {
+        path: 'billing',
+        loadComponent: () =>
+          import('../billing/billing.component').then(
+            (m) => m.BillingComponent
+          ),
+      },
     ],
   },
 ];

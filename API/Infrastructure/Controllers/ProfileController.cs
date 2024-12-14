@@ -1,4 +1,5 @@
-﻿using IdentityX.Application.DTO.Users;
+﻿using API.Application.Interfaces;
+using IdentityX.Application.DTO.Users;
 using IdentityX.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,16 @@ namespace API.Infrastructure.Controllers
 	public class ProfileController : BaseApiController
 	{
 		private readonly IProfileService _profileService;
+		private readonly IFirebaseStorageService _firebaseStorageService;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProfileController"/> class.
 		/// </summary>
 		/// <param name="profileService">The profile service.</param>
-		public ProfileController(IProfileService profileService)
+		public ProfileController(IProfileService profileService, IFirebaseStorageService firebaseStorageService)
 		{
 			_profileService = profileService;
+			_firebaseStorageService = firebaseStorageService;
 		}
 
 		/// <summary>
@@ -30,6 +33,11 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("create")]
 		public async Task<ActionResult> CreateUserProfile([FromBody] CreateUserProfileDto createUserProfileDto)
 		{
+			//Prepare images
+			string filePath = await StoreProfilePhoto(createUserProfileDto.PhotoUrl);
+
+			createUserProfileDto.PhotoUrl = filePath;
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
@@ -67,6 +75,11 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("edit")]
 		public async Task<ActionResult> EditUserProfile([FromBody] EditProfileDto editProfileDto)
 		{
+			//Prepare images
+			string filePath = await StoreProfilePhoto(editProfileDto.PhotoUrl);
+
+			editProfileDto.PhotoUrl = filePath;
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
@@ -92,6 +105,23 @@ namespace API.Infrastructure.Controllers
 
 			await _profileService.DeleteUserProfile(userId);
 			return Ok();
+		}
+		
+		/// <summary>
+		/// Stores the profile photo.
+		/// </summary>
+		/// <param name="photoUrl"></param>
+		/// <returns></returns>
+		private async Task<string> StoreProfilePhoto(string photoUrl)
+		{
+			//If is not base64 string return photoUrl
+			if (!photoUrl.Contains("base64"))
+			{
+				return photoUrl;
+			}
+
+			return await _firebaseStorageService
+				.StoreProfilePhoto(photoUrl, Guid.NewGuid().ToString(), "photoUrl");
 		}
 	}
 }

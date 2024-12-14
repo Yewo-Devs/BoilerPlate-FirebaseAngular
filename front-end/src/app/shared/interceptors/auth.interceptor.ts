@@ -24,6 +24,9 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
+          if (!this.preferencesService.getPreferences().user) {
+            return throwError(error);
+          }
           const token = this.preferencesService.getPreferences().user.token;
           if (token && this.isTokenExpired(token)) {
             // Refresh token

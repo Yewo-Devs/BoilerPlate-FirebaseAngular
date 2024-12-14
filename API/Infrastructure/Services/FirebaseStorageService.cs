@@ -99,6 +99,13 @@ namespace API.Infrastructure.Services
 
 			var stream = new MemoryStream(bytes);
 
+			// Get the content type from the base64 string
+			int start = path.IndexOf("data:") + 5;
+			int end = path.IndexOf(";");
+			string contentType = path.Substring(start, end - start);
+
+			fileName += GetFileExtension(contentType);
+
 			try
 			{
 				var downloadUrl = await new FirebaseStorage(Bucket, new FirebaseStorageOptions()).Child("Files").Child(uid).Child(fileName).PutAsync(stream);

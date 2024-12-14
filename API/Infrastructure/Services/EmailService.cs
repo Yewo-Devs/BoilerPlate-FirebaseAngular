@@ -58,8 +58,8 @@ namespace API.Infrastructure.Services
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
 				{
-					{ "firstname", profile.Firstname },
-					{ "lastname", profile.Lastname },
+					{ "firstname", profile.FirstName },
+					{ "lastname", profile.LastName },
 					{ "itemTitle", subscription.ItemTitle }
 				});
 
@@ -150,8 +150,8 @@ namespace API.Infrastructure.Services
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
 				{
-					{ "firstname", profile.Firstname },
-					{ "lastname", profile.Lastname },
+					{ "firstname", profile.FirstName },
+					{ "lastname", profile.LastName },
 					{ "itemTitle", checkoutDto.ItemTitle },
 					{ "itemDescription", checkoutDto.ItemDescription },
 					{ "price", checkoutDto.Price.ToString() },
