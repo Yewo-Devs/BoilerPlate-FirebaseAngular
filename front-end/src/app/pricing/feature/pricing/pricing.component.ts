@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedUiModule } from '../../../shared/ui/shared-ui.module';
-import { PaymentTypes } from '../../../shared/models/dto/checkout-dto';
+import { PaymentTypes } from '../../../shared/models/dto/payment/checkout-dto';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 import { PaymentService } from '../../../shared/services/payment-service/payment.service';
 import { environment } from '../../../../environments/environment';

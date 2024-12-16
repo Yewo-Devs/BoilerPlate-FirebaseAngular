@@ -16,6 +16,7 @@
               <label for="" class="sr-only"> Email </label>
               <app-text-input
                 [type]="'text'"
+                [thick]="true"
                 [formControl]="loginForm.get('email')"
                 [placeholder]="'Email'"
                 [label]="'email'"
@@ -27,6 +28,7 @@
               <label for="" class="sr-only"> Password </label>
               <app-text-input
                 [type]="'password'"
+                [thick]="true"
                 [formControl]="loginForm.get('password')"
                 [placeholder]="'Password (min. 8 characters)'"
                 [label]="'password'"

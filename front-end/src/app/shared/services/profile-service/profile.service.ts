@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { PreferencesService } from '../preferences-service/preferences.service';
-import { ProfileDto } from '../../models/dto/profile-dto';
-import { CreateUserProfileDto } from '../../models/dto/create-user-profile-dto';
-import { EditProfileDto } from '../../models/dto/edit-profile-dto';
+import { ProfileDto } from '../../models/dto/user-auth/profile-dto';
+import { CreateUserProfileDto } from '../../models/dto/user-auth/create-user-profile-dto';
+import { EditProfileDto } from '../../models/dto/user-auth/edit-profile-dto';
 
 @Injectable({
   providedIn: 'root',

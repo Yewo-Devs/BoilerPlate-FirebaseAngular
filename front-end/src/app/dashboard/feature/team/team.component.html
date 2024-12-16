@@ -4,8 +4,7 @@
       <div class="max-w-md">
         <h1 class="text-lg font-bold text-gray-900">Settings</h1>
         <p class="mt-2 text-sm font-medium leading-6 text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis morbi
-          pulvinar venenatis non.
+          Manage your team settings and preferences here.
         </p>
       </div>
     </div>
@@ -16,7 +15,7 @@
       <div class="mt-8">
         <h1 class="text-base font-bold text-gray-900">Team</h1>
         <p class="mt-1 text-sm font-medium text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipis.
+          View and manage your team members.
         </p>
       </div>
 
@@ -31,85 +30,163 @@
               <div class="px-4 py-5 sm:p-6">
                 <div class="sm:flex sm:items-center sm:justify-between">
                   <div>
-                    <p class="text-base font-bold text-gray-900">
-                      Teams you are on
-                    </p>
+                    <p class="text-base font-bold text-gray-900">My Teams</p>
                     <p class="mt-1 text-sm font-medium text-gray-500">
-                      Lorem ipsum dolor sit amet, consectetur adipis.
+                      Here are the teams you are a part of.
                     </p>
                   </div>
 
                   <div class="mt-4 sm:mt-0">
                     <button
+                      (click)="showDialogNewTeam()"
                       type="button"
                       class="inline-flex items-center justify-center px-5 py-3 text-sm font-semibold leading-4 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
                     >
-                      Join Another Team
+                      Create Team
                     </button>
                   </div>
                 </div>
 
+                <p-dialog [modal]="true" [(visible)]="visibleNewTeam">
+                  <div class="w-full max-w-sm bg-white shadow-lg rounded-xl">
+                    <div class="px-4 py-5 sm:p-6">
+                      <p class="text-xl font-bold text-gray-900">
+                        Create New Team
+                      </p>
+                      <p class="mt-3 text-sm font-medium text-gray-500">
+                        Fill out the form below to create a new team.
+                      </p>
+
+                      <form [formGroup]="teamForm" class="mt-6">
+                        <div class="space-y-4">
+                          <div>
+                            <label
+                              for=""
+                              class="text-sm font-bold text-gray-900"
+                            >
+                              Team Photo
+                            </label>
+                            <div class="mt-4 sm:mt-0">
+                              <div class="sm:col-span-2">
+                                <div class="flex items-center space-x-6">
+                                  <img
+                                    class="flex-shrink-0 object-cover w-12 h-12 rounded-lg"
+                                    [src]="
+                                      teamForm.get('teamPhotoUrl').value
+                                        ? teamForm.get('teamPhotoUrl').value
+                                        : '../../../../assets/images/img.svg'
+                                    "
+                                    alt=""
+                                  />
+                                  <button
+                                    type="button"
+                                    class="text-sm font-semibold text-gray-400 transition-all duration-200 rounded-md hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+                                    (click)="removePhoto()"
+                                  >
+                                    Remove
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    class="text-sm font-semibold text-indigo-600 transition-all duration-200 rounded-md hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                                    (click)="fileInput.click()"
+                                  >
+                                    Select
+                                  </button>
+                                  <input
+                                    type="file"
+                                    #fileInput
+                                    (change)="updatePhoto($event)"
+                                    style="display: none"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="space-y-4">
+                          <div>
+                            <label
+                              for=""
+                              class="text-sm font-bold text-gray-900"
+                            >
+                              Team Name
+                            </label>
+                            <div class="mt-2">
+                              <app-text-input
+                                [type]="'text'"
+                                [formControl]="teamForm.get('name')"
+                                [placeholder]="'Team Name'"
+                                [label]="'team name'"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="flex items-center justify-end mt-5 space-x-4"
+                        >
+                          <button
+                            type="reset"
+                            (click)="visibleNewTeam = false; teamForm.reset()"
+                            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            [disabled]="!teamForm.valid"
+                            (click)="teamForm.valid && createTeam()"
+                            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </p-dialog>
+
                 <div class="flow-root mt-8">
                   <div class="-my-5 divide-y divide-gray-100">
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/rareblocks-logo.png"
-                            alt=""
-                          />
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">
-                            Rareblocks
-                          </p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            3 members
-                          </p>
-                        </div>
-
-                        <div class="ml-auto">
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
+                    <ng-container *ngFor="let team of teams">
+                      <div class="py-5">
+                        <div class="flex items-center">
+                          <div
+                            class="relative flex-shrink-0"
+                            *ngIf="team.teamPhotoUrl"
                           >
-                            Leave
-                          </a>
+                            <img
+                              class="object-cover w-10 h-10 rounded-full"
+                              src="{{ team.teamPhotoUrl }}"
+                              alt=""
+                            />
+                          </div>
+
+                          <div class="ml-4">
+                            <p class="text-sm font-bold text-gray-900">
+                              {{ team.name }}
+                            </p>
+                            <p class="mt-1 text-sm font-medium text-gray-500">
+                              {{ team.members.length }}
+                              {{
+                                team.members.length === 1 ? "member" : "members"
+                              }}
+                            </p>
+                          </div>
+
+                          <div class="ml-auto">
+                            <a
+                              (click)="viewTeam(team)"
+                              class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
+                            >
+                              View
+                            </a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/astrona-logo.png"
-                            alt=""
-                          />
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">Astrona</p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            12 members
-                          </p>
-                        </div>
-
-                        <div class="ml-auto">
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
-                          >
-                            Leave
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                    </ng-container>
                   </div>
                 </div>
               </div>
@@ -122,16 +199,17 @@
                 <div class="sm:flex sm:items-center sm:justify-between">
                   <div>
                     <p class="text-base font-bold text-gray-900">
-                      Team Members
+                      {{ selectedTeam ? selectedTeam.name : "Team" }} Members
                     </p>
                     <p class="mt-1 text-sm font-medium text-gray-500">
-                      Lorem ipsum dolor sit amet, consectetur adipis.
+                      Manage your team members here.
                     </p>
                   </div>
 
                   <div class="mt-4 sm:mt-0">
                     <button
-                      type="button"
+                      (click)="showDialogNewMember()"
+                      [disabled]="!isOwner()"
                       class="inline-flex items-center justify-center px-5 py-3 text-sm font-semibold leading-4 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
                     >
                       Add New Member
@@ -139,227 +217,188 @@
                   </div>
                 </div>
 
+                <p-dialog [modal]="true" [(visible)]="visibleNewMember">
+                  <div class="w-full max-w-sm bg-white shadow-lg rounded-xl">
+                    <div class="px-4 py-5 sm:p-6">
+                      <p class="text-xl font-bold text-gray-900">
+                        Add New Members
+                      </p>
+                      <p class="mt-3 text-sm font-medium text-gray-500">
+                        Enter the email addresses of new members, separated by
+                        commas.
+                      </p>
+
+                      <form [formGroup]="memberForm" class="mt-6">
+                        <div class="space-y-4">
+                          <div>
+                            <label
+                              for=""
+                              class="text-sm font-bold text-gray-900"
+                              >Email Addresses</label
+                            >
+                            <div class="mt-2">
+                              <app-text-input
+                                [type]="'text'"
+                                [formControl]="memberForm.get('emails')"
+                                [placeholder]="'Email Addresses'"
+                                [label]="'email addresses'"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="space-y-4">
+                          <div>
+                            <label
+                              for=""
+                              class="text-sm font-bold text-gray-900"
+                              >Role</label
+                            >
+                            <div class="mt-2 custom-select">
+                              <select
+                                formControlName="role"
+                                class="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-gray-900 focus:border-gray-900 sm:text-sm caret-gray-900"
+                              >
+                                <option value="Manager">Manager</option>
+                                <option value="Editor">Editor</option>
+                                <option value="Viewer">Viewer</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="flex items-center justify-end mt-5 space-x-4"
+                        >
+                          <button
+                            type="reset"
+                            (click)="
+                              visibleNewMember = false; memberForm.reset()
+                            "
+                            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            [disabled]="!memberForm.valid"
+                            (click)="memberForm.valid && addMembers()"
+                            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </p-dialog>
+
+                <p-dialog [modal]="true" [(visible)]="visibleEditMember">
+                  <div class="w-full max-w-sm bg-white shadow-lg rounded-xl">
+                    <div class="px-4 py-5 sm:p-6">
+                      <p class="text-xl font-bold text-gray-900">
+                        Edit Member Role
+                      </p>
+                      <p class="mt-3 text-sm font-medium text-gray-500">
+                        Change the role of the selected member.
+                      </p>
+
+                      <form [formGroup]="editMemberForm" class="mt-6">
+                        <div class="space-y-4">
+                          <div>
+                            <label
+                              for=""
+                              class="text-sm font-bold text-gray-900"
+                              >Role</label
+                            >
+                            <div class="mt-2 custom-select">
+                              <select
+                                formControlName="role"
+                                class="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-gray-900 focus:border-gray-900 sm:text-sm caret-gray-900"
+                              >
+                                <option value="Manager">Manager</option>
+                                <option value="Editor">Editor</option>
+                                <option value="Viewer">Viewer</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="flex items-center justify-end mt-5 space-x-4"
+                        >
+                          <button
+                            type="reset"
+                            (click)="
+                              visibleEditMember = false; editMemberForm.reset()
+                            "
+                            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            [disabled]="!editMemberForm.valid"
+                            (click)="editMemberForm.valid && editTeamMember()"
+                            class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </p-dialog>
+
                 <div class="flow-root mt-8">
                   <div class="-my-5 divide-y divide-gray-100">
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/avatar-female.png"
-                            alt=""
-                          />
+                    <ng-container *ngFor="let member of teamMembers">
+                      <div class="py-5">
+                        <div class="flex items-center">
                           <div
-                            class="absolute -top-px -right-px w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"
-                          ></div>
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">
-                            Arlene McCoy
-                          </p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            arlenemc
-                          </p>
-                        </div>
-
-                        <div
-                          class="flex items-center justify-end ml-auto space-x-8"
-                        >
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
+                            *ngIf="member.photoUrl"
+                            class="relative flex-shrink-0"
                           >
-                            Remove
-                          </a>
+                            <img
+                              class="object-cover w-10 h-10 rounded-full"
+                              src="{{ member.photoUrl }}"
+                              alt=""
+                            />
+                          </div>
 
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700"
+                          <div class="ml-4">
+                            <p class="text-sm font-bold text-gray-900">
+                              {{ member.firstName }} {{ member.lastName }}
+                            </p>
+                            <p class="mt-1 text-sm font-medium text-gray-500">
+                              {{ getRole(member.userId) }}
+                            </p>
+                          </div>
+
+                          <div
+                            class="flex items-center justify-end ml-auto space-x-8"
                           >
-                            Edit
-                          </a>
+                            <button
+                              (click)="removeFromTeam(member.userId)"
+                              [disabled]="!isOwner()"
+                              *ngIf="getRole(member.userId) !== 'Owner'"
+                              class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
+                            >
+                              Remove
+                            </button>
+
+                            <button
+                              (click)="showDialogEditMember(member.userId)"
+                              [disabled]="!isOwner()"
+                              *ngIf="getRole(member.userId) !== 'Owner'"
+                              class="text-sm font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700"
+                            >
+                              Edit
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/avatar-female-2.png"
-                            alt=""
-                          />
-                          <div
-                            class="absolute -top-px -right-px w-3.5 h-3.5 bg-gray-300 border-2 border-white rounded-full"
-                          ></div>
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">
-                            Darrell Steward
-                          </p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            darrellsteward
-                          </p>
-                        </div>
-
-                        <div
-                          class="flex items-center justify-end ml-auto space-x-8"
-                        >
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
-                          >
-                            Remove
-                          </a>
-
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700"
-                          >
-                            Edit
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/avatar-female-3.png"
-                            alt=""
-                          />
-                          <div
-                            class="absolute -top-px -right-px w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"
-                          ></div>
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">
-                            Marvin McKinney
-                          </p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            marvinmc
-                          </p>
-                        </div>
-
-                        <div
-                          class="flex items-center justify-end ml-auto space-x-8"
-                        >
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
-                          >
-                            Remove
-                          </a>
-
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700"
-                          >
-                            Edit
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/avatar-male.png"
-                            alt=""
-                          />
-                          <div
-                            class="absolute -top-px -right-px w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"
-                          ></div>
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">
-                            Floyd Miles
-                          </p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            floydmiles
-                          </p>
-                        </div>
-
-                        <div
-                          class="flex items-center justify-end ml-auto space-x-8"
-                        >
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
-                          >
-                            Remove
-                          </a>
-
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700"
-                          >
-                            Edit
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="py-5">
-                      <div class="flex items-center">
-                        <div class="relative flex-shrink-0">
-                          <img
-                            class="object-cover w-10 h-10 rounded-full"
-                            src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/previews/settings/1/avatar-male-2.png"
-                            alt=""
-                          />
-                          <div
-                            class="absolute -top-px -right-px w-3.5 h-3.5 bg-gray-300 border-2 border-white rounded-full"
-                          ></div>
-                        </div>
-
-                        <div class="ml-4">
-                          <p class="text-sm font-bold text-gray-900">
-                            Albert Flores
-                          </p>
-                          <p class="mt-1 text-sm font-medium text-gray-500">
-                            albertfl
-                          </p>
-                        </div>
-
-                        <div
-                          class="flex items-center justify-end ml-auto space-x-8"
-                        >
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-gray-400 transition-all duration-200 hover:text-gray-900"
-                          >
-                            Remove
-                          </a>
-
-                          <a
-                            href="#"
-                            title=""
-                            class="text-sm font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700"
-                          >
-                            Edit
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                    </ng-container>
                   </div>
                 </div>
               </div>

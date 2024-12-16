@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { CheckoutDto } from '../../models/dto/checkout-dto';
+import { CheckoutDto } from '../../models/dto/payment/checkout-dto';
 
 @Injectable({
   providedIn: 'root',

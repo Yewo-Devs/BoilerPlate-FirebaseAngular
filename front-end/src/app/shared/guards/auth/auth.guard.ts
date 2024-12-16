@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PreferencesService } from '../../services/preferences-service/preferences.service';
-import { UserDto } from '../../models/dto/user-dto';
+import { UserDto } from '../../models/dto/user-auth/user-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -30,9 +30,12 @@ export class AuthGuard implements CanActivate {
     }
 
     let prefs = this.preferencesService.getPreferences();
-    prefs.nextPage = state.url;
 
-    this.preferencesService.setPreferences(prefs);
+    if (!prefs.nextPage.includes('team')) {
+      prefs.nextPage = state.url;
+
+      this.preferencesService.setPreferences(prefs);
+    }
 
     this.toastService.error('You need to sign in first.');
     this.routerService.navigateByUrl('/sign-in');

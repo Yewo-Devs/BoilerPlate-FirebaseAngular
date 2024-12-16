@@ -8,10 +8,10 @@ import { AccountService } from '../../../shared/services/account-service/account
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 import { Title, Meta } from '@angular/platform-browser';
-import { LoginDto } from '../../../shared/models/dto/login-dto';
+import { LoginDto } from '../../../shared/models/dto/user-auth/login-dto';
 import { environment } from '../../../../environments/environment';
 import { ProfileService } from '../../../shared/services/profile-service/profile.service';
-import { CreateUserProfileDto } from '../../../shared/models/dto/create-user-profile-dto';
+import { CreateUserProfileDto } from '../../../shared/models/dto/user-auth/create-user-profile-dto';
 import { switchMap, tap } from 'rxjs';
 
 @Component({

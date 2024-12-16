@@ -6,7 +6,7 @@ import {
   Router,
 } from '@angular/router';
 import { PreferencesService } from '../../services/preferences-service/preferences.service';
-import { ProfileDto } from '../../models/dto/profile-dto';
+import { ProfileDto } from '../../models/dto/user-auth/profile-dto';
 
 @Injectable({
   providedIn: 'root',

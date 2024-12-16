@@ -16,6 +16,7 @@ namespace API.Infrastructure.Services
 		private readonly ICloudflareService _cloudflareService;
 		private readonly SendGridClient _sendGridClient;
 		private readonly string _emailDomain;
+		private readonly string _applicationDomain;
 		private readonly string _companyAddress;
 		private readonly string _saasName;
 		private readonly string _logoUrl;
@@ -27,6 +28,7 @@ namespace API.Infrastructure.Services
 			_sendGridClient = new SendGridClient(sendGridApiKey);
 
 			_emailDomain = Environment.GetEnvironmentVariable("Email_Domain");
+			_applicationDomain = Environment.GetEnvironmentVariable("Application_Domain");
 			_companyAddress = Environment.GetEnvironmentVariable("Company_Address");
 			_saasName = Environment.GetEnvironmentVariable("SaaS_Name");
 			_logoUrl = Environment.GetEnvironmentVariable("Logo_Url");
@@ -281,6 +283,27 @@ namespace API.Infrastructure.Services
 			}
 
 			return template;
+		}
+
+		public async Task SendTeamInvitation(TeamDto teamDto, string inviteId, CreateInvitationDto createInvitationDto)
+		{
+			var subject = "Team Invitation";
+
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+				"Presentation/EmailTemplates", "TeamInvitation.html");
+
+			string url = $"{_applicationDomain}/dashboard/team?teamId={teamDto.Id}&inviteId={inviteId}";
+
+			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
+			{
+					{ "invitationUrl", url },
+					{ "teamName", teamDto.Name },
+					{ "role", createInvitationDto.Role }
+			});
+
+			var fromEmail = $"no-reply@{_emailDomain}";
+
+			await SendEmail(message, subject, new List<string> { createInvitationDto.Email }, fromEmail);
 		}
 	}
 

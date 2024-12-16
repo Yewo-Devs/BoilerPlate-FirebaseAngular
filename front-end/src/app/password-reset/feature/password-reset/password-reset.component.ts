@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../../shared/services/account-service/account.service';
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
-import { PasswordResetDto } from '../../../shared/models/dto/password-reset-dto';
+import { PasswordResetDto } from '../../../shared/models/dto/user-auth/password-reset-dto';
 import { SharedUiModule } from '../../../shared/ui/shared-ui.module';
 
 @Component({

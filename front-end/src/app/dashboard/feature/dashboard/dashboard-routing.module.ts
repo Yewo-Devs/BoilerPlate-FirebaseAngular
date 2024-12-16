@@ -24,8 +24,8 @@ const routes: Routes = [
       },
       {
         path: 'team',
-        loadComponent: () =>
-          import('../team/team.component').then((m) => m.TeamComponent),
+        loadChildren: () =>
+          import('../team/team.module').then((m) => m.TeamModule),
       },
       {
         path: 'notifications',

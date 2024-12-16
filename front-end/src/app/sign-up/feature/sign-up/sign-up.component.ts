@@ -8,9 +8,9 @@ import { Preferences } from '../../../shared/models/preferences';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { RegisterUserDto } from '../../../shared/models/dto/register-user-dto';
+import { RegisterUserDto } from '../../../shared/models/dto/user-auth/register-user-dto';
 import { environment } from '../../../../environments/environment';
-import { CreateUserProfileDto } from '../../../shared/models/dto/create-user-profile-dto';
+import { CreateUserProfileDto } from '../../../shared/models/dto/user-auth/create-user-profile-dto';
 import { ProfileService } from '../../../shared/services/profile-service/profile.service';
 import { switchMap, tap } from 'rxjs';
 

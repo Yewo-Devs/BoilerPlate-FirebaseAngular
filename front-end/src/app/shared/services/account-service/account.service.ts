@@ -6,12 +6,12 @@ import { environment } from '../../../../environments/environment';
 import { PreferencesService } from '../preferences-service/preferences.service';
 import { Router } from '@angular/router';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { EditUserDto } from '../../models/dto/edit-user-dto';
-import { LoginDto } from '../../models/dto/login-dto';
-import { PasswordResetDto } from '../../models/dto/password-reset-dto';
-import { RegisterUserDto } from '../../models/dto/register-user-dto';
-import { UserDto } from '../../models/dto/user-dto';
-import { RefreshAuthDto } from '../../models/dto/refresh-auth-dto';
+import { EditUserDto } from '../../models/dto/user-auth/edit-user-dto';
+import { LoginDto } from '../../models/dto/user-auth/login-dto';
+import { PasswordResetDto } from '../../models/dto/user-auth/password-reset-dto';
+import { RegisterUserDto } from '../../models/dto/user-auth/register-user-dto';
+import { UserDto } from '../../models/dto/user-auth/user-dto';
+import { RefreshAuthDto } from '../../models/dto/user-auth/refresh-auth-dto';
 
 @Injectable({
   providedIn: 'root',

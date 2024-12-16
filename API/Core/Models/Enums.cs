@@ -11,6 +11,7 @@
 			Transaction,
 			CustomerPurchase,
 			Subscription,
+			Team,
 		}
 
 		public enum PaymentTypes

@@ -1,5 +1,5 @@
-import { ProfileDto } from './dto/profile-dto';
-import { UserDto } from './dto/user-dto';
+import { ProfileDto } from './dto/user-auth/profile-dto';
+import { UserDto } from './dto/user-auth/user-dto';
 
 // preferences.ts
 export interface Preferences {

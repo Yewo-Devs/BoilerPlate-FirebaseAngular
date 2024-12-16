@@ -10,5 +10,6 @@ namespace API.Application.Interfaces
 		Task SendReceipt(CheckoutDto checkoutDto, AppUser appUser);
 		Task SendEmail(string message, string subject, List<string> receipients);
 		Task PaymentFailedNotice(Subscription subscription, AppUser appUser);
+		Task SendTeamInvitation(TeamDto teamDto, string inviteId, CreateInvitationDto createInvitationDto);
 	}
 }

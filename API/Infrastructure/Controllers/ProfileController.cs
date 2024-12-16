@@ -114,6 +114,11 @@ namespace API.Infrastructure.Controllers
 		/// <returns></returns>
 		private async Task<string> StoreProfilePhoto(string photoUrl)
 		{
+			if(photoUrl == null)
+			{
+				return "";
+			}
+
 			//If is not base64 string return photoUrl
 			if (!photoUrl.Contains("base64"))
 			{

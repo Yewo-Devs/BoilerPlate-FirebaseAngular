@@ -13,6 +13,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() placeholder = '';
   @Input() invalidFeedback = true;
   @Input() icon = '';
+  @Input() thick = false;
 
   constructor(public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;

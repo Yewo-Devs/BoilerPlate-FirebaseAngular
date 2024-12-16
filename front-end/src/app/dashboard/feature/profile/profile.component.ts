@@ -5,11 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OnInit } from '@angular/core';
 import { ProfileService } from '../../../shared/services/profile-service/profile.service';
 import { ToastrService } from 'ngx-toastr';
-import { EditProfileDto } from '../../../shared/models/dto/edit-profile-dto';
+import { EditProfileDto } from '../../../shared/models/dto/user-auth/edit-profile-dto';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 import { SharedUiModule } from '../../../shared/ui/shared-ui.module';
 import { AccountService } from '../../../shared/services/account-service/account.service';
-import { EditUserDto } from '../../../shared/models/dto/edit-user-dto';
+import { EditUserDto } from '../../../shared/models/dto/user-auth/edit-user-dto';
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
 
 @Component({

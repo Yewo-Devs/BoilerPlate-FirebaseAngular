@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProfileDto } from '../../models/dto/profile-dto';
+import { ProfileDto } from '../../models/dto/user-auth/profile-dto';
 import { PreferencesService } from '../../services/preferences-service/preferences.service';
 import { AccountService } from '../../services/account-service/account.service';
 

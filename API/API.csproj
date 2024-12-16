@@ -40,6 +40,9 @@
     <None Update="Presentation\EmailTemplates\Receipt.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Presentation\EmailTemplates\TeamInvitation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

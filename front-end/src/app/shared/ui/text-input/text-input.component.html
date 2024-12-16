@@ -7,6 +7,7 @@
   </div>
 
   <input
+    *ngIf="thick"
     [ngClass]="{
       'pl-12': icon,
       'pl-4': !icon
@@ -18,6 +19,17 @@
     class="block w-full py-4 pl-12 pr-4 overflow-hidden text-base font-normal text-gray-900 placeholder-gray-600 transition-all duration-200 border border-gray-300 caret-gray-900 rounded-xl bg-white focus:outline-none focus:bg-white focus:border-gray-900 focus:ring-gray-900 font-pj"
     [formControl]="ngControl.control"
     placeholder="{{ placeholder }}"
+  />
+
+  <input
+    *ngIf="!thick"
+    [class.is-invalid]="
+      ngControl.touched && ngControl.invalid && invalidFeedback
+    "
+    type="{{ type }}"
+    [formControl]="ngControl.control"
+    placeholder="{{ placeholder }}"
+    class="block w-full px-4 py-3 placeholder-gray-500 border -gray-300 rounded-lg focus:ring-gray-900 focus:border-gray-900 sm:text-sm caret-gray-900"
   />
 </div>
 <ng-container *ngIf="ngControl.touched && ngControl.invalid && invalidFeedback">

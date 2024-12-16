@@ -8,7 +8,7 @@ import {
 import { SharedUiModule } from '../../../shared/ui/shared-ui.module';
 import { ProfileService } from '../../../shared/services/profile-service/profile.service';
 import { Router } from '@angular/router';
-import { CreateUserProfileDto } from '../../../shared/models/dto/create-user-profile-dto';
+import { CreateUserProfileDto } from '../../../shared/models/dto/user-auth/create-user-profile-dto';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 
 @Component({
@@ -47,8 +47,17 @@ export class ProfileOnboardingComponent {
         this.profileService
           .getProfile(createProfileDto.userId)
           .subscribe((profile) => {
-            console.log('Profile created:', profile);
-            this.router.navigateByUrl('/dashboard');
+            if (!this.preferencesService.getPreferences().nextPage) {
+              this.router.navigateByUrl('/dashboard');
+            } else {
+              this.router.navigateByUrl(
+                this.preferencesService.getPreferences().nextPage
+              );
+
+              let prefs = this.preferencesService.getPreferences();
+              prefs.nextPage = '';
+              this.preferencesService.setPreferences(prefs);
+            }
           });
       });
   }
