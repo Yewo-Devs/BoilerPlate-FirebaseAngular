@@ -66,6 +66,20 @@ namespace API.Infrastructure.Controllers
 		}
 
 		[Authorize]
+		[HttpGet("get-subscription")]
+		public async Task<ActionResult<Core.Models.Purchases.Subscription>> GetSubscription([FromQuery] string userId)
+		{
+			return await _paymentService.GetSubscription(userId);
+		}
+
+		[Authorize]
+		[HttpGet("get-user-transactions")]
+		public async Task<IEnumerable<Core.Models.Purchases.Transaction>> GetUserTransactions([FromQuery] string userId, [FromQuery] int pageSize, [FromQuery] int currentPage)
+		{
+			return await _paymentService.GetUserTransactions(userId, pageSize, currentPage);
+		}
+
+		[Authorize]
 		[HttpPost("update-subscription")]
 		public async Task UpdateSubscription(UpdateSubscriptionDto updateSubscriptionDto)
 		{

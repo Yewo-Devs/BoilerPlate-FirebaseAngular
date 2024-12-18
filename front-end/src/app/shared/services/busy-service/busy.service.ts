@@ -8,7 +8,23 @@ export class BusyService {
   busyRequestCount = 0;
   constructor(private spinnerService: NgxSpinnerService) {}
 
+  private resetTimer: any;
+
+  private startTimer() {
+    this.resetTimer = setTimeout(() => {
+      this.idle();
+    }, 60000);
+  }
+
+  private clearTimer() {
+    if (this.resetTimer) {
+      clearTimeout(this.resetTimer);
+      this.resetTimer = null;
+    }
+  }
+
   busy() {
+    this.clearTimer();
     this.busyRequestCount++;
 
     this.spinnerService.show(undefined, {
@@ -16,14 +32,13 @@ export class BusyService {
       bdColor: 'rgba(0, 0, 0, 0.8)',
       color: '#fff',
     });
+
+    this.startTimer();
   }
 
   idle() {
-    this.busyRequestCount--;
-
-    if (this.busyRequestCount <= 0) {
-      this.busyRequestCount = 0;
-      this.spinnerService.hide();
-    }
+    this.clearTimer();
+    this.busyRequestCount = 0;
+    this.spinnerService.hide();
   }
 }

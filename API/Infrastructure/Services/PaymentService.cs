@@ -9,6 +9,7 @@ using API.Core.Models.Purchases;
 using IdentityX.Application.Interfaces;
 using IEmailService = API.Application.Interfaces.IEmailService;
 using IdentityX.Application.Extensions;
+using Stripe.BillingPortal;
 
 namespace API.Infrastructure.Services
 {
@@ -45,6 +46,16 @@ namespace API.Infrastructure.Services
 
 		public async Task<string> GetPaymentPage(CheckoutDto checkoutDto)
 		{
+			//Check if user already has a subscription and cancel it
+			Core.Models.Purchases.Subscription activeSubscription = await GetSubscription(checkoutDto.CustomerId);
+
+			if (activeSubscription != null)
+			{
+				//Remove free trial
+				checkoutDto.FreeTrial = false;
+				checkoutDto.FreeTrialPeriodDays = 0;
+			}
+
 			var sessionService = new SessionService();
 
 			var sessionLineItemOptions = new SessionLineItemOptions
@@ -111,6 +122,16 @@ namespace API.Infrastructure.Services
 				return resultUrl;
 
 			string customerId = queryParams[1];
+
+			//Check if user already has a subscription and cancel it
+			Core.Models.Purchases.Subscription activeSubscription = await GetSubscription(customerId);
+
+			if(activeSubscription != null)
+			{
+				//Cancel old subscription
+				await CancelSubscription(activeSubscription.SubscriptionId);
+			}
+
 			var checkoutDto = await _firebaseService.GetInstanceOfType<CheckoutDto>(FirebaseDataNodes.Checkout, customerId);
 
 			var price = checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser ?
@@ -124,8 +145,9 @@ namespace API.Infrastructure.Services
 				Amount = price,
 				DateTime = DateTime.UtcNow,
 				CustomerId = customerId,
-				Id = DateTime.UtcNow.ToString(),
+				Id = DateTime.UtcNow.Ticks.ToString(),
 				ItemTitle = checkoutDto.ItemTitle,
+				Currency = checkoutDto.Currency
 			};
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Transaction, transaction, transaction.Id);
@@ -149,18 +171,29 @@ namespace API.Infrastructure.Services
 			if (checkoutDto.PaymentType == PaymentTypes.Subscription)
 			{
 				string subscriptionId = session.SubscriptionId;
+				
+				string interval = checkoutDto.SubscriptionInterval;
+
+				interval = interval.First().ToString().ToUpper() + interval.Substring(1);
+
+				interval = interval.ToLower() == "day" ? "Daily" : interval + "ly";
+
+				var subscriptionService = new SubscriptionService();
+				var _subscription = await subscriptionService.GetAsync(subscriptionId);
 
 				var subscription = new Core.Models.Purchases.Subscription
 				{
 					SubscriptionId = subscriptionId,
 					CustomerId = customerId,
 					DateTime = DateTime.UtcNow,
-					ExpiryDate = session.Subscription.CurrentPeriodEnd,
+					ExpiryDate = _subscription.CurrentPeriodEnd,
 					Price = price,
 					Currency = checkoutDto.Currency,
 					ItemTitle = checkoutDto.ItemTitle,
 					ItemDescription = checkoutDto.ItemDescription,
 					Id = Guid.NewGuid().ToString(),
+					Interval = interval,
+					CancellationDate = default(DateTime)
 				};
 
 				await _firebaseService.StoreData(FirebaseDataNodes.Subscription, subscription, customerId);
@@ -172,18 +205,29 @@ namespace API.Infrastructure.Services
 			{
 				string subscriptionId = session.SubscriptionId;
 
+				string interval = checkoutDto.SubscriptionInterval;
+
+				interval = interval.First().ToString().ToUpper() + interval.Substring(1);
+
+				interval = interval.ToLower() == "day" ? "Daily" : interval + "ly";
+
+				var subscriptionService = new SubscriptionService();
+				var _subscription = await subscriptionService.GetAsync(subscriptionId);
+
 				var subscription = new Core.Models.Purchases.Subscription
 				{
 					SubscriptionId = subscriptionId,
 					CustomerId = customerId,
 					DateTime = DateTime.UtcNow,
-					ExpiryDate = session.Subscription.CurrentPeriodEnd,
+					ExpiryDate = _subscription.CurrentPeriodEnd,
 					Price = price,
 					Currency = checkoutDto.Currency,
 					ItemTitle = checkoutDto.ItemTitle,
 					ItemDescription = checkoutDto.ItemDescription,
 					Id = Guid.NewGuid().ToString(),
-					MemberIds = new string[1] { customerId }
+					MemberIds = new string[1] { customerId },
+					Interval = interval,
+					CancellationDate = default(DateTime)
 				};
 
 				await _firebaseService.StoreData(FirebaseDataNodes.Subscription, subscription, customerId);
@@ -241,6 +285,14 @@ namespace API.Infrastructure.Services
 			firebaseSubscription.Price = price;
 			firebaseSubscription.ExpiryDate = updatedSubscription.CurrentPeriodEnd;
 
+			string interval = updateSubscriptionDto.SubscriptionInterval;
+
+			interval = interval.First().ToString().ToUpper() + interval.Substring(1);
+
+			interval = interval.ToLower() == "day" ? "Daily" : interval + "ly";
+
+			firebaseSubscription.Interval = interval;
+
 			await _firebaseService
 				.UpdateData(FirebaseDataNodes.Subscription, firebaseSubscription.CustomerId, firebaseSubscription);
 		}
@@ -265,6 +317,19 @@ namespace API.Infrastructure.Services
 
 			var appUser = await _accountService.GetUserFromId(subscription.CustomerId);
 			await _emailService.PaymentFailedNotice(subscription, appUser);
+
+			var transaction = new Transaction
+			{
+				Amount = subscription.Price,
+				DateTime = DateTime.UtcNow,
+				CustomerId = subscription.CustomerId,
+				Id = DateTime.UtcNow.Ticks.ToString(),
+				ItemTitle = subscription.ItemTitle,
+				Currency = subscription.Currency,
+				Status = "Failed"
+			};
+
+			await _firebaseService.StoreData(FirebaseDataNodes.Transaction, transaction, transaction.Id);
 		}
 
 		public async Task HandleInvoicePaymentSucceeded(Invoice? invoice)
@@ -290,8 +355,9 @@ namespace API.Infrastructure.Services
 				Amount = subscription.Price,
 				DateTime = DateTime.UtcNow,
 				CustomerId = subscription.CustomerId,
-				Id = DateTime.UtcNow.ToString(),
+				Id = DateTime.UtcNow.Ticks.ToString(),
 				ItemTitle = subscription.ItemTitle,
+				Currency = checkoutDto.Currency
 			};
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Transaction, transaction, transaction.Id);
@@ -299,24 +365,75 @@ namespace API.Infrastructure.Services
 
 		public async Task<string> UpdatePaymentMethod(string subscriptionId)
 		{
-			var subscriptionService = new SubscriptionService();
-			var subscription = await subscriptionService.GetAsync(subscriptionId);
-			var customerId = subscription.CustomerId;
-
-			var customer = await _accountService.GetUserFromId(customerId);
-
-			var options = new SetupIntentCreateOptions
+			try
 			{
-				Customer = customerId,
-				PaymentMethodTypes = new List<string> { "card" },
+				var subscriptionService = new SubscriptionService();
+				var subscription = await subscriptionService.GetAsync(subscriptionId);
+				var customerId = subscription.CustomerId;
+
+				var options = new Stripe.BillingPortal.SessionCreateOptions
+				{
+					Customer = customerId,
+					ReturnUrl = $"{_applicationDomain}/dashboard/billing"
+				};
+
+				var service = new Stripe.BillingPortal.SessionService();
+				var session = await service.CreateAsync(options);
+
+				var paymentMethodUpdateUrl = session.Url;
+
+				return paymentMethodUpdateUrl;
+			}
+			catch
+			{
+				await ConfigureBillingPortalAsync();
+
+				var subscriptionService = new SubscriptionService();
+				var subscription = await subscriptionService.GetAsync(subscriptionId);
+				var customerId = subscription.CustomerId;
+
+				var options = new Stripe.BillingPortal.SessionCreateOptions
+				{
+					Customer = customerId,
+					ReturnUrl = $"{_applicationDomain}/dashboard/billing"
+				};
+
+				var service = new Stripe.BillingPortal.SessionService();
+				var session = await service.CreateAsync(options);
+
+				var paymentMethodUpdateUrl = session.Url;
+
+				return paymentMethodUpdateUrl;
+			}
+		}
+
+		private async Task ConfigureBillingPortalAsync()
+		{
+			var configurationService = new ConfigurationService();
+
+			var options = new ConfigurationCreateOptions
+			{
+				BusinessProfile = new ConfigurationBusinessProfileOptions
+				{
+					Headline = "Manage your billing and subscriptions",
+				},
+				Features = new ConfigurationFeaturesOptions
+				{
+					CustomerUpdate = new ConfigurationFeaturesCustomerUpdateOptions
+					{
+						AllowedUpdates = new List<string> { "address", "email", "phone" },
+						Enabled = true,
+					},
+					PaymentMethodUpdate = new ConfigurationFeaturesPaymentMethodUpdateOptions
+					{
+						Enabled = true,
+					},
+				},
+				DefaultReturnUrl = $"{_applicationDomain}/dashboard/billing"
 			};
 
-			var service = new SetupIntentService();
-			var intent = await service.CreateAsync(options);
-
-			var paymentMethodUpdateUrl = $"https://checkout.stripe.com/setup/{intent.ClientSecret}";
-
-			return paymentMethodUpdateUrl;
+			// Create a new configuration
+			var configuration = await configurationService.CreateAsync(options);
 		}
 
 		private async Task InitWebHook()
@@ -347,6 +464,24 @@ namespace API.Infrastructure.Services
 			{
 				// Log the exception or handle it accordingly
 			}
+		}
+
+		public async Task<Core.Models.Purchases.Subscription> GetSubscription(string userId)
+		{
+			return await _firebaseService
+					.GetInstanceOfType<Core.Models.Purchases.Subscription>(FirebaseDataNodes.Subscription, userId);
+		}
+
+		public async Task<IEnumerable<Transaction>> GetUserTransactions(string userId, int pageSize, int currentPage)
+		{
+			var transactions = await _firebaseService.GetCollectionOfType<Transaction>(FirebaseDataNodes.Transaction);
+
+			transactions = transactions.Where(t => t.CustomerId == userId)
+				.OrderByDescending(t => t.DateTime)
+				.Skip(pageSize * (currentPage - 1))
+				.Take(pageSize);
+
+			return transactions;
 		}
 	}
 }

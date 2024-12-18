@@ -10,6 +10,20 @@ import { CheckoutDto } from '../../models/dto/payment/checkout-dto';
 export class PaymentService {
   constructor(private httpClient: HttpClient) {}
 
+  //get-subscription
+  getSubscription(userId: string) {
+    return this.httpClient.get(
+      environment.apiUrl + 'payment/get-subscription?userId=' + userId
+    );
+  }
+
+  //get-transaction
+  getTransactions(userId: string, page: number, size: number) {
+    return this.httpClient.get(
+      `${environment.apiUrl}payment/get-user-transactions?userId=${userId}&currentPage=${page}&pageSize=${size}`
+    );
+  }
+
   //update-payment-method
   updatePaymentMethod(subscriptionId: string) {
     return this.httpClient.get(

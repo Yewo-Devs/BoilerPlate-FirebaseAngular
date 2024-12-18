@@ -6,8 +6,7 @@
       <h2
         class="text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj"
       >
-        Try {{ saasName }} for 30 days, completely free. No credit card
-        required.
+        Try {{ saasName }} for 30 days, completely free. Cancel at any time.
       </h2>
     </div>
 
@@ -44,7 +43,20 @@
     <div
       class="grid grid-cols-1 px-12 mt-8 text-center sm:text-left sm:px-0 gap-x-12 gap-y-16 lg:mt-16 sm:grid-cols-2 lg:grid-cols-4"
     >
-      <div>
+      <div class="flex flex-col" *ngIf="displayItem(0)">
+        <div
+          *ngIf="subscriptionInterval != 'mo'"
+          class="self-end flex mb-4 items-center w-fit font-medium text-white p-1 px-4 justify-center rounded-l-xl rounded-r-xl bg-gray-500"
+          style="
+            background: linear-gradient(
+              92.78deg,
+              #ff1f9a 6.35%,
+              #ff7527 98.76%
+            );
+          "
+        >
+          SAVE ${{ items[0].originalPrice * 12 * discount | currencyFormat }}
+        </div>
         <h3 class="text-lg font-bold text-gray-900 font-pj">Startup</h3>
         <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
           Best for small business owners who needs website for business.
@@ -269,14 +281,27 @@
 
         <a
           (click)="onBuy(0)"
-          class="inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+          class="w-full inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           role="button"
         >
-          Get 30 days free trial
+          {{ getCTA(0) }}
         </a>
       </div>
 
-      <div>
+      <div class="flex flex-col" *ngIf="displayItem(1)">
+        <div
+          *ngIf="subscriptionInterval != 'mo'"
+          class="self-end flex mb-4 items-center w-fit font-medium text-white p-1 px-4 justify-center rounded-l-xl rounded-r-xl bg-gray-500"
+          style="
+            background: linear-gradient(
+              92.78deg,
+              #ff1f9a 6.35%,
+              #ff7527 98.76%
+            );
+          "
+        >
+          SAVE ${{ items[1].originalPrice * 12 * discount | currencyFormat }}
+        </div>
         <h3 class="text-lg font-bold text-gray-900 font-pj">Pro</h3>
         <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
           Best for small business owners who needs website for business.
@@ -537,14 +562,27 @@
 
         <a
           (click)="onBuy(1)"
-          class="inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+          class="w-full inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           role="button"
         >
-          Get 30 days free trial
+          {{ getCTA(1) }}
         </a>
       </div>
 
-      <div>
+      <div class="flex flex-col" *ngIf="displayItem(2)">
+        <div
+          *ngIf="subscriptionInterval != 'mo'"
+          class="self-end flex mb-4 items-center w-fit font-medium text-white p-1 px-4 justify-center rounded-l-xl rounded-r-xl bg-gray-500"
+          style="
+            background: linear-gradient(
+              92.78deg,
+              #ff1f9a 6.35%,
+              #ff7527 98.76%
+            );
+          "
+        >
+          SAVE ${{ items[2].originalPrice * 12 * discount | currencyFormat }}
+        </div>
         <h3 class="text-lg font-bold text-gray-900 font-pj">Company</h3>
         <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
           Best for small business owners who needes website for business.
@@ -856,15 +894,28 @@
 
           <a
             (click)="onBuy(2)"
-            class="relative inline-flex items-center justify-center px-4 py-3 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded font-pj hover:bg-gray-700 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+            class="w-full relative inline-flex items-center justify-center px-4 py-3 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded font-pj hover:bg-gray-700 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
             role="button"
           >
-            Get 30 days free trial
+            {{ getCTA(2) }}
           </a>
         </div>
       </div>
 
-      <div>
+      <div class="flex flex-col" *ngIf="displayItem(3)">
+        <div
+          *ngIf="subscriptionInterval != 'mo'"
+          class="self-end flex mb-4 items-center w-fit font-medium text-white p-1 px-4 justify-center rounded-l-xl rounded-r-xl bg-gray-500"
+          style="
+            background: linear-gradient(
+              92.78deg,
+              #ff1f9a 6.35%,
+              #ff7527 98.76%
+            );
+          "
+        >
+          SAVE ${{ items[3].originalPrice * 12 * discount | currencyFormat }}
+        </div>
         <h3 class="text-lg font-bold text-gray-900 font-pj">Enterprise</h3>
         <p class="mt-3 text-sm font-normal text-gray-600 font-pj">
           Best for small business owners who needes website for business.
@@ -1197,10 +1248,10 @@
 
         <a
           (click)="onBuy(3)"
-          class="inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+          class="w-full inline-flex items-center justify-center px-4 py-3 mt-10 text-base font-bold text-gray-900 transition-all duration-200 bg-transparent border border-gray-400 rounded font-pj hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
           role="button"
         >
-          Get 30 days free trial
+          {{ getCTA(3) }}
         </a>
       </div>
     </div>
