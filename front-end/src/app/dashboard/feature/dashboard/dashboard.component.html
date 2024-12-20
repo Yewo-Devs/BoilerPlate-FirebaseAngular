@@ -66,9 +66,10 @@
           >
             <i class="pi pi-bell text-xl"></i>
             <span
+              *ngIf="notificationCount > 0"
               class="inline-flex items-center px-1.5 absolute -top-px -right-1 py-0.5 rounded-full text-xs font-semibold bg-indigo-600 text-white"
             >
-              1
+              {{ notificationCount }}
             </span>
           </div>
         </div>

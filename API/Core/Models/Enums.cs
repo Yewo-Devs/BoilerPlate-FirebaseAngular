@@ -12,6 +12,7 @@
 			CustomerPurchase,
 			Subscription,
 			Team,
+			Notification,
 		}
 
 		public enum PaymentTypes

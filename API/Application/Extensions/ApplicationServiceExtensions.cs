@@ -7,6 +7,7 @@ namespace API.Application.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<INotificationService, NotificationService>();
 			services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ICloudflareService, CloudflareService>();
