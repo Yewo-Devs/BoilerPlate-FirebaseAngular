@@ -4,4 +4,5 @@ export interface RegisterUserDto {
   email: string;
   role?: string;
   permissions?: string[];
+  requireEmailVerification: boolean;
 }

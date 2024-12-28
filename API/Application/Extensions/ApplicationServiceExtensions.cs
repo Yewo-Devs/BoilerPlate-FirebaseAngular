@@ -7,9 +7,11 @@ namespace API.Application.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<INotificationService, NotificationService>();
 			services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IReportService, ReportService>();
+			services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ICloudflareService, CloudflareService>();
 			services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IPhotoService, PhotoService>();

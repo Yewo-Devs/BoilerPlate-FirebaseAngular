@@ -1,8 +1,10 @@
-<main>
+<main class="bg-gray-50 dark:bg-neutral-900">
   <div class="py-6">
     <div class="px-4 mx-auto sm:px-6 md:px-8">
       <div class="max-w-md">
-        <h1 class="text-lg font-bold text-gray-900">Settings</h1>
+        <h1 class="text-lg font-bold text-gray-900 dark:text-white">
+          Settings
+        </h1>
         <p class="mt-2 text-sm font-medium leading-6 text-gray-500">
           Manage your billing information and payment methods. Update your
           subscription plan and view your transaction history.
@@ -11,13 +13,11 @@
     </div>
 
     <div class="px-4 mx-auto mt-8 sm:px-6 md:px-8">
-      <div class="px-3 py-2 bg-white border border-gray-200 rounded-lg">
-        <app-nav-bread-crumb></app-nav-bread-crumb>
-      </div>
+      <app-nav-bread-crumb></app-nav-bread-crumb>
 
       <div class="mt-8 sm:flex sm:items-center sm:justify-between">
         <div>
-          <p class="text-base font-bold text-gray-900">
+          <p class="text-base font-bold text-gray-900 dark:text-white">
             Subscription Plan:
             <span class="text-indigo-600">{{
               validSubscription() ? subscription.itemTitle : "None"
@@ -40,20 +40,20 @@
           <button
             [disabled]="!validSubscription()"
             (click)="cancelSubscription()"
-            class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900"
+            class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-white"
           >
             Cancel Subscription
           </button>
         </div>
       </div>
 
-      <hr class="mt-6 border-gray-200" />
+      <hr class="mt-6 border-gray-200 dark:border-neutral-600" />
 
       <div
         *ngIf="validSubscription()"
         class="mt-4 sm:flex sm:items-center sm:justify-between"
       >
-        <p class="text-sm font-medium text-gray-900">
+        <p class="text-sm font-medium text-gray-900 dark:text-white">
           Your next payment is
           <span class="font-bold"
             >{{ subscription.price | currency }}
@@ -69,11 +69,15 @@
         </p>
       </div>
 
-      <div class="mt-8 bg-white border border-gray-200 rounded-xl">
+      <div
+        class="mt-8 bg-white dark:bg-transparent border border-gray-200 dark:border-neutral-600 dark:border-neutral-600 rounded-xl"
+      >
         <div class="px-4 py-5 sm:p-6">
           <div class="grid grid-cols-1 lg:grid-cols-5 lg:gap-x-24 gap-y-8">
             <div class="lg:col-span-2">
-              <p class="text-base font-bold text-gray-900">Payment Method</p>
+              <p class="text-base font-bold text-gray-900 dark:text-white">
+                Payment Method
+              </p>
               <p class="mt-2 text-sm font-medium text-gray-500">
                 Choose your preferred payment method for making future payments
               </p>
@@ -84,7 +88,7 @@
                 <button
                   [disabled]="!validSubscription()"
                   (click)="managePaymentMethod()"
-                  class="inline-flex items-center justify-center text-sm font-medium leading-5 text-gray-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 hover:text-gray-900"
+                  class="inline-flex items-center justify-center text-sm font-medium leading-5 text-gray-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 hover:text-gray-900 dark:hover:text-gray-600 dark:text-white"
                 >
                   <i class="pi pi-wallet mr-4"></i>
                   Manage Payment Method
@@ -97,13 +101,15 @@
 
       <div class="mt-8">
         <div class="sm:flex sm:items-center sm:justify-between">
-          <p class="flex-1 text-base font-bold text-gray-900">
+          <p class="flex-1 text-base font-bold text-gray-900 dark:text-white">
             Latest Transactions
           </p>
         </div>
 
         <div class="mt-6 ring-1 ring-gray-300 rounded-2xl">
-          <table class="min-w-full lg:divide-y lg:divide-gray-200">
+          <table
+            class="min-w-full lg:divide-y lg:divide-gray-200 dark:divide-neutral-600"
+          >
             <thead class="hidden lg:table-header-group">
               <tr>
                 <td
@@ -133,12 +139,12 @@
               </tr>
             </thead>
 
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-200 dark:divide-neutral-600">
               <ng-container *ngFor="let transaction of transactions">
                 <tr>
                   <td
                     width="50%"
-                    class="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap"
+                    class="px-6 py-4 text-sm font-bold text-gray-900 dark:text-white whitespace-nowrap"
                   >
                     {{ transaction.itemTitle }} Plan -
                     {{ transaction.dateTime | date : "MMM yyyy" }}
@@ -150,14 +156,14 @@
                   </td>
 
                   <td
-                    class="hidden px-6 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap"
+                    class="hidden px-6 py-4 text-sm font-medium text-gray-900 dark:text-white lg:table-cell whitespace-nowrap"
                   >
                     {{ transaction.dateTime | date : "dd MMMM, yyyy" }}
                   </td>
 
                   <td
                     *ngIf="transaction.status == 'Failed'"
-                    class="px-6 py-4 text-sm font-bold text-right text-gray-900 lg:text-left whitespace-nowrap"
+                    class="px-6 py-4 text-sm font-bold text-right text-gray-900 dark:text-white lg:text-left whitespace-nowrap"
                   >
                     {{ transaction.amount | currency }}
                     {{ transaction.currency }}
@@ -177,7 +183,7 @@
 
                   <td
                     *ngIf="transaction.status == 'Failed'"
-                    class="hidden px-6 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap"
+                    class="hidden px-6 py-4 text-sm font-medium text-gray-900 dark:text-white lg:table-cell whitespace-nowrap"
                   >
                     <div class="inline-flex items-center">
                       <svg
@@ -193,7 +199,7 @@
 
                   <td
                     *ngIf="transaction.status != 'Failed'"
-                    class="px-6 py-4 text-sm font-bold text-right text-gray-900 lg:text-left whitespace-nowrap"
+                    class="px-6 py-4 text-sm font-bold text-right text-gray-900 dark:text-white lg:text-left whitespace-nowrap"
                   >
                     {{ transaction.amount | currency }}
                     {{ transaction.currency }}
@@ -213,7 +219,7 @@
 
                   <td
                     *ngIf="transaction.status != 'Failed'"
-                    class="hidden px-6 py-4 text-sm font-medium text-gray-900 lg:table-cell whitespace-nowrap"
+                    class="hidden px-6 py-4 text-sm font-medium text-gray-900 dark:text-white lg:table-cell whitespace-nowrap"
                   >
                     <div class="inline-flex items-center">
                       <svg

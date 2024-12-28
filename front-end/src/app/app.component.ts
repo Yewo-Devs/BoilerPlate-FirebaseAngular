@@ -1,17 +1,14 @@
-import { Component } from '@angular/core';
-import { environment } from '../environments/environment';
-import { Title } from '@angular/platform-browser';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SeoService } from './shared/services/seo-service/seo.service';
 
 @Component({
   selector: 'app-root',
-  standalone: false,
+  imports: [RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent {
-  constructor(private titleService: Title) {}
-
-  ngOnInit() {
-    this.titleService.setTitle(environment.saasName);
-  }
+  constructor(private seoService: SeoService) {}
 }

@@ -9,18 +9,22 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('../recents/recents.module').then((m) => m.RecentsModule),
+        loadComponent: () =>
+          import('../recents/recents.component').then(
+            (m) => m.RecentsComponent
+          ),
       },
       {
         path: 'library',
-        loadChildren: () =>
-          import('../library/library.module').then((m) => m.LibraryModule),
+        loadComponent: () =>
+          import('../library/library.component').then(
+            (m) => m.LibraryComponent
+          ),
       },
       {
         path: 'trash',
-        loadChildren: () =>
-          import('../trash/trash.module').then((m) => m.TrashModule),
+        loadComponent: () =>
+          import('../trash/trash.component').then((m) => m.TrashComponent),
       },
       {
         path: 'team',
@@ -33,11 +37,6 @@ const routes: Routes = [
           import('../notifications/notifications.component').then(
             (m) => m.NotificationsComponent
           ),
-      },
-      {
-        path: 'trash',
-        loadChildren: () =>
-          import('../trash/trash.module').then((m) => m.TrashModule),
       },
       {
         path: 'profile',

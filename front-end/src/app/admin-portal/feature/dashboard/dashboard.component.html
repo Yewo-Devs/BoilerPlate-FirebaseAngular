@@ -1,0 +1,542 @@
+<main *ngIf="dashboard">
+  <div class="py-6 dark:bg-neutral-900">
+    <div class="px-4 mx-auto sm:px-6 md:px-8">
+      <div class="md:items-center md:flex">
+        <p
+          class="text-base font-bold text-gray-900 dark:text-white dark:text-gray-50"
+        >
+          Hey {{ prefs.profile.firstName }} -
+        </p>
+        <p
+          class="mt-1 text-base font-medium text-gray-500 dark:text-gray-50 dark:text-gray-200 md:mt-0 md:ml-2"
+        >
+          here's what's happening with your site today
+        </p>
+      </div>
+    </div>
+
+    <div class="px-4 mx-auto mt-8 sm:px-6 md:px-8">
+      <div class="space-y-5 sm:space-y-6">
+        <div
+          class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          <div
+            class="bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl"
+          >
+            <div class="px-5 py-4">
+              <p
+                class="text-xs font-medium tracking-wider text-gray-500 dark:text-gray-50 dark:text-gray-50 uppercase"
+              >
+                Today's Sale
+              </p>
+              <div class="flex items-center justify-between mt-3">
+                <p
+                  class="text-xl font-bold text-gray-900 dark:text-white dark:text-white"
+                >
+                  {{ dashboard.salesToday.amount | currency }}
+                </p>
+
+                <span
+                  [ngClass]="
+                    dashboard.salesToday.positiveChange
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  "
+                  class="inline-flex items-center text-sm font-semibold"
+                >
+                  {{ dashboard.salesToday.positiveChange ? "+" : "-" }}
+                  {{ dashboard.salesToday.change }}%
+                  <svg
+                    *ngIf="dashboard.salesToday.positiveChange"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3 ml-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 11l5-5m0 0l5 5m-5-5v12"
+                    ></path>
+                  </svg>
+                  <svg
+                    *ngIf="!dashboard.salesToday.positiveChange"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3 ml-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17 13l-5 5m0 0l-5-5m5 5V6"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl"
+          >
+            <div class="px-5 py-4">
+              <p
+                class="text-xs font-medium tracking-wider text-gray-500 dark:text-gray-50 uppercase"
+              >
+                Total Sales
+              </p>
+              <div class="flex items-center justify-between mt-3">
+                <p class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ dashboard.totalSales.amount | currency }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl"
+          >
+            <div class="px-5 py-4">
+              <p
+                class="text-xs font-medium tracking-wider text-gray-500 dark:text-gray-50 uppercase"
+              >
+                Average Sale
+              </p>
+              <div class="flex items-center justify-between mt-3">
+                <p class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ dashboard.averageSale.amount | currency }}
+                </p>
+
+                <span
+                  [ngClass]="
+                    dashboard.averageSale.positiveChange
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  "
+                  class="inline-flex items-center text-sm font-semibold"
+                >
+                  {{ dashboard.averageSale.positiveChange ? "+" : "-" }}
+                  {{ dashboard.averageSale.change }}%
+                  <svg
+                    *ngIf="dashboard.averageSale.positiveChange"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3 ml-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 11l5-5m0 0l5 5m-5-5v12"
+                    ></path>
+                  </svg>
+                  <svg
+                    *ngIf="!dashboard.averageSale.positiveChange"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3 ml-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17 13l-5 5m0 0l-5-5m5 5V6"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl"
+          >
+            <div class="px-5 py-4">
+              <p
+                class="text-xs font-medium tracking-wider text-gray-500 dark:text-gray-50 uppercase"
+              >
+                Total Customers
+              </p>
+              <div class="flex items-center justify-between mt-3">
+                <p class="text-xl font-bold text-gray-900 dark:text-white">
+                  {{ dashboard.totalCustomers.amount }}
+                </p>
+
+                <span
+                  [ngClass]="
+                    dashboard.totalCustomers.positiveChange
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  "
+                  class="inline-flex items-center text-sm font-semibold"
+                >
+                  {{ dashboard.totalCustomers.positiveChange ? "+" : "-" }}
+                  {{ dashboard.totalCustomers.change }}%
+                  <svg
+                    *ngIf="dashboard.totalCustomers.positiveChange"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3 ml-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 11l5-5m0 0l5 5m-5-5v12"
+                    ></path>
+                  </svg>
+                  <svg
+                    *ngIf="!dashboard.totalCustomers.positiveChange"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3 ml-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M17 13l-5 5m0 0l-5-5m5 5V6"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-6">
+          <div
+            style="max-height: 400px"
+            class="overflow-hidden bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl lg:col-span-4"
+          >
+            <div class="px-4 pt-5 sm:px-6">
+              <div class="flex flex-wrap items-center justify-between mb-4">
+                <p
+                  class="text-base font-bold text-gray-900 dark:text-white lg:order-1"
+                >
+                  Sales Report
+                </p>
+
+                <button
+                  type="button"
+                  class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-700 dark:text-white bg-white dark:bg-neutral-600 border border-gray-300 dark:border-neutral-600 rounded-lg shadow-sm lg:order-2 2xl:order-3 md:order-last hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                >
+                  <svg
+                    class="w-4 h-4 mr-1 -ml-1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Export to CSV
+                </button>
+
+                <nav
+                  class="flex items-center justify-center mt-4 space-x-1 2xl:order-2 lg:order-3 md:mt-0 lg:mt-4 sm:space-x-2 2xl:mt-0"
+                >
+                  <a
+                    (click)="updateChart('year')"
+                    [ngClass]="{
+                      'text-gray-900 dark:text-white border border-gray-900 dark:border-neutral-600':
+                        selectedPeriod === 'year'
+                    }"
+                    class="px-2 cursor-pointer py-2 text-xs font-bold text-gray-500 dark:text-gray-50 transition-all rounded-lg sm:px-4 hover:bg-gray-100 dark:hover:bg-gray-500 dration-200"
+                  >
+                    12 Months
+                  </a>
+
+                  <a
+                    (click)="updateChart('6 month')"
+                    [ngClass]="{
+                      'text-gray-900 dark:text-white border border-gray-900 dark:border-neutral-600':
+                        selectedPeriod === '6 month'
+                    }"
+                    class="px-2 cursor-pointer py-2 text-xs font-bold text-gray-500 dark:text-gray-50 transition-all rounded-lg sm:px-4 hover:bg-gray-100 dark:hover:bg-gray-500 dration-200"
+                  >
+                    6 Months
+                  </a>
+
+                  <a
+                    (click)="updateChart('month')"
+                    [ngClass]="{
+                      'text-gray-900 dark:text-white border border-gray-900 dark:border-neutral-600':
+                        selectedPeriod === 'month'
+                    }"
+                    class="px-2 cursor-pointer py-2 text-xs font-bold text-gray-500 dark:text-gray-50 transition-all rounded-lg sm:px-4 hover:bg-gray-100 dark:hover:bg-gray-500 dration-200"
+                  >
+                    30 Days
+                  </a>
+
+                  <a
+                    (click)="updateChart('week')"
+                    [ngClass]="{
+                      'text-gray-900 dark:text-white border border-gray-900 dark:border-neutral-600':
+                        selectedPeriod === 'week'
+                    }"
+                    class="px-2 cursor-pointer py-2 text-xs font-bold text-gray-500 dark:text-gray-50 transition-all rounded-lg sm:px-4 hover:bg-gray-100 dark:hover:bg-gray-500 dration-200"
+                  >
+                    7 Days
+                  </a>
+                </nav>
+              </div>
+
+              <p-chart
+                height="300px"
+                type="line"
+                [data]="data"
+                [options]="options"
+              />
+            </div>
+          </div>
+
+          <div
+            class="overflow-hidden bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl lg:col-span-2"
+          >
+            <div class="px-4 py-5 sm:p-6">
+              <div class="sm:flex sm:items-center sm:justify-between">
+                <p class="text-base font-bold text-gray-900 dark:text-white">
+                  Traffic Sources
+                </p>
+
+                <div class="mt-4 sm:mt-0">
+                  <div>
+                    <label for="" class="sr-only"> Duration </label>
+                    <select
+                      class="block w-full p-2 text-base border-none rounded-lg focus:outline-none focus:ring-0 sm:text-sm"
+                    >
+                      <option (click)="updateSources('week')">
+                        Last 7 Days
+                      </option>
+                      <option (click)="updateSources('month')">
+                        Last 30 Days
+                      </option>
+                      <option (click)="updateSources('6 month')">
+                        Last 6 Months
+                      </option>
+                      <option (click)="updateSources('year')">
+                        Last 12 Months
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 space-y-6">
+                <ng-container
+                  *ngFor="
+                    let source of selectedPeriodSource.labels;
+                    let i = index
+                  "
+                >
+                  <div>
+                    <div class="flex items-center justify-between">
+                      <p
+                        class="text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        {{ source }}
+                      </p>
+                      <p
+                        class="text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        {{ selectedPeriodSource.sessions[i] }}
+                      </p>
+                    </div>
+                    <div class="mt-2 bg-gray-200 h-1.5 rounded-full relative">
+                      <div
+                        class="absolute transition-width inset-y-0 left-0 bg-indigo-600 rounded-full"
+                        [style.width.%]="
+                          (selectedPeriodSource.sessions[i] /
+                            totalSessions(selectedPeriodSource.sessions)) *
+                          100
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-6">
+          <div
+            class="overflow-hidden bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl lg:col-span-4"
+          >
+            <div class="px-4 py-5 sm:p-6">
+              <div class="sm:flex sm:items-start sm:justify-between">
+                <div>
+                  <p class="text-base font-bold text-gray-900 dark:text-white">
+                    Transactions
+                  </p>
+                  <p
+                    class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-50"
+                  >
+                    A list of recent transactions made on your site.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="divide-y divide-gray-200">
+              <ng-container
+                *ngFor="let transaction of dashboard.recentTransactions"
+              >
+                <div
+                  class="grid grid-cols-3 py-4 gap-y-4 lg:gap-0 lg:grid-cols-6"
+                >
+                  <!--Completed-->
+                  <div
+                    *ngIf="transaction.status !== 'Failed'"
+                    class="col-span-2 px-4 lg:py-4 sm:px-6 lg:col-span-1"
+                  >
+                    <span
+                      class="text-xs font-medium text-green-900 bg-green-100 rounded-full inline-flex items-center px-2.5 py-1"
+                    >
+                      <svg
+                        class="-ml-1 mr-1.5 h-2.5 w-2.5 text-green-500"
+                        fill="currentColor"
+                        viewBox="0 0 8 8"
+                      >
+                        <circle cx="4" cy="4" r="3"></circle>
+                      </svg>
+                      Completed
+                    </span>
+                  </div>
+                  <!--Failed-->
+                  <div
+                    *ngIf="transaction.status === 'Failed'"
+                    class="col-span-2 px-4 lg:py-4 sm:px-6 lg:col-span-1"
+                  >
+                    <span
+                      class="text-xs font-medium text-red-900 bg-red-100 rounded-full inline-flex items-center px-2.5 py-1"
+                    >
+                      <svg
+                        class="-ml-1 mr-1.5 h-2.5 w-2.5 text-red-500"
+                        fill="currentColor"
+                        viewBox="0 0 8 8"
+                      >
+                        <circle cx="4" cy="4" r="3"></circle>
+                      </svg>
+                      Canceled
+                    </span>
+                  </div>
+
+                  <div class="px-4 lg:py-4 sm:px-6 lg:col-span-2">
+                    <p class="text-sm font-bold text-gray-900 dark:text-white">
+                      {{ transaction.dateTime | date : "MMM d, y" }}
+                    </p>
+                  </div>
+
+                  <div class="px-4 lg:py-4 sm:px-6">
+                    <p class="text-sm font-bold text-gray-900 dark:text-white">
+                      {{ transaction.amount | currency }}
+                    </p>
+                  </div>
+
+                  <div class="px-4 lg:py-4 sm:px-6">
+                    <p
+                      class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-50"
+                    >
+                      {{ transaction.itemTitle }}
+                    </p>
+                  </div>
+
+                  <div class="px-4 lg:py-4 sm:px-6">
+                    <p
+                      class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-50"
+                    >
+                      {{ transaction.location }}
+                    </p>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div
+            class="overflow-hidden bg-white border border-gray-200 dark:bg-neutral-900 dark:border-neutral-600 rounded-xl lg:col-span-2"
+          >
+            <div class="px-4 py-5 sm:p-6">
+              <div>
+                <p class="text-base font-bold text-gray-900 dark:text-white">
+                  Recent Customers
+                </p>
+                <p
+                  class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-50"
+                >
+                  A list of the most recent customers who have made purchases.
+                </p>
+              </div>
+
+              <div class="mt-8 space-y-6">
+                <ng-container
+                  *ngFor="let customer of dashboard.recentCustomers"
+                >
+                  <div class="flex items-center justify-between space-x-5">
+                    <div class="flex items-center flex-1 min-w-0">
+                      <img
+                        *ngIf="customer.photoUrl"
+                        class="flex-shrink-0 object-cover w-10 h-10 rounded-full"
+                        src="{{ customer.photoUrl }}"
+                      />
+                      <i
+                        *ngIf="!customer.photoUrl"
+                        class="pi pi-user flex-shrink-0 object-cover text-4xl rounded-full"
+                      ></i>
+
+                      <div class="flex-1 min-w-0 ml-4">
+                        <p
+                          class="text-sm font-bold text-gray-900 dark:text-white"
+                        >
+                          {{ customer.fullName }}
+                        </p>
+                        <p
+                          class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-50"
+                        >
+                          {{ customer.email }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="text-right">
+                      <p
+                        class="text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        {{ customer.amount | currency }}
+                      </p>
+                      <p
+                        class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-50 truncate"
+                      >
+                        {{ customer.location }}
+                      </p>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

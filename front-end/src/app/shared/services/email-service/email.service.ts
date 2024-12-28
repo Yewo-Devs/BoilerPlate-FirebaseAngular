@@ -14,4 +14,11 @@ export class EmailService {
       customerContactForm
     );
   }
+
+  SendSuggestion(suggestionDto: any) {
+    return this.httpClient.post(
+      environment.apiUrl + 'email/send-suggestion',
+      suggestionDto
+    );
+  }
 }

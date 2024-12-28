@@ -10,6 +10,9 @@ using IdentityX.Application.Interfaces;
 using IEmailService = API.Application.Interfaces.IEmailService;
 using IdentityX.Application.Extensions;
 using Stripe.BillingPortal;
+using API.Core.Models;
+using Stripe.FinancialConnections;
+using Transaction = API.Core.Models.Purchases.Transaction;
 
 namespace API.Infrastructure.Services
 {
@@ -115,13 +118,39 @@ namespace API.Infrastructure.Services
 			var sessionService = new SessionService();
 			var session = await sessionService.GetAsync(queryParams[0]);
 
+			// Retrieve customer's country
+			var customerService = new CustomerService();
+			var customer = await customerService.GetAsync(session.CustomerId);
+
 			string paymentResult = session.PaymentStatus != "paid" ? "fail" : "success";
 			string resultUrl = $"{_applicationDomain}/payment-result?result={paymentResult}";
 
-			if (session.PaymentStatus != "paid")
-				return resultUrl;
-
 			string customerId = queryParams[1];
+
+			var checkoutDto = await _firebaseService.GetInstanceOfType<CheckoutDto>(FirebaseDataNodes.Checkout, customerId);
+
+			var price = checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser ?
+					checkoutDto.Price + (checkoutDto.PricePerUser * (decimal)checkoutDto.NumberOfUsers) :
+					checkoutDto.Price;
+
+			if (session.PaymentStatus != "paid")
+			{
+				var _transaction = new Transaction
+				{
+					Amount = price,
+					DateTime = DateTime.UtcNow,
+					CustomerId = customerId,
+					Id = DateTime.UtcNow.Ticks.ToString(),
+					ItemTitle = checkoutDto.ItemTitle,
+					Currency = checkoutDto.Currency,
+					Status = "Failed",
+					Location = $"{customer.Address.City}, {customer.Address.Country}"
+				};
+
+				await _firebaseService.StoreData(FirebaseDataNodes.Transaction, _transaction, _transaction.Id);
+
+				return resultUrl;
+			}
 
 			//Check if user already has a subscription and cancel it
 			Core.Models.Purchases.Subscription activeSubscription = await GetSubscription(customerId);
@@ -132,12 +161,6 @@ namespace API.Infrastructure.Services
 				await CancelSubscription(activeSubscription.SubscriptionId);
 			}
 
-			var checkoutDto = await _firebaseService.GetInstanceOfType<CheckoutDto>(FirebaseDataNodes.Checkout, customerId);
-
-			var price = checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser ?
-					checkoutDto.Price + (checkoutDto.PricePerUser * (decimal)checkoutDto.NumberOfUsers):
-					checkoutDto.Price;
-
 			await _emailService.SendEmail($"You just got paid!!! ${checkoutDto.Price:f2}", _saasName, new List<string> { _saasOwnerEmail });
 
 			var transaction = new Transaction
@@ -147,7 +170,9 @@ namespace API.Infrastructure.Services
 				CustomerId = customerId,
 				Id = DateTime.UtcNow.Ticks.ToString(),
 				ItemTitle = checkoutDto.ItemTitle,
-				Currency = checkoutDto.Currency
+				Currency = checkoutDto.Currency,
+				Status = "Success",
+				Location = $"{customer.Address.City}, {customer.Address.Country}"
 			};
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Transaction, transaction, transaction.Id);
@@ -318,6 +343,10 @@ namespace API.Infrastructure.Services
 			var appUser = await _accountService.GetUserFromId(subscription.CustomerId);
 			await _emailService.PaymentFailedNotice(subscription, appUser);
 
+			// Retrieve customer's country
+			var customerService = new CustomerService();
+			var customer = await customerService.GetAsync(invoice.CustomerId);
+
 			var transaction = new Transaction
 			{
 				Amount = subscription.Price,
@@ -326,7 +355,8 @@ namespace API.Infrastructure.Services
 				Id = DateTime.UtcNow.Ticks.ToString(),
 				ItemTitle = subscription.ItemTitle,
 				Currency = subscription.Currency,
-				Status = "Failed"
+				Status = "Failed",
+				Location = $"{customer.Address.City}, {customer.Address.Country}"
 			};
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Transaction, transaction, transaction.Id);
@@ -350,6 +380,10 @@ namespace API.Infrastructure.Services
 			await _emailService.SendReceipt(checkoutDto, appUser);
 			await _emailService.SendEmail($"You just got paid!!! ${subscription.Price:f2}", _saasName, new List<string> { _saasOwnerEmail });
 
+			// Retrieve customer's country
+			var customerService = new CustomerService();
+			var customer = await customerService.GetAsync(invoice.CustomerId);
+
 			var transaction = new Transaction
 			{
 				Amount = subscription.Price,
@@ -357,7 +391,9 @@ namespace API.Infrastructure.Services
 				CustomerId = subscription.CustomerId,
 				Id = DateTime.UtcNow.Ticks.ToString(),
 				ItemTitle = subscription.ItemTitle,
-				Currency = checkoutDto.Currency
+				Currency = checkoutDto.Currency,
+				Status = "Success",
+				Location = $"{customer.Address.City}, {customer.Address.Country}"
 			};
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Transaction, transaction, transaction.Id);

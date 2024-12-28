@@ -1,0 +1,199 @@
+<body class="dark:bg-neutral-900">
+  <div class="flex flex-col">
+    <header
+      class="bg-white border-b border-gray-200 dark:bg-neutral-900 dark:border-neutral-600"
+    >
+      <div class="px-4 mx-auto">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center -m-2 xl:hidden">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-lg hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="flex ml-6 xl:ml-0">
+            <div
+              routerLink="/"
+              class="flex cursor-pointer items-center flex-shrink-0"
+            >
+              <img
+                class="block w-auto h-8 lg:hidden"
+                src="../../../../assets/images/logoicon.svg"
+              />
+              <img
+                class="logo hidden w-auto h-8 lg:block"
+                [ngClass]="{ 'dark-mode': darkModeService.isDarkMode() }"
+                routerLink="/"
+              />
+            </div>
+          </div>
+
+          <div class="flex-1 hidden max-w-xs ml-40 mr-auto lg:block">
+            <label for="" class="sr-only"> Search </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+              >
+                <svg
+                  class="w-5 h-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  ></path>
+                </svg>
+              </div>
+
+              <input
+                type="search"
+                name=""
+                id=""
+                class="block w-full py-2 pl-10 border border-gray-300 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm"
+                placeholder="Type to search"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex flex-1 dark:bg-neutral-900">
+      <div class="hidden xl:flex xl:w-64 xl:flex-col">
+        <div class="flex flex-col pt-5 overflow-y-auto">
+          <div class="flex flex-col justify-between flex-1 h-full px-4">
+            <div class="space-y-4">
+              <nav class="flex-1 space-y-1">
+                <a
+                  routerLink="/admin-portal"
+                  [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                >
+                  Dashboard
+                </a>
+              </nav>
+
+              <div>
+                <p
+                  class="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase"
+                >
+                  Analytics
+                </p>
+                <nav class="flex-1 mt-4 space-y-1">
+                  <a
+                    (click)="openAnalytics()"
+                    class="flex cursor-pointer items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                  >
+                    Google Analytics
+                  </a>
+                </nav>
+              </div>
+
+              <div>
+                <p
+                  class="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase"
+                >
+                  Support
+                </p>
+                <nav class="flex-1 mt-4 space-y-1">
+                  <a
+                    routerLink="/admin-portal/tickets"
+                    [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                  >
+                    Tickets
+                    <span
+                      class="text-xs uppercase ml-auto font-semibold text-white bg-gray-500 rounded-full inline-flex items-center px-2 py-0.5"
+                    >
+                      {{ ticketCount }}
+                    </span>
+                  </a>
+
+                  <a
+                    routerLink="/admin-portal/register-user"
+                    [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                  >
+                    Register User
+                  </a>
+
+                  <a
+                    routerLink="/admin-portal/edit-user"
+                    [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                  >
+                    Edit User
+                  </a>
+                </nav>
+              </div>
+
+              <div>
+                <p
+                  class="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase"
+                >
+                  Shop
+                </p>
+                <nav class="flex-1 mt-4 space-y-1">
+                  <a
+                    routerLink="/admin-portal/sales-report"
+                    [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                  >
+                    Sales Reports
+                  </a>
+                </nav>
+              </div>
+            </div>
+
+            <div class="pb-4 mt-12">
+              <nav class="flex-1 space-y-1">
+                <a
+                  (click)="logout()"
+                  class="flex cursor-pointer mb-6 items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
+                >
+                  Logout
+                </a>
+                <p-selectButton
+                  [options]="justifyOptions"
+                  [(ngModel)]="value"
+                  optionLabel="icon"
+                  (onOptionClick)="themeSelect()"
+                >
+                  <ng-template #item let-item>
+                    <i [class]="item.icon"></i>
+                  </ng-template>
+                </p-selectButton>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col flex-1 overflow-x-hidden">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</body>

@@ -4,6 +4,11 @@ import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../../shared/services/account-service/account.service';
 import { NotificationService } from '../../../shared/services/notification-service/notification.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BusyService } from '../../../shared/services/busy-service/busy.service';
+import { EmailService } from '../../../shared/services/email-service/email.service';
+import { DarkModeService } from '../../../shared/services/dark-mode-service/dark-mode.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,26 +17,80 @@ import { NotificationService } from '../../../shared/services/notification-servi
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  value: any = { icon: 'pi pi-sun', justify: 'Light Mode' };
+  value: any = this.darkModeService.isDarkMode()
+    ? { icon: 'pi pi-moon', value: 'Dark Mode' }
+    : { icon: 'pi pi-sun', value: 'Light Mode' };
 
   justifyOptions: any[] = [
-    { icon: 'pi pi-sun', justify: 'Light Mode' },
+    { icon: 'pi pi-sun', value: 'Light Mode' },
     { icon: 'pi pi-moon', value: 'Dark Mode' },
+  ];
+
+  isSidebarOpen = false;
+
+  menuItems = [
+    {
+      items: [
+        {
+          label: 'Profile',
+          icon: 'pi pi-user',
+          command: () => {
+            this.isSidebarOpen = false;
+            this.router.navigateByUrl('/dashboard/profile');
+          },
+        },
+        {
+          label: 'Team',
+          icon: 'pi pi-users',
+          command: () => {
+            this.isSidebarOpen = false;
+            this.router.navigateByUrl('/dashboard/team');
+          },
+        },
+        {
+          label: 'Billing',
+          icon: 'pi pi-money-bill',
+          command: () => {
+            this.isSidebarOpen = false;
+            this.router.navigateByUrl('/dashboard/billing');
+          },
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-sign-out',
+          command: () => {
+            this.logout();
+          },
+        },
+      ],
+    },
   ];
 
   user = this.preferencesService.getPreferences().user;
   profile = this.preferencesService.getPreferences().profile;
   saasName = environment.saasName;
   notificationCount: number = 0;
+  visible: boolean = false;
+
+  suggestionForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
+    private router: Router,
     private preferencesService: PreferencesService,
     private notificationService: NotificationService,
+    public darkModeService: DarkModeService,
     private accountService: AccountService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private busyService: BusyService,
+    private emailService: EmailService
   ) {}
 
   ngOnInit(): void {
+    this.suggestionForm = this.fb.group({
+      suggestion: ['', [Validators.required]],
+    });
+
     this.notificationService
       .getNotificationCount(this.user.id)
       .subscribe((response: number) => {
@@ -57,7 +116,46 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  themeSelect() {
+    if (this.value.value === 'Light Mode') {
+      this.darkModeService.setLightTheme();
+    } else {
+      this.darkModeService.setDarkTheme();
+    }
+  }
+
   logout() {
     this.accountService.logout();
+  }
+
+  onSubmit() {
+    this.visible = false;
+
+    let suggestionDto = {
+      name: this.profile.firstName + ' ' + this.profile.lastName,
+      email: this.user.email,
+      message: this.suggestionForm.controls.suggestion.value,
+    };
+
+    this.busyService.busy();
+
+    this.emailService.SendSuggestion(suggestionDto).subscribe(
+      (response) => {
+        this.busyService.idle();
+
+        this.toastService.success(
+          'We have received your suggestion, thank you.',
+          'Suggestion Received'
+        );
+      },
+      (error) => {
+        this.busyService.idle();
+
+        this.toastService.error(
+          'Something went wrong please try again.',
+          'Suggestion Failed'
+        );
+      }
+    );
   }
 }

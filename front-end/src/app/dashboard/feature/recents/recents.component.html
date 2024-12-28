@@ -1,81 +1,100 @@
-<div class="content-container">
-  <div class="title-container">
-    <h2 class="text">Recents</h2>
-  </div>
-  <div class="button-group">
-    <button class="btn-outline btn-action">
-      <i class="pi pi-plus-circle"></i>
-      <div>
-        <label>Craft a new offer</label>
-        <p>The start of every great business</p>
+<main class="bg-gray-50 dark:bg-neutral-900">
+  <div class="py-6">
+    <div class="px-4 mx-auto sm:px-6 md:px-8">
+      <div class="max-w-md">
+        <h1
+          class="text-lg font-bold text-gray-900 dark:text-white dark:text-white"
+        >
+          Recents
+        </h1>
       </div>
-    </button>
-    <button class="btn-outline btn-action">
-      <i class="pi pi-file-import"></i>
-      <div>
-        <label>Import an offer</label>
-        <p>Import your dashboard and supercharge them</p>
-      </div>
-    </button>
-  </div>
-  <article class="dashboard-container">
-    <ng-container *ngFor="let item of items; let i = index">
-      <div class="offer-card">
-        <div class="banner click"></div>
-        <div class="info-container">
+    </div>
+    <div class="px-4 mx-auto mt-8 sm:px-6 md:px-8">
+      <hr class="mt-6 border-gray-200" />
+
+      <div class="button-group mt-6">
+        <button
+          class="btn-outline btn-action inline-flex items-center justify-center px-4 py-2 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-white"
+        >
+          <i class="pi pi-plus-circle"></i>
           <div>
-            <h4 class="text click">
-              {{ item.name }}
-            </h4>
-            <label class="text">
-              Updated {{ item.lastUpdated | date : "MMM dd, yyyy" }}
-            </label>
+            <label>Craft a new item</label>
+            <p>Lorem ipsum dolor sit amet.</p>
           </div>
-          <button class="btn btn-ellips" (click)="menu(item, $event, i)">
-            <i class="pi pi-ellipsis-h text"></i>
-            <p-menu
-              #menuq
-              [model]="[
-                {
-                  label: 'Options',
-                  items: [
-                    {
-                      label: 'Edit offer',
-                      icon: 'pi pi-pen-to-square'
-                    },
-                    {
-                      label: 'Move to folder',
-                      icon: 'pi pi-folder'
-                    },
-                    {
-                      label: 'Copy link',
-                      icon: 'pi pi-link'
-                    },
-                    {
-                      label: 'Delete',
-                      icon: 'pi pi-trash red'
-                    }
-                  ]
-                }
-              ]"
-              [popup]="true"
-            >
-              <ng-template pTemplate="item" let-item>
-                <a
-                  pRipple
-                  class="kebab flex align-items-center p-menuitem-link"
-                >
-                  <span [class]="item.icon"></span>
-                  <label *ngIf="item.label == 'Delete'" class="red">{{
-                    item.label
-                  }}</label>
-                  <label *ngIf="item.label != 'Delete'">{{ item.label }}</label>
-                </a>
-              </ng-template>
-            </p-menu>
-          </button>
-        </div>
+        </button>
+        <button
+          class="btn-outline btn-action inline-flex items-center justify-center px-4 py-2 text-sm font-semibold leading-5 text-gray-600 transition-all duration-200 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:bg-gray-50 hover:text-gray-900 dark:text-white"
+        >
+          <i class="pi pi-file-import"></i>
+          <div>
+            <label>Import an item</label>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+          </div>
+        </button>
       </div>
-    </ng-container>
-  </article>
-</div>
+
+      <article class="dashboard-container">
+        <ng-container *ngFor="let item of items; let i = index">
+          <div class="offer-card">
+            <div class="banner click"></div>
+            <div class="info-container">
+              <div>
+                <h4 class="text click">
+                  {{ item.name }}
+                </h4>
+                <label class="text">
+                  Updated {{ item.lastUpdated | date : "MMM dd, yyyy" }}
+                </label>
+              </div>
+              <button class="btn btn-ellips" (click)="menu(item, $event, i)">
+                <i class="pi pi-ellipsis-h text"></i>
+                <p-menu
+                  #menuq
+                  [model]="[
+                    {
+                      label: 'Actions',
+                      items: [
+                        {
+                          label: 'Edit',
+                          icon: 'pi pi-pen-to-square'
+                        },
+                        {
+                          label: 'Move to folder',
+                          icon: 'pi pi-folder'
+                        },
+                        {
+                          label: 'Copy link',
+                          icon: 'pi pi-link'
+                        },
+                        {
+                          label: 'Delete',
+                          icon: 'pi pi-trash red'
+                        }
+                      ]
+                    }
+                  ]"
+                  [popup]="true"
+                >
+                  <ng-template pTemplate="item" let-item>
+                    <a
+                      pRipple
+                      class="kebab flex align-items-center p-menuitem-link"
+                    >
+                      <span [class]="item.icon"></span>
+                      <label *ngIf="item.label == 'Delete'" class="red">{{
+                        item.label
+                      }}</label>
+                      <label *ngIf="item.label != 'Delete'">{{
+                        item.label
+                      }}</label>
+                    </a>
+                  </ng-template>
+                </p-menu>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </article>
+    </div>
+  </div>
+</main>

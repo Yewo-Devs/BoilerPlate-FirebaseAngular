@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { SharedUiModule } from '../../../shared/ui/shared-ui.module';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Title, Meta } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
-import { EmailService } from '../../data-access/email.service';
+import { EmailService } from '../../../shared/services/email-service/email.service';
 
 @Component({
   selector: 'app-support',
@@ -17,22 +16,8 @@ export class SupportComponent {
     private fb: FormBuilder,
     private toastrService: ToastrService,
     private emailService: EmailService,
-    private busyService: BusyService,
-    title: Title,
-    meta: Meta
-  ) {
-    title.setTitle('Support');
-    meta.addTags([
-      {
-        name: 'description',
-        content: 'We would love to hear from you.',
-      },
-      {
-        name: 'keywords',
-        content: 'Illustration, Contact, Illustration Packs',
-      },
-    ]);
-  }
+    private busyService: BusyService
+  ) {}
 
   contactForm: any;
 

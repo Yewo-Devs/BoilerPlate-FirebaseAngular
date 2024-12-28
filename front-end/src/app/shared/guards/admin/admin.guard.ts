@@ -18,10 +18,13 @@ export class AdminGuard implements CanActivate {
     let user: UserDto = this.preferencesService.getPreferences().user;
 
     if (user) {
-      return (
-        user.permissions.includes('Administrator') ||
-        user.permissions.includes('Development')
-      );
+      if (user.role == 'Admin') {
+        return true;
+      } else {
+        this.toastService.error('You are unauthorized!');
+        this.routerService.navigateByUrl('/sign-in');
+        return false;
+      }
     }
 
     let prefs = this.preferencesService.getPreferences();

@@ -6,4 +6,5 @@ export interface TransactionDto {
   currency: string;
   status: string;
   dateTime: Date;
+  location: string;
 }

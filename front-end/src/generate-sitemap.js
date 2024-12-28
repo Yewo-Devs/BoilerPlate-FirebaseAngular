@@ -1,36 +1,26 @@
 const fs = require("fs");
 const builder = require("xmlbuilder");
 
-// Read the environment file
-const environment = JSON.parse(
-  fs
-    .readFileSync("environments/environment.ts", "utf8")
-    .replace(/export const environment = /, "")
-    .replace(/;/, "")
-);
-
 // Extract the site URL
+const envFilePath = "src/environments/env.json";
+const envData = JSON.parse(fs.readFileSync(envFilePath, "utf-8"));
+
+const environment = envData.production;
+
 const siteUrl = environment.saasUrl;
 
-const urls = [
-  { loc: `${siteUrl}`, changefreq: "daily", priority: 1.0 },
-  {
-    loc: `${siteUrl}pricing`,
-    changefreq: "weekly",
-    priority: 0.8,
-  },
-  {
-    loc: `${siteUrl}support`,
-    changefreq: "weekly",
-    priority: 0.8,
-  },
-  {
-    loc: `${siteUrl}sign-in`,
-    changefreq: "weekly",
-    priority: 0.8,
-  },
-  // Add more URLs as needed
-];
+// Read and parse the SEO JSON file
+const seoDataPath = "src/assets/seo.json";
+const seoData = JSON.parse(fs.readFileSync(seoDataPath, "utf8"));
+
+// Generate sitemap URLs from SEO data
+const urls = Object.keys(seoData).map((key) => ({
+  loc: `${siteUrl}${key}`,
+  changefreq: seoData[key].changefreq,
+  priority: seoData[key].priority,
+}));
+
+console.log(urls);
 
 const root = builder
   .create("urlset", { encoding: "UTF-8" })
@@ -45,5 +35,5 @@ urls.forEach((url) => {
 
 const xml = root.end({ pretty: true });
 
-fs.writeFileSync("assets/sitemap.xml", xml);
+fs.writeFileSync("src/assets/sitemap.xml", xml);
 console.log("Sitemap generated!");

@@ -4,17 +4,28 @@ import { DashboardService } from '../../data-access/dashboard.service';
 import { ToastrService } from 'ngx-toastr';
 import { Menu } from 'primeng/menu';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recents',
-  standalone: false,
+  imports: [Menu, CommonModule],
+  standalone: true,
   templateUrl: './recents.component.html',
   styleUrl: './recents.component.css',
 })
 export class RecentsComponent {
   @ViewChildren('menuq') menus!: QueryList<Menu>;
 
-  items: any[] = [];
+  items: any[] = [
+    {
+      name: 'Test 1',
+      lastUpdated: '2021-09-01T00:00:00',
+    },
+    {
+      name: 'Test 2',
+      lastUpdated: '2021-09-01T00:00:00',
+    },
+  ];
 
   constructor(
     private router: Router,

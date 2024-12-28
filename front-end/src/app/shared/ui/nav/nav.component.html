@@ -143,39 +143,13 @@
             <img src="{{ profile.photoUrl }}" class="rounded-full" />
           </span>
         </button>
+        <p-menu
+          #op
+          [model]="menuItems"
+          [popup]="true"
+        />
       </div>
     </div>
-
-    <p-overlayPanel #op [style]="{ 'margin-top': '.5rem' }">
-      <div class="border border-gray-300 rounded-lg text-gray-700 text-sm w-40">
-        <ul class="flex flex-col p-2">
-          <li
-            routerLink="/dashboard"
-            class="w-full rounded-md p-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Dashboard
-          </li>
-          <li
-            routerLink="/dashboard/profile"
-            class="w-full rounded-md p-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Profile
-          </li>
-          <li
-            routerLink="/dashboard/billing"
-            class="w-full rounded-md p-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Billing
-          </li>
-          <li
-            (click)="logout()"
-            class="w-full rounded-md p-2 hover:bg-gray-100 cursor-pointer"
-          >
-            Logout
-          </li>
-        </ul>
-      </div>
-    </p-overlayPanel>
 
     <nav *ngIf="expanded" x-collapse>
       <div class="px-1 py-8">

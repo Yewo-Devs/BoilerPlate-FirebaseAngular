@@ -7,17 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+	<PackageReference Include="CloudinaryDotNet" Version="1.27.1" />
 	<PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
 	<PackageReference Include="FirebaseStorage.net" Version="1.0.3" />
+	<PackageReference Include="Google.Analytics.Data.V1Beta" Version="2.0.0-beta09" />
 	<PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
-	<PackageReference Include="IdentityX" Version="1.2.5" />
+	<PackageReference Include="IdentityX" Version="1.2.8" />
 	<PackageReference Include="LiteDB" Version="5.0.21" />
 	<PackageReference Include="MimeTypesMap" Version="1.0.9" />
-	<PackageReference Include="NUnit" Version="4.2.2" />
+	<PackageReference Include="NUnit" Version="4.3.1" />
 	<PackageReference Include="OpenAI-DotNet" Version="8.4.1" />
 	<PackageReference Include="SendGrid" Version="9.29.3" />
-	<PackageReference Include="Stripe.net" Version="47.1.0" />
+	<PackageReference Include="Stripe.net" Version="47.2.0" />
     <PackageReference Include="CompressedStaticFiles" Version="2.2.0" />
   </ItemGroup>
 
@@ -26,6 +27,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Presentation\EmailTemplates\CustomerContactFormMessage.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Presentation\EmailTemplates\CustomerSuggestion.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Presentation\EmailTemplates\MfaToken.html">

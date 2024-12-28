@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
@@ -11,8 +10,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 })
 export class PaymentResultComponent {
   success: boolean = false;
-  constructor(private route: ActivatedRoute, title: Title) {
-    title.setTitle('Hide.me | Payment Result');
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
       this.success = params['result'] != 'fail';
     });

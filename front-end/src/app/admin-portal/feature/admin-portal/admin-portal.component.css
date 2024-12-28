@@ -1,0 +1,16 @@
+body {
+  min-height: 100vh;
+}
+
+.logo {
+  content: url("../../../../assets/images/yourlogo.svg");
+  height: 25px;
+}
+
+.dark-mode {
+  content: url("../../../../assets/images/yourlogodark.svg") !important;
+}
+
+.transition-width {
+  transition: width 0.3s ease-in-out;
+}

@@ -165,6 +165,47 @@ namespace API.Infrastructure.Services
 			await SendEmail(message, subject, new List<string> { appUser.Email }, fromEmail);
 		}
 
+		public async Task SendTeamInvitation(TeamDto teamDto, string inviteId, CreateInvitationDto createInvitationDto)
+		{
+			var subject = "Team Invitation";
+
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+				"Presentation/EmailTemplates", "TeamInvitation.html");
+
+			string url = $"{_applicationDomain}/dashboard/team?teamId={teamDto.Id}&inviteId={inviteId}";
+
+			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
+			{
+					{ "invitationUrl", url },
+					{ "teamName", teamDto.Name },
+					{ "role", createInvitationDto.Role }
+			});
+
+			var fromEmail = $"no-reply@{_emailDomain}";
+
+			await SendEmail(message, subject, new List<string> { createInvitationDto.Email }, fromEmail);
+		}
+
+		public async Task SendCustomerSuggestion(CustomerSuggestionDto customerSuggestionDto)
+		{
+			var subject = "Customer Suggestion";
+
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+				"Presentation/EmailTemplates", "CustomerSuggestion.html");
+
+			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
+				{
+					{ "name", customerSuggestionDto.Name },
+					{ "email", customerSuggestionDto.Email },
+					{ "message", customerSuggestionDto.Message }
+				});
+
+			var fromEmail = $"no-reply@{_emailDomain}";
+			var toEmail = $"support@{_emailDomain}";
+
+			await SendEmail(message, subject, new List<string> { toEmail }, fromEmail);
+		}
+
 		private async Task AuthenticateDomain(string domain)
 		{
 			// Check if the domain is already authenticated
@@ -283,27 +324,6 @@ namespace API.Infrastructure.Services
 			}
 
 			return template;
-		}
-
-		public async Task SendTeamInvitation(TeamDto teamDto, string inviteId, CreateInvitationDto createInvitationDto)
-		{
-			var subject = "Team Invitation";
-
-			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-				"Presentation/EmailTemplates", "TeamInvitation.html");
-
-			string url = $"{_applicationDomain}/dashboard/team?teamId={teamDto.Id}&inviteId={inviteId}";
-
-			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
-			{
-					{ "invitationUrl", url },
-					{ "teamName", teamDto.Name },
-					{ "role", createInvitationDto.Role }
-			});
-
-			var fromEmail = $"no-reply@{_emailDomain}";
-
-			await SendEmail(message, subject, new List<string> { createInvitationDto.Email }, fromEmail);
 		}
 	}
 

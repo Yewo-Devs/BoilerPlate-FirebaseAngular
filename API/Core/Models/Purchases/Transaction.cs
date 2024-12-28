@@ -4,6 +4,7 @@
 	{
 		public string Id { get; set; }
 		public string CustomerId { get; set; }
+		public string Location { get; set; }
 		public string ItemTitle { get; set; }
 		public decimal Amount { get; set; }
 		public string Currency { get; set; }

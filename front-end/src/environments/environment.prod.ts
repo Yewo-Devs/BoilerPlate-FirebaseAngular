@@ -4,5 +4,6 @@ export const environment = {
   clientUrl: '',
   googleClientId: 'YOUR_GOOGLE_CLIENT_ID',
   saasName: 'SaaS Name',
-  saasUrl: 'www.my-saas.com/',
+  saasUrl: 'https://www.my-saas.com/',
+  googleAnalyticsUrl: '',
 };

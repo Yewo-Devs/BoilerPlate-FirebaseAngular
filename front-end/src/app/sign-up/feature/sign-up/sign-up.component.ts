@@ -6,7 +6,6 @@ import { AccountService } from '../../../shared/services/account-service/account
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
 import { Preferences } from '../../../shared/models/preferences';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
-import { Title, Meta } from '@angular/platform-browser';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { RegisterUserDto } from '../../../shared/models/dto/user-auth/register-user-dto';
 import { environment } from '../../../../environments/environment';
@@ -29,23 +28,8 @@ export class SignUpComponent implements OnInit {
     private busyService: BusyService,
     private preferencesService: PreferencesService,
     private authService: SocialAuthService,
-    private routerService: Router,
-    title: Title,
-    meta: Meta
-  ) {
-    title.setTitle('Create An Account');
-    meta.addTags([
-      {
-        name: 'description',
-        content: 'Sign up using your email or other options.',
-      },
-      {
-        name: 'keywords',
-        content:
-          'Illustrations, Avatars, 3D, Illustration Pack, Download, Free Download, Sign Up, Account',
-      },
-    ]);
-  }
+    private routerService: Router
+  ) {}
 
   userForm: any;
 
@@ -77,6 +61,7 @@ export class SignUpComponent implements OnInit {
       role: 'User',
       email: this.userForm.controls.email.value,
       password: this.userForm.controls.password.value,
+      requireEmailVerification: true,
     };
 
     this.busyService.busy();
@@ -156,6 +141,9 @@ export class SignUpComponent implements OnInit {
       )
       .subscribe(
         (profileResponse: any) => {
+          prefs.profile = profileResponse;
+          this.preferencesService.setPreferences(prefs);
+
           if (prefs.nextPage) {
             this.routerService.navigateByUrl(prefs.nextPage);
             prefs.nextPage = null;

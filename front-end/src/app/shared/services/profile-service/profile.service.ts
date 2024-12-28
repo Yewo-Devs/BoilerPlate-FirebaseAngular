@@ -41,7 +41,6 @@ export class ProfileService {
       .get(environment.apiUrl + 'profile/get?userId=' + userId)
       .pipe(
         map((response: any) => {
-          this.setprofile(response);
           return response;
         })
       );

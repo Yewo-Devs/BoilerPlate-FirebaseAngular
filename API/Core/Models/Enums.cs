@@ -13,6 +13,7 @@
 			Subscription,
 			Team,
 			Notification,
+			Ticket,
 		}
 
 		public enum PaymentTypes

@@ -1,16 +1,5 @@
-.content-container {
-  padding: 0 2rem;
-}
-
-.title-container {
-  border-bottom: 1px solid var(--light-gray);
-  padding: 1.64rem 0;
-
-  margin-bottom: 1rem;
-}
 /*Content*/
 .button-group {
-  margin-bottom: 2rem;
   display: flex;
   gap: 1rem;
 }
@@ -70,11 +59,6 @@
   }
 }
 
-.btn-action:hover {
-  background: var(--lightest-gray);
-  color: var(--text-color);
-}
-
 .dashboard-container {
   display: grid;
   padding-bottom: 1rem;
@@ -103,5 +87,16 @@
   label {
     font-size: 0.75rem;
     font-weight: 300;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-group {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .dashboard-container {
+    grid-template-columns: 1fr;
   }
 }

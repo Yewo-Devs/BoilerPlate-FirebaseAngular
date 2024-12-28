@@ -7,7 +7,6 @@ import { Preferences } from '../../../shared/models/preferences';
 import { AccountService } from '../../../shared/services/account-service/account.service';
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
-import { Title, Meta } from '@angular/platform-browser';
 import { LoginDto } from '../../../shared/models/dto/user-auth/login-dto';
 import { environment } from '../../../../environments/environment';
 import { ProfileService } from '../../../shared/services/profile-service/profile.service';
@@ -29,24 +28,9 @@ export class LoginComponent implements OnInit {
     private toastService: ToastrService,
     private busyService: BusyService,
     private routerService: Router,
-    private authService: SocialAuthService,
-    title: Title,
-    meta: Meta
-  ) {
-    title.setTitle('Sign In To Your Account');
+    private authService: SocialAuthService
+  ) {}
 
-    meta.addTags([
-      {
-        name: 'description',
-        content: 'Sign into your account to access your illustrations.',
-      },
-      {
-        name: 'keywords',
-        content:
-          'Illustrations, Avatars, 3D, Illustration Pack, Download, Free Download, Sign In, Account',
-      },
-    ]);
-  }
   loginForm: any;
   user: SocialUser | undefined;
 
@@ -96,6 +80,9 @@ export class LoginComponent implements OnInit {
         this.accountService.setUser(response);
 
         this.profileService.getProfile(prefs.user.id).subscribe((_response) => {
+          prefs.profile = _response;
+          this.preferencesService.setPreferences(prefs);
+
           if (prefs.nextPage) {
             this.routerService.navigateByUrl(prefs.nextPage);
             prefs.nextPage = null;
@@ -158,6 +145,9 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         (profileResponse: any) => {
+          prefs.profile = profileResponse;
+          this.preferencesService.setPreferences(prefs);
+
           if (prefs.nextPage) {
             this.routerService.navigateByUrl(prefs.nextPage);
             prefs.nextPage = null;

@@ -1,0 +1,4 @@
+.fullscreen {
+  display: block;
+  min-height: 100vh;
+}

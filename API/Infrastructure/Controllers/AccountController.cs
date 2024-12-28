@@ -1,4 +1,5 @@
-﻿using IdentityX.Application.DTO.Users;
+﻿using API.Application.DTO;
+using IdentityX.Application.DTO.Users;
 using IdentityX.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,9 @@ namespace API.Infrastructure.Controllers
 		/// <param name="registerDto">The registration details.</param>
 		/// <returns>The registered user.</returns>
 		[HttpPost("register")]
-		public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+		public async Task<ActionResult<UserDto>> Register(ExtendedRegisterDto extendedRegisterDto)
 		{
-			var resultObject = await _accountService.Register(registerDto, true);
+			var resultObject = await _accountService.Register(extendedRegisterDto, extendedRegisterDto.RequireEmailVerification);
 
 			if (resultObject.Error != null)
 				return BadRequest(resultObject.Error);
@@ -37,7 +38,7 @@ namespace API.Infrastructure.Controllers
 		/// Gets all users.
 		/// </summary>
 		/// <returns>A list of users.</returns>
-		[Authorize("Admin")]
+		[Authorize("AdminPolicy")]
 		[HttpGet("get-users")]
 		public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
 		{

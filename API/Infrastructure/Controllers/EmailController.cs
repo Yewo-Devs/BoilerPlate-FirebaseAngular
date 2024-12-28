@@ -36,5 +36,17 @@ namespace API.Infrastructure.Controllers
 			await _emailService.SendCustomerContactFormMessage(customerContactFormMessage);
 			return Ok();
 		}
+
+		/// <summary>
+		/// Sends a customer contact form message.
+		/// </summary>
+		/// <param name="customerContactFormMessage">The DTO containing the customer contact form message data.</param>
+		/// <returns>An <see cref="ActionResult"/> indicating the result of the operation.</returns>
+		[HttpPost("send-suggestion")]
+		public async Task<ActionResult> SendCustomerSuggestion(CustomerSuggestionDto customerSuggestionDto)
+		{
+			await _emailService.SendCustomerSuggestion(customerSuggestionDto);
+			return Ok();
+		}
 	}
 }

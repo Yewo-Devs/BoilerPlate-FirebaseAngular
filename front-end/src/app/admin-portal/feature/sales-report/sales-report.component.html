@@ -1,0 +1,149 @@
+<main class="bg-gray-50 dark:bg-neutral-900 w-screen md:w-full lg:w-full">
+  <div class="py-6">
+    <div class="px-4 mx-auto sm:px-6 md:px-8">
+      <div class="max-w-md">
+        <h1 class="text-lg font-bold text-gray-900 dark:text-white">
+          Sales Report
+        </h1>
+      </div>
+    </div>
+
+    <div class="px-4 mx-auto mt-8 sm:px-6 md:px-8">
+      <form [formGroup]="periodForm" class="flex gap-4 mb-6">
+        <div>
+          <p
+            class="block text-sm mb-2 font-medium text-gray-900 dark:text-white sm:mt-px sm:pt-2"
+          >
+            Start Date
+          </p>
+          <p-datepicker
+            formControlName="startDate"
+            [showIcon]="true"
+            inputId="buttondisplay"
+            [showOnFocus]="false"
+          />
+        </div>
+        <div>
+          <p
+            class="block text-sm mb-2 font-medium text-gray-900 dark:text-white sm:mt-px sm:pt-2"
+          >
+            End Date
+          </p>
+          <p-datepicker
+            formControlName="endDate"
+            [showIcon]="true"
+            inputId="buttondisplay"
+            [showOnFocus]="false"
+          />
+        </div>
+        <button
+          [disabled]="!periodForm.valid"
+          (click)="periodForm.valid && onSubmit()"
+          class="inline-flex h-fit self-end items-center justify-center px-5 py-4 text-sm font-semibold leading-4 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+        >
+          Generate Report
+        </button>
+        <button
+          [disabled]="!periodForm.valid"
+          (click)="periodForm.valid && exportExcel()"
+          class="inline-flex h-fit self-end items-center justify-center px-5 py-4 text-sm font-semibold leading-4 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+        >
+          Export Excel
+        </button>
+      </form>
+      <p-table
+        [value]="sales"
+        dataKey="id"
+        [rows]="10"
+        styleClass="p-datatable-gridlines p-datatable-striped"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [loading]=""
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+              <div class="flex align-items-center">
+                ID
+                <p-columnFilter
+                  type="text"
+                  field="id"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th>
+              <div class="flex align-items-center">
+                Purchase Date
+                <p-columnFilter
+                  type="text"
+                  field="date"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th>
+              <div class="flex align-items-center">
+                Customer
+                <p-columnFilter
+                  type="text"
+                  field="customer"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th>
+              <div class="flex align-items-center">
+                Item
+                <p-columnFilter
+                  type="text"
+                  field="item"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th style="min-width: 15rem">
+              <div class="flex align-items-center">
+                Price
+                <p-columnFilter
+                  type="text"
+                  field="price"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sale>
+          <tr>
+            <td>
+              {{ sale.Id }}
+            </td>
+            <td>
+              {{ sale.Date }}
+            </td>
+            <td>
+              {{ sale.Customer }}
+            </td>
+            <td>
+              {{ sale.Item }}
+            </td>
+            <td>
+              {{ sale.Price }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">Nothing to show.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</main>

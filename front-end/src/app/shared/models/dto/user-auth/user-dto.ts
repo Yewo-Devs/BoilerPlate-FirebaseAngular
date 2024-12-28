@@ -6,4 +6,5 @@ export interface UserDto {
   permissions: string[];
   token: string;
   refreshToken: string;
+  accountEnabled: boolean;
 }

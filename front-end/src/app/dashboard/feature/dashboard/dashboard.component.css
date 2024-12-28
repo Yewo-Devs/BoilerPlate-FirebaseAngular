@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   min-height: 100vh;
 }
@@ -19,12 +23,17 @@ a {
 .brand-section {
   img {
     cursor: pointer;
+    content: url("../../../../assets/images/yourlogo.svg");
     width: 10rem;
     margin: 0;
   }
 
   padding: 1rem;
   margin-bottom: 1rem;
+}
+
+.dark-mode {
+  content: url("../../../../assets/images/yourlogodark.svg") !important;
 }
 
 .profile-container {
@@ -104,11 +113,67 @@ a {
 }
 
 @media (max-width: 768px) {
+  .container {
+    display: flex;
+    margin-top: 1rem;
+  }
+
   .sidebar {
+    width: 0;
+    padding: 0;
+    border: none;
+    transition: width 0.3s ease; /* Add transition for width */
+  }
+
+  .sidebar.open {
+    display: grid;
+    padding: 1rem;
     width: 100vw;
   }
 
-  .container {
-    display: flex;
+  .sidebar-options {
+    opacity: 0; /* Default hidden state */
+    display: none;
+    transition: opacity 0.3s ease; /* Add transition for opacity */
   }
+
+  .sidebar.open .sidebar-options {
+    opacity: 1; /* Show options when open */
+    display: block;
+  }
+
+  .sidebar-option {
+    transform: scale(0); /* Default scaled down state */
+    transition: transform 0.3s ease; /* Add transition for transform */
+  }
+
+  .sidebar.open .sidebar-option {
+    transform: scale(1); /* Scale up options when open */
+  }
+
+  .content-container.open {
+    width: 0;
+  }
+
+  .content-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  :host ::ng-deep .p-dialog {
+    width: 90% !important;
+  }
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 6px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 0px;
+}
+
+:host ::ng-deep .p-menu-submenu-label {
+  display: none;
 }
