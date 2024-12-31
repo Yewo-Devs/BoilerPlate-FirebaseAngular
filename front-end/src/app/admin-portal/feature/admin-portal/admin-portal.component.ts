@@ -17,6 +17,8 @@ export class AdminPortalComponent {
     private ticketService: TicketService
   ) {}
 
+  isSidebarOpen: boolean = false;
+
   value: any = this.darkModeService.isDarkMode()
     ? { icon: 'pi pi-moon', value: 'Dark Mode' }
     : { icon: 'pi pi-sun', value: 'Light Mode' };

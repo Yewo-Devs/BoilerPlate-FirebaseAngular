@@ -2,6 +2,7 @@ using API.Application.Extensions;
 using API.Infrastructure.Services;
 using CompressedStaticFiles;
 using IdentityX.Application.Extensions;
+using Microsoft.Extensions.FileProviders;
 
 namespace API
 {
@@ -44,8 +45,8 @@ namespace API
 				.AllowCredentials());
 			app.UseAuthentication();
 			app.UseAuthorization();
+
 			app.UseDefaultFiles();
-			app.UseCompressedStaticFiles();
 
 			app.UseEndpoints(endpoints =>
 			{

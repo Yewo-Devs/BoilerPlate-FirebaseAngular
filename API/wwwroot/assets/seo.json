@@ -49,6 +49,13 @@
     "changefreq": "weekly",
     "priority": 0.8
   },
+  "admin-portal": {
+    "title": "Administrator Portal",
+    "description": "Access the administrator portal to manage users and settings.",
+    "keywords": "Admin Portal, Administrator, User Management, Settings",
+    "changefreq": "weekly",
+    "priority": 0.8
+  },
   "verification-result": {
     "title": "Verification Result",
     "description": "View the result of your account verification.",

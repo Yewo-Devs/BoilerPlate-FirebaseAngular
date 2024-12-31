@@ -16,13 +16,20 @@ export class TicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketService.getTickets().subscribe((response: TicketDto[]) => {
-      this.tickets = response;
+      this.tickets = response.sort((a, b) => {
+        const priorityOrder = ['High', 'Medium', 'Low'];
+        return (
+          priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+        );
+      });
     });
   }
 
   onResolve(ticket: TicketDto) {
     ticket.archived = true;
 
-    this.ticketService.archiveTicket(ticket.id).subscribe();
+    this.ticketService.archiveTicket(ticket.id).subscribe((response) => {
+      window.location.reload();
+    });
   }
 }

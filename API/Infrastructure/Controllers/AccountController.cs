@@ -26,6 +26,11 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("register")]
 		public async Task<ActionResult<UserDto>> Register(ExtendedRegisterDto extendedRegisterDto)
 		{
+			extendedRegisterDto.Email = extendedRegisterDto.Email.ToLower();
+
+			if (!string.IsNullOrEmpty(extendedRegisterDto.Username))
+				extendedRegisterDto.Username = extendedRegisterDto.Username.ToLower();
+
 			var resultObject = await _accountService.Register(extendedRegisterDto, extendedRegisterDto.RequireEmailVerification);
 
 			if (resultObject.Error != null)
@@ -54,6 +59,11 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("edit-user")]
 		public async Task<ActionResult<UserDto>> EditUser(EditUserDto editUserDto)
 		{
+			editUserDto.Email = editUserDto.Email.ToLower();
+
+			if (!string.IsNullOrEmpty(editUserDto.Username))
+				editUserDto.Username = editUserDto.Username.ToLower();
+
 			var resultObject = await _accountService.EditUser(editUserDto);
 
 			if (resultObject.Error != null)
@@ -86,6 +96,8 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("social-login")]
 		public async Task<ActionResult<UserDto>> SocialLogin(SocialLoginDto socialLoginDto)
 		{
+			socialLoginDto.Email = socialLoginDto.Email.ToLower();
+
 			var resultObject = await _accountService.SocialLogin(socialLoginDto);
 
 			if (resultObject.Error != null)

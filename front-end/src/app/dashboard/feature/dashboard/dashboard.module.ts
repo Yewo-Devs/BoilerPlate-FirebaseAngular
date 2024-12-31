@@ -6,6 +6,8 @@ import { Menu } from 'primeng/menu';
 import { SelectButton } from 'primeng/selectbutton';
 import { Dialog } from 'primeng/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedUiModule } from '../../../shared/ui/shared-ui.module';
+import { SelectModule } from 'primeng/select';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -17,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     Menu,
     ReactiveFormsModule,
     FormsModule,
+    SharedUiModule,
+    SelectModule,
   ],
 })
 export class DashboardModule {}

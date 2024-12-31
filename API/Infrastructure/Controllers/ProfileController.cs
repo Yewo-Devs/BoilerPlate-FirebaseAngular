@@ -3,6 +3,7 @@ using IdentityX.Application.DTO.Users;
 using IdentityX.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace API.Infrastructure.Controllers
 {
@@ -33,6 +34,12 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("create")]
 		public async Task<ActionResult> CreateUserProfile([FromBody] CreateUserProfileDto createUserProfileDto)
 		{
+			//Title case first and last name
+			TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+			createUserProfileDto.FirstName = textInfo.ToTitleCase(createUserProfileDto.FirstName.ToLower());
+			createUserProfileDto.LastName = textInfo.ToTitleCase(createUserProfileDto.LastName.ToLower());
+
 			//Prepare images
 			string filePath = await StoreProfilePhoto(createUserProfileDto.PhotoUrl);
 
@@ -75,6 +82,12 @@ namespace API.Infrastructure.Controllers
 		[HttpPost("edit")]
 		public async Task<ActionResult> EditUserProfile([FromBody] EditProfileDto editProfileDto)
 		{
+			//Title case first and last name
+			TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+			editProfileDto.FirstName = textInfo.ToTitleCase(editProfileDto.FirstName.ToLower());
+			editProfileDto.LastName = textInfo.ToTitleCase(editProfileDto.LastName.ToLower());
+
 			//Prepare images
 			string filePath = await StoreProfilePhoto(editProfileDto.PhotoUrl);
 

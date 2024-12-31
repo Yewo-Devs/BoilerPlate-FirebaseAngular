@@ -14,3 +14,27 @@ body {
 .transition-width {
   transition: width 0.3s ease-in-out;
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    padding: 0;
+    border: none;
+    transition: width 0.3s ease; /* Add transition for width */
+    height: 100vh;
+  }
+
+  .sidebar.open {
+    display: grid;
+    padding: 1rem;
+    width: 100vw;
+  }
+
+  .content-container.open {
+    width: 0;
+  }
+
+  .content-container {
+    width: 100%;
+  }
+}

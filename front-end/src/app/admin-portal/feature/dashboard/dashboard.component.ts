@@ -51,6 +51,28 @@ export class DashboardComponent {
     return totalSessions;
   }
 
+  periodTotal() {
+    let total = 0;
+
+    console.log(this.selectedPeriodData);
+
+    for (let i = 0; i < this.selectedPeriodData.newUsersAmounts.length; i++) {
+      total += this.selectedPeriodData.newUsersAmounts[i];
+    }
+
+    for (
+      let i = 0;
+      i < this.selectedPeriodData.returningUsersAmounts.length;
+      i++
+    ) {
+      total += this.selectedPeriodData.returningUsersAmounts[i];
+    }
+
+    return total;
+  }
+
+  selectedPeriodData: any;
+
   updateChart(period: string) {
     this.selectedPeriod = period;
 
@@ -81,6 +103,8 @@ export class DashboardComponent {
     } else if (period === 'week') {
       response = this.dashboard.salesReport7Days;
     }
+
+    this.selectedPeriodData = response;
 
     this.data = {
       labels: response.labels,

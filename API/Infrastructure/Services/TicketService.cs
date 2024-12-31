@@ -25,9 +25,13 @@ namespace API.Infrastructure.Services
 			ticket.Archived = true;
 			ticket.ModifiedDate = DateTime.UtcNow;
 
-			await _firebaseService.UpdateData(FirebaseDataNodes.Notification, Id, ticket);
+			await _firebaseService.UpdateData(FirebaseDataNodes.Ticket, Id, ticket);
 
 			//Inform Client
+			await _emailService.SendEmail(
+				$"Your ticket with ID #{ticket.ID} has been successfully resolved.",
+				"Ticket Resolved", 
+				new List<string> { ticket.CreatedBy });
 		}
 
 		public async Task<int> GetTicketCount()
@@ -53,13 +57,20 @@ namespace API.Infrastructure.Services
 
 			ticket.CreatedDate = DateTime.UtcNow;
 			ticket.Archived = false;
+			ticket.ID = DateTime.UtcNow.Ticks.ToString();
 
-			await _firebaseService.StoreData(FirebaseDataNodes.Ticket, ticket, null, true);
+			await _firebaseService.StoreData(FirebaseDataNodes.Ticket, ticket, ticket.ID);
 
-			await _emailService.SendEmail("Ticket Created", 
-				"A new ticket has been created", new List<string>() { _saasOwnerEmail });
+			await _emailService.SendEmail(
+				"A new ticket has been created",
+				"Ticket Created",
+				new List<string>() { _saasOwnerEmail });
 
 			//Inform Client
+			await _emailService.SendEmail(
+			$"Your ticket with ID #{ticket.ID} has been successfully created. We are currently working on resolving it.",
+			"Ticket Created",
+			new List<string> { ticket.CreatedBy });
 		}
 	}
 }
