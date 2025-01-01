@@ -5,7 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { ReportService } from '../../../shared/services/report-service/report.service';
 import { BusyService } from '../../../shared/services/busy-service/busy.service';
-import * as FileSaver from 'file-saver';
+import * as FileSaver from 'file-saver-es';
 
 @Component({
   selector: 'app-sales-report',

@@ -2,7 +2,6 @@ using API.Application.Extensions;
 using API.Infrastructure.Services;
 using CompressedStaticFiles;
 using IdentityX.Application.Extensions;
-using Microsoft.Extensions.FileProviders;
 
 namespace API
 {
@@ -46,12 +45,9 @@ namespace API
 			app.UseAuthentication();
 			app.UseAuthorization();
 
-			app.UseDefaultFiles();
-
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-				endpoints.MapFallbackToController("Index", "Fallback");
 			});
 		}
 	}

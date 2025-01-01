@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production && gzipper compress ../API/wwwroot --output-file-format [filename].[ext].gz ../API/wwwroot/compressed --zopfli",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prebuild": "node src/generate-sitemap.js"
@@ -22,7 +22,7 @@
     "@angular/router": "^19.0.1",
     "@primeng/themes": "^19.0.1",
     "chart.js": "^4.4.7",
-    "file-saver": "^2.0.5",
+    "file-saver-es": "^2.0.5",
     "fs": "^0.0.1-security",
     "jwt-decode": "^4.0.0",
     "ngx-spinner": "^17.0.0",
@@ -40,7 +40,6 @@
     "@angular/compiler-cli": "^19.0.1",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.20",
-    "gzipper": "^8.2.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
