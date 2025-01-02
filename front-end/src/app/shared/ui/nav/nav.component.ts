@@ -3,6 +3,7 @@ import { ProfileDto } from '../../models/dto/user-auth/profile-dto';
 import { PreferencesService } from '../../services/preferences-service/preferences.service';
 import { AccountService } from '../../services/account-service/account.service';
 import { Router } from '@angular/router';
+import { UserDto } from '../../models/dto/user-auth/user-dto';
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 export class NavComponent {
   expanded = false;
   profile: ProfileDto;
+  user: UserDto;
+
   menuItems = [
     {
       items: [
@@ -54,6 +57,7 @@ export class NavComponent {
     private accountService: AccountService
   ) {
     this.profile = preferencesService.getPreferences().profile;
+    this.user = preferencesService.getPreferences().user;
     if (!preferencesService.getPreferences().user) {
       return;
     }

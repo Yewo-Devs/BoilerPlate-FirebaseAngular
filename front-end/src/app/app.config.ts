@@ -7,7 +7,6 @@ import {
 } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { SocialSignOnModule } from './shared/social-sign-on/social-sign-on.module';
 import { SharedModule } from './shared/shared.module';
@@ -28,12 +27,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideHttpClient(withInterceptorsFromDi()),
-    importProvidersFrom(
-      BrowserModule,
-      NgxSpinnerModule,
-      SocialSignOnModule,
-      SharedModule
-    ),
+    importProvidersFrom(BrowserModule, SocialSignOnModule, SharedModule),
     provideRouter(appRoutes, withRouterConfig(routerOptions)),
   ],
 };

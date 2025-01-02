@@ -23,6 +23,10 @@
 
   <input
     *ngIf="!thick"
+    [ngClass]="{
+      'pl-12': icon,
+      'pl-4': !icon
+    }"
     [class.is-invalid]="
       ngControl.touched && ngControl.invalid && invalidFeedback
     "

@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://boilerplate-firebaseangular.onrender.com/',
-  clientUrl: 'https://www.apex-offers.com/',
+  apiUrl: 'https://localhost:7294/api/',
+  clientUrl: 'https://localhost:7294/',
   googleClientId: 'YOUR_GOOGLE_CLIENT_ID',
-  saasName: 'Boiler Plate',
-  saasUrl: 'https://www.apex-offers.com/',
+  saasName: 'SaaS Name',
+  saasUrl: 'https://www.my-saas.com/',
   googleAnalyticsUrl: '',
 };

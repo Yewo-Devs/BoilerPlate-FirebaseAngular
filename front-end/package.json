@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
+    "analyze": "ng build --configuration production --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prebuild": "node src/generate-sitemap.js"
@@ -22,7 +23,6 @@
     "@angular/router": "^19.0.1",
     "@primeng/themes": "^19.0.1",
     "chart.js": "^4.4.7",
-    "file-saver-es": "^2.0.5",
     "fs": "^0.0.1-security",
     "jwt-decode": "^4.0.0",
     "ngx-spinner": "^17.0.0",

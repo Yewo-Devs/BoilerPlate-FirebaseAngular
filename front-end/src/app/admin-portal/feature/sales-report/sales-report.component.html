@@ -16,11 +16,11 @@
           >
             Start Date
           </p>
-          <p-datepicker
-            formControlName="startDate"
-            [showIcon]="true"
-            inputId="buttondisplay"
-            [showOnFocus]="false"
+          <app-text-input
+            [type]="'date'"
+            [formControl]="periodForm.get('startDate')"
+            [placeholder]="'Start Date'"
+            [label]="'start date'"
           />
         </div>
         <div>
@@ -29,11 +29,11 @@
           >
             End Date
           </p>
-          <p-datepicker
-            formControlName="endDate"
-            [showIcon]="true"
-            inputId="buttondisplay"
-            [showOnFocus]="false"
+          <app-text-input
+            [type]="'date'"
+            [formControl]="periodForm.get('endDate')"
+            [placeholder]="'End Date'"
+            [label]="'end date'"
           />
         </div>
         <button
@@ -43,107 +43,94 @@
         >
           Generate Report
         </button>
-        <button
-          [disabled]="!periodForm.valid"
-          (click)="periodForm.valid && exportExcel()"
-          class="inline-flex h-fit self-end items-center justify-center px-5 py-4 text-sm font-semibold leading-4 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
-        >
-          Export Excel
-        </button>
       </form>
-      <p-table
-        [value]="sales"
-        dataKey="id"
-        [rows]="10"
-        styleClass="p-datatable-gridlines p-datatable-striped"
-        [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10, 25, 50]"
-        [loading]=""
-        [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      <div *ngIf="sales.length > 0">
+        <p
+          class="text-sm w-fit font-medium mb-1 border-b text-gray-900 dark:text-white lg:order-1"
+        >
+          Total Sales
+        </p>
+        <p class="text-xl mb-2 font-bold text-gray-900 dark:text-white">
+          {{ periodTotal() | currency }}
+        </p>
+      </div>
+      <table
+        class="min-w-full divide-y divide-gray-200 dark:divide-neutral-900"
       >
-        <ng-template pTemplate="header">
+        <thead class="bg-gray-50 dark:bg-neutral-600">
           <tr>
-            <th>
-              <div class="flex align-items-center">
-                ID
-                <p-columnFilter
-                  type="text"
-                  field="id"
-                  display="menu"
-                ></p-columnFilter>
-              </div>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+            >
+              ID
             </th>
-
-            <th>
-              <div class="flex align-items-center">
-                Purchase Date
-                <p-columnFilter
-                  type="text"
-                  field="date"
-                  display="menu"
-                ></p-columnFilter>
-              </div>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+            >
+              Purchase Date
             </th>
-
-            <th>
-              <div class="flex align-items-center">
-                Customer
-                <p-columnFilter
-                  type="text"
-                  field="customer"
-                  display="menu"
-                ></p-columnFilter>
-              </div>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+            >
+              Customer
             </th>
-            <th>
-              <div class="flex align-items-center">
-                Item
-                <p-columnFilter
-                  type="text"
-                  field="item"
-                  display="menu"
-                ></p-columnFilter>
-              </div>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+            >
+              Item
             </th>
-
-            <th style="min-width: 15rem">
-              <div class="flex align-items-center">
-                Price
-                <p-columnFilter
-                  type="text"
-                  field="price"
-                  display="menu"
-                ></p-columnFilter>
-              </div>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+            >
+              Price
             </th>
           </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-sale>
-          <tr>
-            <td>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-neutral-900 divide-y divide-gray-200 dark:divide-neutral-900"
+        >
+          <tr *ngFor="let sale of sales">
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"
+            >
               {{ sale.Id }}
             </td>
-            <td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+            >
               {{ sale.Date }}
             </td>
-            <td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+            >
               {{ sale.Customer }}
             </td>
-            <td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+            >
               {{ sale.Item }}
             </td>
-            <td>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300"
+            >
               {{ sale.Price }}
             </td>
           </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="7">Nothing to show.</td>
+          <tr *ngIf="sales.length === 0">
+            <td
+              colspan="5"
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 text-center"
+            >
+              Nothing to show.
+            </td>
           </tr>
-        </ng-template>
-      </p-table>
+        </tbody>
+      </table>
     </div>
   </div>
 </main>

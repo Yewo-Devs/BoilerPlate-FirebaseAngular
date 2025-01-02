@@ -34,10 +34,12 @@
               class="flex cursor-pointer items-center flex-shrink-0"
             >
               <img
+                loading="lazy"
                 class="block w-auto h-8 lg:hidden"
                 src="../../../../assets/images/logoicon.svg"
               />
               <img
+                loading="lazy"
                 class="logo hidden w-auto h-8 lg:block"
                 [ngClass]="{ 'dark-mode': darkModeService.isDarkMode() }"
                 routerLink="/"
@@ -93,6 +95,7 @@
                   routerLink="/admin-portal"
                   [routerLinkActive]="['text-white', 'bg-indigo-700']"
                   [routerLinkActiveOptions]="{ exact: true }"
+                  (click)="isSidebarOpen = false"
                   class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
                 >
                   Dashboard
@@ -107,7 +110,7 @@
                 </p>
                 <nav class="flex-1 mt-4 space-y-1">
                   <a
-                    (click)="openAnalytics()"
+                    (click)="openAnalytics(); isSidebarOpen = false"
                     class="flex cursor-pointer items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
                   >
                     Google Analytics
@@ -125,6 +128,7 @@
                   <a
                     routerLink="/admin-portal/tickets"
                     [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    (click)="isSidebarOpen = false"
                     class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
                   >
                     Tickets
@@ -138,6 +142,7 @@
                   <a
                     routerLink="/admin-portal/register-user"
                     [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    (click)="isSidebarOpen = false"
                     class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
                   >
                     Register User
@@ -146,6 +151,7 @@
                   <a
                     routerLink="/admin-portal/edit-user"
                     [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    (click)="isSidebarOpen = false"
                     class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
                   >
                     Edit User
@@ -163,6 +169,7 @@
                   <a
                     routerLink="/admin-portal/sales-report"
                     [routerLinkActive]="['text-white', 'bg-indigo-700']"
+                    (click)="isSidebarOpen = false"
                     class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 group"
                   >
                     Sales Reports

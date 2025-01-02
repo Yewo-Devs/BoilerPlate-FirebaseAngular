@@ -8,6 +8,7 @@
           class="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
         >
           <img
+            loading="lazy"
             class="w-auto h-8"
             src="../../../../assets/images/yourlogo.svg"
             alt=""
@@ -70,7 +71,11 @@
           </span>
 
           <span *ngIf="profile.photoUrl" aria-hidden="true">
-            <img src="{{ profile.photoUrl }}" class="rounded-md" />
+            <img
+              loading="lazy"
+              src="{{ profile.photoUrl }}"
+              class="rounded-md"
+            />
           </span>
         </button>
       </div>
@@ -140,20 +145,29 @@
           </span>
 
           <span *ngIf="profile.photoUrl" aria-hidden="true">
-            <img src="{{ profile.photoUrl }}" class="rounded-full" />
+            <img
+              loading="lazy"
+              src="{{ profile.photoUrl }}"
+              class="rounded-full"
+            />
           </span>
         </button>
-        <p-menu
-          #op
-          [model]="menuItems"
-          [popup]="true"
-        />
+        <p-menu #op [model]="menuItems" [popup]="true" />
       </div>
     </div>
 
     <nav *ngIf="expanded" x-collapse>
       <div class="px-1 py-8">
         <div class="grid gap-y-7">
+          <ng-container *ngIf="user">
+            <a
+              *ngIf="user.role == 'Admin'"
+              routerLink="/admin-portal"
+              class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+            >
+              Admin Portal
+            </a>
+          </ng-container>
           <a
             *ngIf="profile"
             routerLink="/dashboard"

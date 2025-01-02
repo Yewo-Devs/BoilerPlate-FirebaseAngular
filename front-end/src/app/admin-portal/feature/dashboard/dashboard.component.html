@@ -334,19 +334,12 @@
                     <label for="" class="sr-only"> Duration </label>
                     <select
                       class="block w-full p-2 text-base border-none rounded-lg focus:outline-none focus:ring-0 sm:text-sm"
+                      (change)="updateSources($event.target.value)"
                     >
-                      <option (click)="updateSources('week')">
-                        Last 7 Days
-                      </option>
-                      <option (click)="updateSources('month')">
-                        Last 30 Days
-                      </option>
-                      <option (click)="updateSources('6 month')">
-                        Last 6 Months
-                      </option>
-                      <option (click)="updateSources('year')">
-                        Last 12 Months
-                      </option>
+                      <option value="week">Last 7 Days</option>
+                      <option value="month">Last 30 Days</option>
+                      <option value="6 month">Last 6 Months</option>
+                      <option value="year">Last 12 Months</option>
                     </select>
                   </div>
                 </div>
@@ -506,6 +499,7 @@
                   <div class="flex items-center justify-between space-x-5">
                     <div class="flex items-center flex-1 min-w-0">
                       <img
+                        loading="lazy"
                         *ngIf="customer.photoUrl"
                         class="flex-shrink-0 object-cover w-10 h-10 rounded-full"
                         src="{{ customer.photoUrl }}"

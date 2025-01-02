@@ -4,10 +4,12 @@
   >
     <!-- Hamburger Button -->
     <button class="hamburger-button" (click)="isSidebarOpen = !isSidebarOpen">
-      <i class="pi pi-bars text-xl"></i>
+      <i class="pi pi-bars text-2xl"></i>
     </button>
 
-    <h1 *ngIf="!isSidebarOpen" class="text-md font-medium">{{ saasName }}</h1>
+    <h1 *ngIf="!isSidebarOpen" routerLink="/" class="text-xl font-medium">
+      {{ saasName }}
+    </h1>
   </div>
   <div [ngClass]="{ open: isSidebarOpen }" class="container">
     <aside
@@ -20,6 +22,7 @@
         >
           <!--Dark Mode Logo-->
           <img
+            loading="lazy"
             [ngClass]="{ 'dark-mode': darkModeService.isDarkMode() }"
             routerLink="/"
           />
@@ -30,6 +33,7 @@
             (click)="op.toggle($event)"
           >
             <img
+              loading="lazy"
               *ngIf="profile.photoUrl"
               class="w-8 h-8 rounded-md"
               src="{{ profile.photoUrl }}"

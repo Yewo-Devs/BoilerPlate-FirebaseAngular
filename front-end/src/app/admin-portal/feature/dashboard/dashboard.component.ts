@@ -6,6 +6,7 @@ import { DashboardDto } from '../../../shared/models/dto/report/dashboard-dto';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
 import { ReportService } from '../../../shared/services/report-service/report.service';
 import { DarkModeService } from '../../../shared/services/dark-mode-service/dark-mode.service';
+import { BusyService } from '../../../shared/services/busy-service/busy.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,15 +30,19 @@ export class DashboardComponent {
   constructor(
     private preferencesService: PreferencesService,
     private darkModeService: DarkModeService,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private busyService: BusyService
   ) {}
 
   ngOnInit(): void {
+    this.busyService.busy();
     this.reportService.getDashboard().subscribe((data: DashboardDto) => {
       this.dashboard = data;
 
       this.updateChart('year');
       this.updateSources('week');
+
+      this.busyService.idle();
     });
   }
 

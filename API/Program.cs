@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
 namespace API
 {
     public class Program
@@ -11,6 +13,14 @@ namespace API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureKestrel(options =>
+					{
+						options.ListenAnyIP(5000, listenOptions =>
+						{
+							listenOptions.Protocols = HttpProtocols.Http2;
+							listenOptions.UseHttps();
+						});
+					});
 #if DEBUG
 					webBuilder.UseStartup<Startup>();
 #else
