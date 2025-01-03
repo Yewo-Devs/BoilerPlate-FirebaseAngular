@@ -1,0 +1,53 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:23890",
+      "sslPort": 44356
+    }
+  },
+  "profiles": {
+    "API": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "",
+      "applicationUrl": "https://localhost:7294;http://localhost:5076",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Firebase_AuthSecret": "",
+        "Firebase_BasePath": "",
+        "Firebase_StorageBucket": "",
+        "Firebase_Admin_Sdk_Path": "",
+        "Application_Domain": "",
+        "Token_Issuer": "",
+        "Token_Audience": "",
+        "Token_Key": "",
+        "Stripe_ApiKey": "",
+        "OpenAi_ApiKey": "",
+        "Cloudinary_ApiKey": "",
+        "Cloudinary_ApiSecret": "",
+        "Cloudinary_CloudName": "",
+        "SaaS_Name": "",
+        "Logo_Url": "",
+        "Company_Address": "",
+        "SaaS_Owner_Email": "",
+        "SendGrid_ApiKey": "",
+        "Email_Domain": "",
+        "Cloudflare_ApiToken": "",
+        "Ga4_PropertyId": "",
+        "GOOGLE_APPLICATION_CREDENTIALS": ""
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

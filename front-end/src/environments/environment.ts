@@ -6,5 +6,4 @@ export const environment = {
   saasName: 'SaaS Name',
   saasUrl: 'https://www.my-saas.com/',
   googleAnalyticsUrl: '',
-  cdnUrl: 'https://cdn.apex-offers.com/',
 };
