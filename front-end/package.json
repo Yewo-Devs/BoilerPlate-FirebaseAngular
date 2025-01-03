@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production",
+    "build": "node prompt-deploy-url.js",
     "analyze": "ng build --configuration production --stats-json",
     "serve:ssr:front-end": "node dist/front-end/server/server.mjs",
     "watch": "ng build --watch --configuration development",
