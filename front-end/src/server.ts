@@ -3,48 +3,57 @@ import { CommonEngine, isMainModule } from '@angular/ssr/node';
 import express from 'express';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import fetch from 'node-fetch';
+import path from 'node:path';
 import bootstrap from './main.server';
-import { environment } from './environments/environment';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-const browserDistFolder = resolve(serverDistFolder, '../browser');
+const browserDistFolder = 'https://cdn.apex-offers.com/';
 const indexHtml = join(serverDistFolder, 'index.server.html');
 
 const app = express();
 const commonEngine = new CommonEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+const hasExtension = (filePath: string): boolean => {
+  return path.extname(filePath) !== '';
+};
 
-/**
- * Serve static files from /browser
- */
-if (true) {
-  app.get(
-    '**',
-    express.static('https://cdn.apex-offers.com/', {
-      maxAge: '1y',
-      index: 'index.html',
-    })
-  );
-} else {
-  app.get(
-    '**',
-    express.static(browserDistFolder, {
-      maxAge: '1y',
-      index: 'index.html',
-    })
-  );
-}
+app.set('view engine', 'html');
+app.set('views', browserDistFolder);
+
+app.get('**', async (req, res) => {
+  try {
+    let requestPath = req.path;
+
+    if (!hasExtension(requestPath)) {
+      requestPath += '/index.html';
+    }
+
+    const cdnPath = `${browserDistFolder}${requestPath}`;
+    const response = await fetch(cdnPath);
+
+    if (!response.ok) {
+      res.status(response.status).send('Error message');
+      return;
+    }
+
+    const contentType = response.headers.get('content-type') ?? '';
+
+    res.set('Content-Type', contentType);
+
+    if (contentType.includes('text') || contentType.includes('json')) {
+      const body = await response.text();
+      res.send(body);
+    } else {
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      res.send(buffer);
+    }
+  } catch (error) {
+    console.error('Error fetching:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 /**
  * Handle all other requests by rendering the Angular application.
