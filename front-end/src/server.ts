@@ -28,7 +28,7 @@ const commonEngine = new CommonEngine();
 /**
  * Serve static files from /browser
  */
-if (environment.production) {
+if (true) {
   app.get(
     '**',
     express.static(environment.cdnUrl, {
