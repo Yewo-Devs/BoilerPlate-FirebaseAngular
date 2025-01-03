@@ -25,14 +25,16 @@ export class BillingComponent implements OnInit {
   subscription: SubscriptionDto;
   transactions: TransactionDto[];
 
-  prefs = this.preferencesService.getPreferences();
+  prefs;
 
   constructor(
     private paymentService: PaymentService,
     private preferencesService: PreferencesService,
     private toastService: ToastrService,
     private busyService: BusyService
-  ) {}
+  ) {
+    this.prefs = preferencesService.getPreferences();
+  }
 
   ngOnInit(): void {
     this.getSubscription();

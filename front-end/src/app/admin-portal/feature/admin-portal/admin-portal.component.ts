@@ -15,13 +15,15 @@ export class AdminPortalComponent {
     public darkModeService: DarkModeService,
     private accountService: AccountService,
     private ticketService: TicketService
-  ) {}
+  ) {
+    this.value = darkModeService.isDarkMode()
+      ? { icon: 'pi pi-moon', value: 'Dark Mode' }
+      : { icon: 'pi pi-sun', value: 'Light Mode' };
+  }
 
   isSidebarOpen: boolean = false;
 
-  value: any = this.darkModeService.isDarkMode()
-    ? { icon: 'pi pi-moon', value: 'Dark Mode' }
-    : { icon: 'pi pi-sun', value: 'Light Mode' };
+  value: any = {};
 
   justifyOptions: any[] = [
     { icon: 'pi pi-sun', value: 'Light Mode' },

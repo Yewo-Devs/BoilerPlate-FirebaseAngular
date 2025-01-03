@@ -32,4 +32,9 @@
     -ms-user-select: none; /* IE10+ */
     user-select: none;
   }
+
+  body {
+    min-height: 100vh;
+    background-color: rgb(249 250 251 / 100%);
+  }
 }

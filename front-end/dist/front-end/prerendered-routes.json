@@ -1,0 +1,29 @@
+{
+  "routes": {
+    "/": {},
+    "/admin-portal": {},
+    "/admin-portal/edit-user": {},
+    "/admin-portal/register-user": {},
+    "/admin-portal/sales-report": {},
+    "/admin-portal/tickets": {},
+    "/dashboard": {},
+    "/dashboard/billing": {},
+    "/dashboard/library": {},
+    "/dashboard/notifications": {},
+    "/dashboard/profile": {},
+    "/dashboard/team": {},
+    "/dashboard/trash": {},
+    "/password-reset": {},
+    "/payment-result": {},
+    "/pricing": {},
+    "/privacy-policy": {},
+    "/profile-onboarding": {},
+    "/reset-password": {},
+    "/sign-in": {},
+    "/sign-up": {},
+    "/support": {},
+    "/terms": {},
+    "/verification-result": {},
+    "/verify": {}
+  }
+}

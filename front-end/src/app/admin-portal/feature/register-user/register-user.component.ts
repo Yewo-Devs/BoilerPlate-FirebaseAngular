@@ -23,7 +23,7 @@ import { CreateUserProfileDto } from '../../../shared/models/dto/user-auth/creat
 })
 export class RegisterUserComponent implements OnInit {
   profileForm: FormGroup;
-  prefs = this.preferencesService.getPreferences();
+  prefs;
 
   permissions = ['Account Management', 'Customer'];
 
@@ -34,7 +34,9 @@ export class RegisterUserComponent implements OnInit {
     private busyService: BusyService,
     private accountService: AccountService,
     private toastService: ToastrService
-  ) {}
+  ) {
+    this.prefs = preferencesService.getPreferences();
+  }
 
   removePhoto() {
     this.profileForm.get('photoUrl').setValue('');
