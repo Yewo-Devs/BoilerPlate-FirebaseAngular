@@ -22,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 export class TeamComponent implements OnInit {
   teams: TeamDto[] = [];
   selectedTeam: TeamDto;
-  prefs = this.preferencesService.getPreferences();
+  prefs;
 
   teamForm: FormGroup;
   memberForm: FormGroup;
@@ -37,6 +37,8 @@ export class TeamComponent implements OnInit {
     private profileService: ProfileService,
     private fb: FormBuilder
   ) {
+    this.prefs = this.preferencesService.getPreferences();
+
     this.route.queryParams.subscribe((params) => {
       let teamId = params['teamId'];
       let inviteId = params['inviteId'];

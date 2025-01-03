@@ -18,9 +18,7 @@ import { TicketService } from '../../../shared/services/ticket-service/ticket.se
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  value: any = this.darkModeService.isDarkMode()
-    ? { icon: 'pi pi-moon', value: 'Dark Mode' }
-    : { icon: 'pi pi-sun', value: 'Light Mode' };
+  value: any = {};
 
   justifyOptions: any[] = [
     { icon: 'pi pi-sun', value: 'Light Mode' },
@@ -67,8 +65,8 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  user = this.preferencesService.getPreferences().user;
-  profile = this.preferencesService.getPreferences().profile;
+  user;
+  profile;
   saasName = environment.saasName;
   notificationCount: number = 0;
   visible: boolean = false;
@@ -88,7 +86,14 @@ export class DashboardComponent implements OnInit {
     private busyService: BusyService,
     private emailService: EmailService,
     private ticketService: TicketService
-  ) {}
+  ) {
+    this.value = darkModeService.isDarkMode()
+      ? { icon: 'pi pi-moon', value: 'Dark Mode' }
+      : { icon: 'pi pi-sun', value: 'Light Mode' };
+
+    this.user = this.preferencesService.getPreferences().user;
+    this.profile = this.preferencesService.getPreferences().profile;
+  }
 
   ngOnInit(): void {
     this.suggestionForm = this.fb.group({
