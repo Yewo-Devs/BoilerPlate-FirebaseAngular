@@ -20,7 +20,7 @@ import { BusyService } from '../../../shared/services/busy-service/busy.service'
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
-  prefs = this.preferencesService.getPreferences();
+  prefs;
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +29,9 @@ export class ProfileComponent implements OnInit {
     private busyService: BusyService,
     private accountService: AccountService,
     private toastService: ToastrService
-  ) {}
+  ) {
+    this.prefs = this.preferencesService.getPreferences();
+  }
 
   removePhoto() {
     this.profileForm.get('photoUrl').setValue('');

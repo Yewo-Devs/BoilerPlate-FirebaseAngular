@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "analyze": "ng build --configuration production --stats-json",
+    "serve:ssr:front-end": "node dist/front-end/server/server.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prebuild": "node src/generate-sitemap.js"
@@ -29,25 +30,30 @@
     "ngx-toastr": "^19.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.1",
+    "xmlbuilder": "^15.1.1",
+    "@angular/platform-server": "^19.0.0",
+    "@angular/ssr": "^19.0.6",
+    "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "xmlbuilder": "^15.1.1",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.0.2",
-    "@angular/cli": "^19.0.2",
-    "@angular/compiler-cli": "^19.0.1",
+    "@angular-devkit/build-angular": "^19.0.6",
+    "@angular/cli": "^19.0.6",
+    "@angular/compiler-cli": "^19.0.0",
+    "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
-    "autoprefixer": "^10.4.20",
-    "jasmine-core": "~5.1.0",
+    "@types/node": "^18.18.0",
+    "jasmine-core": "~5.4.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.6.2",
+    "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15",
-    "typescript": "^5.5.2"
+    "tailwindcss": "^3.4.15"
   }
 }

@@ -15,7 +15,7 @@ import { BusyService } from '../../../shared/services/busy-service/busy.service'
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  prefs = this.preferencesService.getPreferences();
+  prefs;
   dashboard: DashboardDto;
 
   data: any;
@@ -32,7 +32,9 @@ export class DashboardComponent {
     private darkModeService: DarkModeService,
     private reportService: ReportService,
     private busyService: BusyService
-  ) {}
+  ) {
+    this.prefs = preferencesService.getPreferences();
+  }
 
   ngOnInit(): void {
     this.busyService.busy();
