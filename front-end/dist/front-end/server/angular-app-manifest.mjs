@@ -6,8 +6,8 @@ export default {
   locale: undefined,
   routes: undefined,
   assets: {
-    'index.csr.html': {size: 5074, hash: '54c9edff37a48575b19229e2d62f3699c27576ac98eeb29dbb936e3b70105c8b', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 2121, hash: '420d02ce2eaba8e56c784fb8035f6f5e872c99754f81b1f9b24f11eb6bbbdba4', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'index.csr.html': {size: 5466, hash: 'b1d05b88985f12a691016a86a6bbd42837867dfde90154c967482b232ec476b9', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 2485, hash: '464a6ae9288985cb0f92c16e99bd3adb717f76bbb667efd45fb89c2c73a6c583', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
     'styles-WZ2IOCQ3.css': {size: 60322, hash: 'MgWNqBOL5Tc', text: () => import('./assets-chunks/styles-WZ2IOCQ3_css.mjs').then(m => m.default)}
   },
 };
