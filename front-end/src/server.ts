@@ -31,7 +31,7 @@ const commonEngine = new CommonEngine();
 if (true) {
   app.get(
     '**',
-    express.static(environment.cdnUrl, {
+    express.static('https://cdn.apex-offers.com/', {
       maxAge: '1y',
       index: 'index.html',
     })
