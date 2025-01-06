@@ -85,7 +85,7 @@ namespace API.Infrastructure.Services
 				Quantity = 1,
 			};
 
-			string stripeResultUrl = $"{_applicationDomain}/api/payment/payment-result?session_id={{CHECKOUT_SESSION_ID}}&accountId={checkoutDto.CustomerId}";
+			string stripeResultUrl = $"{_applicationDomain}/payment/payment-result?session_id={{CHECKOUT_SESSION_ID}}&accountId={checkoutDto.CustomerId}";
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Checkout, checkoutDto, checkoutDto.CustomerId);
 
@@ -477,7 +477,7 @@ namespace API.Infrastructure.Services
 			var service = new WebhookEndpointService();
 			var existingWebhooks = await service.ListAsync(new WebhookEndpointListOptions());
 
-			string webhookUrl = $"{_applicationDomain}/api/payment/webhook";
+			string webhookUrl = $"{_applicationDomain}/payment/webhook";
 			if (existingWebhooks.Data.Any(we => we.Url == webhookUrl))
 				return;
 
