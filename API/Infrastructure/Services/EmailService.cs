@@ -16,7 +16,7 @@ namespace API.Infrastructure.Services
 		private readonly ICloudflareService _cloudflareService;
 		private readonly SendGridClient _sendGridClient;
 		private readonly string _emailDomain;
-		private readonly string _applicationDomain;
+		private readonly string _frontEndDomain;
 		private readonly string _companyAddress;
 		private readonly string _saasName;
 		private readonly string _logoUrl;
@@ -28,7 +28,7 @@ namespace API.Infrastructure.Services
 			_sendGridClient = new SendGridClient(sendGridApiKey);
 
 			_emailDomain = Environment.GetEnvironmentVariable("Email_Domain");
-			_applicationDomain = Environment.GetEnvironmentVariable("Application_Domain");
+			_frontEndDomain = Environment.GetEnvironmentVariable("FrontEnd_Domain");
 			_companyAddress = Environment.GetEnvironmentVariable("Company_Address");
 			_saasName = Environment.GetEnvironmentVariable("SaaS_Name");
 			_logoUrl = Environment.GetEnvironmentVariable("Logo_Url");
@@ -74,7 +74,7 @@ namespace API.Infrastructure.Services
 		{
 			var subject = "Account Activation";
 
-			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 				"Presentation/EmailTemplates", "AccountActivation.html");
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
@@ -91,7 +91,7 @@ namespace API.Infrastructure.Services
 		{
 			var subject = "Customer Contact Form Message";
 
-			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 				"Presentation/EmailTemplates", "CustomerContactFormMessage.html");
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
@@ -111,7 +111,7 @@ namespace API.Infrastructure.Services
 		{
 			var subject = "Your MFA Token";
 
-			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 				"Presentation/EmailTemplates", "MfaToken.html");
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
@@ -128,7 +128,7 @@ namespace API.Infrastructure.Services
 		{
 			var subject = "Password Reset";
 
-			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 				"Presentation/EmailTemplates", "PasswordReset.html");
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
@@ -147,7 +147,7 @@ namespace API.Infrastructure.Services
 
 			var subject = "Your Receipt";
 
-			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 				"Presentation/EmailTemplates", "Receipt.html");
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
@@ -172,7 +172,7 @@ namespace API.Infrastructure.Services
 			var templatePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 				"Presentation/EmailTemplates", "TeamInvitation.html");
 
-			string url = $"{_applicationDomain}/dashboard/team?teamId={teamDto.Id}&inviteId={inviteId}";
+			string url = $"{_frontEndDomain}/dashboard/team?teamId={teamDto.Id}&inviteId={inviteId}";
 
 			var message = await GetEmailTemplate(templatePath, new Dictionary<string, string>
 			{
@@ -258,7 +258,7 @@ namespace API.Infrastructure.Services
 			var domainAuthResponse = JsonConvert.DeserializeObject<DomainAuthResponse>(_responseBody);
 
 			Console.WriteLine("Adding the following DNS records to your Cloudflare DNS settings:");
-			List<DnsRecord> dnsRecords = new List<DnsRecord>() 
+			List<DnsRecord> dnsRecords = new List<DnsRecord>()
 			{ domainAuthResponse.Dns.Mail_cname, domainAuthResponse.Dns.Dkim1, domainAuthResponse.Dns.Dkim2 };
 
 			foreach (DnsRecord dnsRecord in dnsRecords)

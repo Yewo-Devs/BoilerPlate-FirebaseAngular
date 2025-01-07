@@ -10,6 +10,7 @@ import { ProfileService } from '../../../shared/services/profile-service/profile
 import { Router } from '@angular/router';
 import { CreateUserProfileDto } from '../../../shared/models/dto/user-auth/create-user-profile-dto';
 import { PreferencesService } from '../../../shared/services/preferences-service/preferences.service';
+import { BusyService } from '../../../shared/services/busy-service/busy.service';
 
 @Component({
   selector: 'app-profile-onboarding',
@@ -24,7 +25,8 @@ export class ProfileOnboardingComponent {
     private fb: FormBuilder,
     private profileService: ProfileService,
     private preferencesService: PreferencesService,
-    private router: Router
+    private router: Router,
+    private busyService: BusyService
   ) {
     this.profileForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -41,12 +43,19 @@ export class ProfileOnboardingComponent {
       lastName: lastName,
     };
 
+    this.busyService.busy();
+
     this.profileService
       .createProfile(createProfileDto)
       .subscribe((response) => {
         this.profileService
           .getProfile(createProfileDto.userId)
           .subscribe((profile) => {
+            this.busyService.idle();
+            let prefs = this.preferencesService.getPreferences();
+            prefs.profile = profile;
+            this.preferencesService.setPreferences(prefs);
+
             if (!this.preferencesService.getPreferences().nextPage) {
               this.router.navigateByUrl('/dashboard');
             } else {

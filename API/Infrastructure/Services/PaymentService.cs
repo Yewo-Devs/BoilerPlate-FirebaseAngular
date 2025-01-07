@@ -10,15 +10,14 @@ using IdentityX.Application.Interfaces;
 using IEmailService = API.Application.Interfaces.IEmailService;
 using IdentityX.Application.Extensions;
 using Stripe.BillingPortal;
-using API.Core.Models;
-using Stripe.FinancialConnections;
 using Transaction = API.Core.Models.Purchases.Transaction;
 
 namespace API.Infrastructure.Services
 {
 	public class PaymentService : IPaymentService
 	{
-		private readonly string _applicationDomain;
+		private readonly string _apiDomain;
+		private readonly string _frontEndDomain;
 		private readonly string _stripeApiKey;
 		private readonly string _saasName;
 		private readonly string _saasOwnerEmail;
@@ -28,7 +27,8 @@ namespace API.Infrastructure.Services
 
 		public PaymentService(IFirebaseService firebaseService, IEmailService emailService, IAccountService accountService, IConfiguration configuration)
 		{
-			_applicationDomain = configuration["Application_Domain"];
+			_apiDomain = configuration["Api_Domain"];
+			_frontEndDomain = configuration["FrontEnd_Domain"];
 			_stripeApiKey = configuration["Stripe_ApiKey"];
 			_saasName = configuration["SaaS_Name"];
 			_saasOwnerEmail = configuration["SaaS_Owner_Email"];
@@ -66,14 +66,14 @@ namespace API.Infrastructure.Services
 				PriceData = new SessionLineItemPriceDataOptions
 				{
 					Currency = checkoutDto.Currency,
-					UnitAmountDecimal = checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser?
-					(checkoutDto.Price * 100) + ((checkoutDto.PricePerUser * (decimal)checkoutDto.NumberOfUsers) * 100):
+					UnitAmountDecimal = checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser ?
+					(checkoutDto.Price * 100) + ((checkoutDto.PricePerUser * (decimal)checkoutDto.NumberOfUsers) * 100) :
 					checkoutDto.Price * 100,
 					ProductData = new SessionLineItemPriceDataProductDataOptions
 					{
 						Name = checkoutDto.ItemTitle,
-						Description = checkoutDto.ItemDescription + (checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser? 
-						$"({checkoutDto.NumberOfUsers} users)": "")
+						Description = checkoutDto.ItemDescription + (checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser ?
+						$"({checkoutDto.NumberOfUsers} users)" : "")
 					},
 					Recurring = checkoutDto.PaymentType == PaymentTypes.Subscription ?
 					new SessionLineItemPriceDataRecurringOptions
@@ -85,7 +85,7 @@ namespace API.Infrastructure.Services
 				Quantity = 1,
 			};
 
-			string stripeResultUrl = $"{_applicationDomain}/payment/payment-result?session_id={{CHECKOUT_SESSION_ID}}&accountId={checkoutDto.CustomerId}";
+			string stripeResultUrl = $"{_apiDomain}/payment/payment-result?session_id={{CHECKOUT_SESSION_ID}}&accountId={checkoutDto.CustomerId}";
 
 			await _firebaseService.StoreData(FirebaseDataNodes.Checkout, checkoutDto, checkoutDto.CustomerId);
 
@@ -94,7 +94,7 @@ namespace API.Infrastructure.Services
 			var options = new SessionCreateOptions
 			{
 				LineItems = new List<SessionLineItemOptions> { sessionLineItemOptions },
-				Mode = checkoutDto.PaymentType == PaymentTypes.Subscription || 
+				Mode = checkoutDto.PaymentType == PaymentTypes.Subscription ||
 				checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser ? "subscription" : "payment",
 				SuccessUrl = stripeResultUrl,
 				CancelUrl = stripeResultUrl,
@@ -123,7 +123,7 @@ namespace API.Infrastructure.Services
 			var customer = await customerService.GetAsync(session.CustomerId);
 
 			string paymentResult = session.PaymentStatus != "paid" ? "fail" : "success";
-			string resultUrl = $"{_applicationDomain}/payment-result?result={paymentResult}";
+			string resultUrl = $"{_frontEndDomain}/payment-result?result={paymentResult}";
 
 			string customerId = queryParams[1];
 
@@ -155,7 +155,7 @@ namespace API.Infrastructure.Services
 			//Check if user already has a subscription and cancel it
 			Core.Models.Purchases.Subscription activeSubscription = await GetSubscription(customerId);
 
-			if(activeSubscription != null)
+			if (activeSubscription != null)
 			{
 				//Cancel old subscription
 				await CancelSubscription(activeSubscription.SubscriptionId);
@@ -196,7 +196,7 @@ namespace API.Infrastructure.Services
 			if (checkoutDto.PaymentType == PaymentTypes.Subscription)
 			{
 				string subscriptionId = session.SubscriptionId;
-				
+
 				string interval = checkoutDto.SubscriptionInterval;
 
 				interval = interval.First().ToString().ToUpper() + interval.Substring(1);
@@ -223,7 +223,7 @@ namespace API.Infrastructure.Services
 
 				await _firebaseService.StoreData(FirebaseDataNodes.Subscription, subscription, customerId);
 
-				return $"{_applicationDomain}/payment-result?result={paymentResult}&subscriptionInit=true";
+				return $"{_frontEndDomain}/payment-result?result={paymentResult}&subscriptionInit=true";
 			}
 
 			if (checkoutDto.PaymentType == PaymentTypes.SubscriptionPerUser)
@@ -257,7 +257,7 @@ namespace API.Infrastructure.Services
 
 				await _firebaseService.StoreData(FirebaseDataNodes.Subscription, subscription, customerId);
 
-				return $"{_applicationDomain}/payment-result?result={paymentResult}&subscriptionInit=true";
+				return $"{_frontEndDomain}/payment-result?result={paymentResult}&subscriptionInit=true";
 			}
 
 			await _firebaseService.DeleteData(FirebaseDataNodes.Checkout, customerId);
@@ -285,8 +285,8 @@ namespace API.Infrastructure.Services
 						{
 							Currency = subscription.Items.Data[0].Price.Currency,
 							UnitAmountDecimal = updateSubscriptionDto.PaymentType == PaymentTypes.SubscriptionPerUser?
-							(updateSubscriptionDto.Price * 100) 
-							+ ((updateSubscriptionDto.PricePerUser * 
+							(updateSubscriptionDto.Price * 100)
+							+ ((updateSubscriptionDto.PricePerUser *
 							(decimal)updateSubscriptionDto.NumberOfUsers) * 100):
 							updateSubscriptionDto.Price * 100,
 							Recurring = new SubscriptionItemPriceDataRecurringOptions
@@ -410,7 +410,7 @@ namespace API.Infrastructure.Services
 				var options = new Stripe.BillingPortal.SessionCreateOptions
 				{
 					Customer = customerId,
-					ReturnUrl = $"{_applicationDomain}/dashboard/billing"
+					ReturnUrl = $"{_frontEndDomain}/dashboard/billing"
 				};
 
 				var service = new Stripe.BillingPortal.SessionService();
@@ -431,7 +431,7 @@ namespace API.Infrastructure.Services
 				var options = new Stripe.BillingPortal.SessionCreateOptions
 				{
 					Customer = customerId,
-					ReturnUrl = $"{_applicationDomain}/dashboard/billing"
+					ReturnUrl = $"{_frontEndDomain}/dashboard/billing"
 				};
 
 				var service = new Stripe.BillingPortal.SessionService();
@@ -465,7 +465,7 @@ namespace API.Infrastructure.Services
 						Enabled = true,
 					},
 				},
-				DefaultReturnUrl = $"{_applicationDomain}/dashboard/billing"
+				DefaultReturnUrl = $"{_frontEndDomain}/dashboard/billing"
 			};
 
 			// Create a new configuration
@@ -477,7 +477,7 @@ namespace API.Infrastructure.Services
 			var service = new WebhookEndpointService();
 			var existingWebhooks = await service.ListAsync(new WebhookEndpointListOptions());
 
-			string webhookUrl = $"{_applicationDomain}/payment/webhook";
+			string webhookUrl = $"{_apiDomain}/payment/webhook";
 			if (existingWebhooks.Data.Any(we => we.Url == webhookUrl))
 				return;
 
