@@ -1,0 +1,2 @@
+import './polyfills.server.mjs';
+import{a as i}from"./chunk-ZJ6JZSY5.mjs";import{a as r}from"./chunk-D2P6BBTD.mjs";import{Q as n,V as o}from"./chunk-JQ55PVVS.mjs";var a=class e{constructor(t){this.httpClient=t}SendCustomerContactForm(t){return this.httpClient.post(i.apiUrl+"email/send-customer-contact-form",t)}SendSuggestion(t){return this.httpClient.post(i.apiUrl+"email/send-suggestion",t)}static \u0275fac=function(p){return new(p||e)(o(r))};static \u0275prov=n({token:e,factory:e.\u0275fac,providedIn:"root"})};export{a};
