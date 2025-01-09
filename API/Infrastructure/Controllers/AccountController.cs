@@ -33,7 +33,7 @@ namespace API.Infrastructure.Controllers
 
 			var resultObject = await _accountService.Register(extendedRegisterDto, extendedRegisterDto.RequireEmailVerification);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return BadRequest(resultObject.Error);
 
 			return Ok(resultObject.Result);
@@ -66,7 +66,7 @@ namespace API.Infrastructure.Controllers
 
 			var resultObject = await _accountService.EditUser(editUserDto);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return BadRequest(resultObject.Error);
 
 			return Ok(resultObject.Result);
@@ -82,7 +82,7 @@ namespace API.Infrastructure.Controllers
 		{
 			var resultObject = await _accountService.Login(loginDto);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return Unauthorized(resultObject.Error);
 
 			return Ok(resultObject.Result);
@@ -100,7 +100,7 @@ namespace API.Infrastructure.Controllers
 
 			var resultObject = await _accountService.SocialLogin(socialLoginDto);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return Unauthorized(resultObject.Error);
 
 			return Ok(resultObject.Result);
@@ -117,7 +117,7 @@ namespace API.Infrastructure.Controllers
 		{
 			var resultObject = await _accountService.InitiatePasswordReset(email, username);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return BadRequest(resultObject.Error);
 
 			return Ok(resultObject.Result);
@@ -133,7 +133,7 @@ namespace API.Infrastructure.Controllers
 		{
 			var resultObject = await _accountService.ResetPassword(passwordResetDto);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return BadRequest(resultObject.Error);
 
 			return Ok(resultObject.Result);
@@ -150,7 +150,7 @@ namespace API.Infrastructure.Controllers
 		{
 			var resultObject = await _accountService.VerifyAccount(accountId, token);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return new RedirectResult(resultObject.Result);
 
 			return new RedirectResult(resultObject.Result);
@@ -176,7 +176,7 @@ namespace API.Infrastructure.Controllers
 		{
 			var resultObject = await _accountService.RefreshAuth(refreshAuthDto);
 
-			if (resultObject.Error != null)
+			if (resultObject.Error != "null")
 				return Unauthorized(resultObject.Error);
 
 			return Ok(resultObject.Result);
