@@ -9,7 +9,8 @@
     "serve:ssr:front-end": "node dist/front-end/server/server.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prebuild": "node src/generate-sitemap.js"
+    "prebuild": "node src/generate-sitemap.js",
+    "postbuild": "node docker-after-build.js"
   },
   "private": true,
   "dependencies": {
